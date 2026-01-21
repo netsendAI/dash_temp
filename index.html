@@ -192,11 +192,11 @@
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">13.69%</div>
+                        <div class="value">0.23%</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">10.92%</div>
+                        <div class="value">0.18%</div>
                     </div>
                 </div>
                 <div class="lift negative">-20.2%</div>
@@ -207,11 +207,11 @@
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">28,170₽</div>
+                        <div class="value">473₽</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">18,881₽</div>
+                        <div class="value">317₽</div>
                     </div>
                 </div>
                 <div class="lift negative">-33.0%</div>
@@ -237,14 +237,14 @@
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">168</div>
+                        <div class="value">10,003</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">1,520</div>
+                        <div class="value">90,497</div>
                     </div>
                 </div>
-                <div class="lift positive">Всего: 1,688</div>
+                <div class="lift positive">Всего: 100,500</div>
             </div>
         </div>
         
@@ -292,9 +292,9 @@
                 </tr>
                 <tr>
                     <td>Пользователей (поиск)</td>
-                    <td>168</td>
-                    <td>1,520</td>
-                    <td>+1,352</td>
+                    <td>10,003</td>
+                    <td>90,497</td>
+                    <td>+80,494</td>
                     <td>—</td>
                 </tr>
                 <tr>
@@ -320,16 +320,16 @@
                 </tr>
                 <tr style="font-weight: bold; background: rgba(255,255,255,0.05);">
                     <td>CVR</td>
-                    <td>13.69%</td>
-                    <td>10.92%</td>
-                    <td style="color: #e74c3c">-2.77%</td>
+                    <td>0.23%</td>
+                    <td>0.18%</td>
+                    <td style="color: #e74c3c">-0.05%</td>
                     <td style="color: #e74c3c">-20.2%</td>
                 </tr>
                 <tr style="font-weight: bold; background: rgba(255,255,255,0.05);">
                     <td>RPV</td>
-                    <td>28,170₽</td>
-                    <td>18,881₽</td>
-                    <td style="color: #e74c3c">-9,289₽</td>
+                    <td>473₽</td>
+                    <td>317₽</td>
+                    <td style="color: #e74c3c">-156₽</td>
                     <td style="color: #e74c3c">-33.0%</td>
                 </tr>
                 <tr style="font-weight: bold; background: rgba(255,255,255,0.05);">
@@ -343,7 +343,7 @@
         </div>
         
         <div class="footer">
-            Отчёт сгенерирован: 2026-01-21 12:13:55 | WorkOS AB Test Dashboard
+            Отчёт сгенерирован: 2026-01-21 12:27:01 | WorkOS AB Test Dashboard
         </div>
     </div>
     
@@ -409,14 +409,14 @@
         Plotly.newPlot('metricsChart', [
             {
                 x: ['CVR (%)', 'RPV (тыс.₽)', 'AOV (тыс.₽)'],
-                y: [13.690476190476192, 28.17039880952381, 205.76639130434785],
+                y: [0.22993102069379187, 0.47312076377086876, 205.76639130434785],
                 name: 'A (контроль)',
                 type: 'bar',
                 marker: { color: '#3498db' }
             },
             {
                 x: ['CVR (%)', 'RPV (тыс.₽)', 'AOV (тыс.₽)'],
-                y: [10.921052631578949, 18.881093421052633, 172.8871204819277],
+                y: [0.18343149496668398, 0.3171294297048521, 172.8871204819277],
                 name: 'B (скидка)',
                 type: 'bar',
                 marker: { color: '#9b59b6' }
@@ -438,7 +438,7 @@
                 type: 'funnel',
                 name: 'A (контроль)',
                 y: ['Поиск', 'Заказы', 'Оплаты'],
-                x: [168, 100, 23],
+                x: [10003, 100, 23],
                 textinfo: 'value+percent initial',
                 marker: { color: '#3498db' },
                 textfont: { color: '#fff' }
@@ -447,7 +447,7 @@
                 type: 'funnel',
                 name: 'B (скидка)',
                 y: ['Поиск', 'Заказы', 'Оплаты'],
-                x: [1520, 943, 166],
+                x: [90497, 943, 166],
                 textinfo: 'value+percent initial',
                 marker: { color: '#9b59b6' },
                 textfont: { color: '#fff' }
@@ -465,7 +465,7 @@
         Plotly.newPlot('cvrUsersChart', [
             {
                 x: ['2026-01-20', '2026-01-21'],
-                y: [22.22, 4.95],
+                y: [0.41, 0.08],
                 name: 'A (контроль)',
                 type: 'scatter',
                 mode: 'lines+markers',
@@ -475,7 +475,7 @@
             },
             {
                 x: ['2026-01-20', '2026-01-21'],
-                y: [12.84, 7.51],
+                y: [0.24, 0.12],
                 name: 'B (скидка)',
                 type: 'scatter',
                 mode: 'lines+markers',
