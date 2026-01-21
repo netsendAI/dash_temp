@@ -384,7 +384,186 @@
     <!-- Скрипт авторизации -->
     <script src="auth.js"></script>
 
-    <!-- Если захочешь добавить интерактивные графики Plotly — сюда можно вставить JS из основного дашборда -->
+    <!-- Скрипты Plotly с зафиксированными данными (скопировано из локального HTML-отчёта) -->
+    <script>
+        // Orders chart
+        Plotly.newPlot('ordersChart', [
+            {
+                x: ['2026-01-20', '2026-01-21'],
+                y: [54, 25],
+                name: 'A (контроль)',
+                type: 'bar',
+                marker: { color: '#3498db' }
+            },
+            {
+                x: ['2026-01-20', '2026-01-21'],
+                y: [450, 277],
+                name: 'B (скидка)',
+                type: 'bar',
+                marker: { color: '#9b59b6' }
+            }
+        ], {
+            barmode: 'group',
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#fff' },
+            margin: { t: 20, r: 20, b: 40, l: 50 },
+            legend: { orientation: 'h', y: -0.2 },
+            xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
+            yaxis: { gridcolor: 'rgba(255,255,255,0.1)', title: 'Заказы' }
+        }, { responsive: true });
+        
+        // Payments chart
+        Plotly.newPlot('paymentsChart', [
+            {
+                x: ['2026-01-20', '2026-01-21'],
+                y: [17, 4],
+                name: 'A (контроль)',
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: '#3498db', width: 3 },
+                marker: { size: 8 }
+            },
+            {
+                x: ['2026-01-20', '2026-01-21'],
+                y: [83, 38],
+                name: 'B (скидка)',
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: '#9b59b6', width: 3 },
+                marker: { size: 8 }
+            }
+        ], {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#fff' },
+            margin: { t: 20, r: 20, b: 40, l: 50 },
+            legend: { orientation: 'h', y: -0.2 },
+            xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
+            yaxis: { gridcolor: 'rgba(255,255,255,0.1)', title: 'Оплаты' }
+        }, { responsive: true });
+        
+        // Metrics comparison chart
+        Plotly.newPlot('metricsChart', [
+            {
+                x: ['CVR (%)', 'RPV (тыс.₽)', 'AOV (тыс.₽)'],
+                y: [15.555555555555555, 32.26291851851852, 207.40447619047617],
+                name: 'A (контроль)',
+                type: 'bar',
+                marker: { color: '#3498db' }
+            },
+            {
+                x: ['CVR (%)', 'RPV (тыс.₽)', 'AOV (тыс.₽)'],
+                y: [9.88562091503268, 16.287583333333334, 164.760347107438],
+                name: 'B (скидка)',
+                type: 'bar',
+                marker: { color: '#9b59b6' }
+            }
+        ], {
+            barmode: 'group',
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#fff' },
+            margin: { t: 20, r: 20, b: 40, l: 50 },
+            legend: { orientation: 'h', y: -0.2 },
+            xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
+            yaxis: { gridcolor: 'rgba(255,255,255,0.1)' }
+        }, { responsive: true });
+        
+        // Funnel chart - from search users to paid orders
+        Plotly.newPlot('funnelChart', [
+            {
+                type: 'funnel',
+                name: 'A (контроль)',
+                y: ['Поиск', 'Заказы', 'Оплаты'],
+                x: [135, 79, 21],
+                textinfo: 'value+percent initial',
+                marker: { color: '#3498db' },
+                textfont: { color: '#fff' }
+            },
+            {
+                type: 'funnel',
+                name: 'B (скидка)',
+                y: ['Поиск', 'Заказы', 'Оплаты'],
+                x: [1224, 727, 121],
+                textinfo: 'value+percent initial',
+                marker: { color: '#9b59b6' },
+                textfont: { color: '#fff' }
+            }
+        ], {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#fff' },
+            margin: { t: 20, r: 20, b: 20, l: 100 },
+            legend: { orientation: 'h', y: -0.1 },
+            funnelmode: 'group'
+        }, { responsive: true });
+        
+        // CVR users -> paid
+        Plotly.newPlot('cvrUsersChart', [
+            {
+                x: ['2026-01-20', '2026-01-21'],
+                y: [20.99, 6.06],
+                name: 'A (контроль)',
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: '#3498db', width: 3 },
+                marker: { size: 8 },
+                hovertemplate: '%{x}<br>A: %{y:.1f}%<extra></extra>'
+            },
+            {
+                x: ['2026-01-20', '2026-01-21'],
+                y: [11.22, 6.31],
+                name: 'B (скидка)',
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: '#9b59b6', width: 3 },
+                marker: { size: 8 },
+                hovertemplate: '%{x}<br>B: %{y:.1f}%<extra></extra>'
+            }
+        ], {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#fff' },
+            margin: { t: 20, r: 20, b: 40, l: 60 },
+            legend: { orientation: 'h', y: -0.2 },
+            xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
+            yaxis: { gridcolor: 'rgba(255,255,255,0.1)', title: 'CVR', ticksuffix: '%' }
+        }, { responsive: true });
+        
+        // Pay-through orders -> paid
+        Plotly.newPlot('payRateChart', [
+            {
+                x: ['2026-01-20', '2026-01-21'],
+                y: [31.48, 16.0],
+                name: 'A (контроль)',
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: '#3498db', width: 3 },
+                marker: { size: 8 },
+                text: [31.48, 16.0],
+                hovertemplate: '%{x}<br>A: %{y:.1f}%<extra></extra>'
+            },
+            {
+                x: ['2026-01-20', '2026-01-21'],
+                y: [18.44, 13.72],
+                name: 'B (скидка)',
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: '#9b59b6', width: 3 },
+                marker: { size: 8 },
+                hovertemplate: '%{x}<br>B: %{y:.1f}%<extra></extra>'
+            }
+        ], {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#fff' },
+            margin: { t: 20, r: 20, b: 40, l: 60 },
+            legend: { orientation: 'h', y: -0.2 },
+            xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
+            yaxis: { gridcolor: 'rgba(255,255,255,0.1)', title: 'Pay-through', ticksuffix: '%' }
+        }, { responsive: true });
+    </script>
 </body>
 </html>
 
