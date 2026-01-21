@@ -1,8 +1,9 @@
 (function () {
   // Захардкоженные логин и пароль для доступа
   // При необходимости просто поменяй значения ниже
-  const USERNAME = 'boss';
-  const PASSWORD = 'shadow123';
+  // Логин/пароль видны в коде, это осознанно.
+  const USERNAME = 'temp-dashboard';
+  const PASSWORD = 'TempDash_24!';
 
   const STORAGE_KEY = 'ab_in4868_auth';
 
