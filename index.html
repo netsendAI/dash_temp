@@ -237,7 +237,7 @@
         <div class="target-card">
             <h2>🎯 TARGET: RPV +5%</h2>
             <div class="status">❌ НЕ ДОСТИГНУТ</div>
-            <div class="details">Факт: -32.5%</div>
+            <div class="details">Факт: -30.9%</div>
         </div>
         
         <div class="metrics-grid">
@@ -250,10 +250,10 @@
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">0.24%</div>
+                        <div class="value">0.25%</div>
                     </div>
                 </div>
-                <div class="lift negative">-25.7%</div>
+                <div class="lift negative">-24.1%</div>
             </div>
             
             <div class="metric-card">
@@ -261,14 +261,14 @@
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">597₽</div>
+                        <div class="value">596₽</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">402₽</div>
+                        <div class="value">411₽</div>
                     </div>
                 </div>
-                <div class="lift negative">-32.5%</div>
+                <div class="lift negative">-30.9%</div>
             </div>
             
             <div class="metric-card">
@@ -280,10 +280,10 @@
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">167,038₽</div>
+                        <div class="value">167,544₽</div>
                     </div>
                 </div>
-                <div class="lift negative">-9.2%</div>
+                <div class="lift negative">-8.9%</div>
             </div>
             
             <div class="metric-card">
@@ -291,14 +291,14 @@
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">17,578</div>
+                        <div class="value">17,608</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">158,958</div>
+                        <div class="value">159,231</div>
                     </div>
                 </div>
-                <div class="lift positive">Всего: 176,536</div>
+                <div class="lift positive">Всего: 176,839</div>
             </div>
         </div>
         
@@ -365,68 +365,92 @@
                 </tr>
                 <tr>
                     <td>Пользователей (поиск)</td>
-                    <td>17,578</td>
-                    <td>158,958</td>
-                    <td>+141,380</td>
+                    <td>17,608</td>
+                    <td>159,231</td>
+                    <td>+141,623</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>Заказов</td>
-                    <td>211</td>
-                    <td>1,920</td>
-                    <td>+1,709</td>
+                    <td>216</td>
+                    <td>1,985</td>
+                    <td>+1,769</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>Оплат</td>
                     <td>57</td>
-                    <td>383</td>
-                    <td>+326</td>
+                    <td>391</td>
+                    <td>+334</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>Выручка</td>
                     <td>10,487,285₽</td>
-                    <td>63,975,434₽</td>
-                    <td>+53,488,149₽</td>
+                    <td>65,509,770₽</td>
+                    <td>+55,022,485₽</td>
                     <td>—</td>
                 </tr>
                 <tr style="font-weight: bold; background: rgba(255,255,255,0.05);">
                     <td>CVR</td>
                     <td>0.32%</td>
-                    <td>0.24%</td>
+                    <td>0.25%</td>
                     <td style="color: #e74c3c">-0.08%</td>
-                    <td style="color: #e74c3c">-25.7%</td>
+                    <td style="color: #e74c3c">-24.1%</td>
                 </tr>
                 <tr style="font-weight: bold; background: rgba(255,255,255,0.05);">
                     <td>RPV</td>
-                    <td>597₽</td>
-                    <td>402₽</td>
-                    <td style="color: #e74c3c">-194₽</td>
-                    <td style="color: #e74c3c">-32.5%</td>
+                    <td>596₽</td>
+                    <td>411₽</td>
+                    <td style="color: #e74c3c">-184₽</td>
+                    <td style="color: #e74c3c">-30.9%</td>
                 </tr>
                 <tr style="font-weight: bold; background: rgba(255,255,255,0.05);">
                     <td>AOV</td>
                     <td>183,987₽</td>
-                    <td>167,038₽</td>
-                    <td style="color: #e74c3c">-16,950₽</td>
-                    <td style="color: #e74c3c">-9.2%</td>
+                    <td>167,544₽</td>
+                    <td style="color: #e74c3c">-16,443₽</td>
+                    <td style="color: #e74c3c">-8.9%</td>
                 </tr>
             </table>
         </div>
         
         <div class="footer">
-            Отчёт сгенерирован: 2026-01-22 10:32:46 | WorkOS AB Test Dashboard
+            Отчёт сгенерирован: 2026-01-22 10:36:03 | WorkOS AB Test Dashboard
         </div>
     </div>
     
     <script>
+        // Helper function to normalize date to 'YYYY-MM-DD' format
+        function normalizeDate(date) {
+            if (!date) return null;
+            if (typeof date === 'string') {
+                // If already string, extract YYYY-MM-DD part
+                return date.substring(0, 10);
+            }
+            if (date instanceof Date) {
+                // If Date object, format it
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            // Try to convert to string and extract date part
+            return String(date).substring(0, 10);
+        }
+        
         // Store data with tour operators for filtering
         const rawData = {
-            df: [{"variant": "a", "tour_operator": "Anex", "total_orders": 16, "unique_users": 12, "paid_orders": 5, "total_gmv": 4232642.0, "paid_revenue": 1861870.0, "avg_paid_order_value": 372374.0}, {"variant": "a", "tour_operator": "Biblio Globus", "total_orders": 34, "unique_users": 27, "paid_orders": 10, "total_gmv": 5883153.0, "paid_revenue": 1813480.0, "avg_paid_order_value": 181348.0}, {"variant": "a", "tour_operator": "Coral Travel", "total_orders": 2, "unique_users": 2, "paid_orders": 0, "total_gmv": 397174.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "a", "tour_operator": "FUN&SUN", "total_orders": 23, "unique_users": 18, "paid_orders": 10, "total_gmv": 4474190.0, "paid_revenue": 1754819.0, "avg_paid_order_value": 175481.9}, {"variant": "a", "tour_operator": "ICS Travel Group", "total_orders": 16, "unique_users": 10, "paid_orders": 2, "total_gmv": 2991368.0, "paid_revenue": 258003.0, "avg_paid_order_value": 129001.5}, {"variant": "a", "tour_operator": "Intourist", "total_orders": 5, "unique_users": 5, "paid_orders": 2, "total_gmv": 816377.0, "paid_revenue": 350021.0, "avg_paid_order_value": 175010.5}, {"variant": "a", "tour_operator": "Let’s Fly", "total_orders": 9, "unique_users": 6, "paid_orders": 1, "total_gmv": 1523429.0, "paid_revenue": 111299.0, "avg_paid_order_value": 111299.0}, {"variant": "a", "tour_operator": "One Touch Travel", "total_orders": 3, "unique_users": 2, "paid_orders": 0, "total_gmv": 821184.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "a", "tour_operator": "PAKS", "total_orders": 3, "unique_users": 3, "paid_orders": 0, "total_gmv": 806841.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "a", "tour_operator": "Pegas Touristik", "total_orders": 17, "unique_users": 13, "paid_orders": 3, "total_gmv": 2941247.0, "paid_revenue": 587389.0, "avg_paid_order_value": 195796.33333333334}, {"variant": "a", "tour_operator": "RussianExpress", "total_orders": 1, "unique_users": 1, "paid_orders": 0, "total_gmv": 121518.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "a", "tour_operator": "Space Travel", "total_orders": 8, "unique_users": 8, "paid_orders": 2, "total_gmv": 1538376.0, "paid_revenue": 218537.0, "avg_paid_order_value": 109268.5}, {"variant": "a", "tour_operator": "Sunmar", "total_orders": 18, "unique_users": 14, "paid_orders": 4, "total_gmv": 3468202.0, "paid_revenue": 735770.0, "avg_paid_order_value": 183942.5}, {"variant": "a", "tour_operator": "Tez Tour", "total_orders": 8, "unique_users": 5, "paid_orders": 0, "total_gmv": 2331274.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "a", "tour_operator": "Travelata", "total_orders": 48, "unique_users": 31, "paid_orders": 18, "total_gmv": 9864618.0, "paid_revenue": 2796097.0, "avg_paid_order_value": 155338.72222222222}, {"variant": "b", "tour_operator": "AleanTour", "total_orders": 6, "unique_users": 6, "paid_orders": 0, "total_gmv": 550840.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "b", "tour_operator": "Anex", "total_orders": 110, "unique_users": 87, "paid_orders": 21, "total_gmv": 26474225.0, "paid_revenue": 4298025.0, "avg_paid_order_value": 204667.85714285713}, {"variant": "b", "tour_operator": "Biblio Globus", "total_orders": 363, "unique_users": 258, "paid_orders": 85, "total_gmv": 65654545.0, "paid_revenue": 13296514.0, "avg_paid_order_value": 156429.57647058825}, {"variant": "b", "tour_operator": "China Travel", "total_orders": 2, "unique_users": 1, "paid_orders": 0, "total_gmv": 1099072.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "b", "tour_operator": "Coral Travel", "total_orders": 25, "unique_users": 21, "paid_orders": 6, "total_gmv": 4752379.0, "paid_revenue": 1087148.0, "avg_paid_order_value": 181191.33333333334}, {"variant": "b", "tour_operator": "FUN&SUN", "total_orders": 144, "unique_users": 115, "paid_orders": 34, "total_gmv": 29579530.0, "paid_revenue": 5791220.0, "avg_paid_order_value": 170330.0}, {"variant": "b", "tour_operator": "ICS Travel Group", "total_orders": 138, "unique_users": 88, "paid_orders": 20, "total_gmv": 23313890.0, "paid_revenue": 3320504.0, "avg_paid_order_value": 166025.2}, {"variant": "b", "tour_operator": "IZI Tour", "total_orders": 1, "unique_users": 1, "paid_orders": 0, "total_gmv": 224249.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "b", "tour_operator": "Intourist", "total_orders": 84, "unique_users": 68, "paid_orders": 16, "total_gmv": 17122308.0, "paid_revenue": 2526775.0, "avg_paid_order_value": 157923.4375}, {"variant": "b", "tour_operator": "Let’s Fly", "total_orders": 89, "unique_users": 78, "paid_orders": 8, "total_gmv": 19861153.0, "paid_revenue": 1672610.0, "avg_paid_order_value": 209076.25}, {"variant": "b", "tour_operator": "One Touch Travel", "total_orders": 39, "unique_users": 26, "paid_orders": 2, "total_gmv": 9652148.0, "paid_revenue": 805791.0, "avg_paid_order_value": 402895.5}, {"variant": "b", "tour_operator": "PAKS", "total_orders": 61, "unique_users": 49, "paid_orders": 6, "total_gmv": 18736275.0, "paid_revenue": 1797241.0, "avg_paid_order_value": 299540.1666666667}, {"variant": "b", "tour_operator": "Pegas Touristik", "total_orders": 188, "unique_users": 130, "paid_orders": 34, "total_gmv": 35611754.0, "paid_revenue": 6736333.0, "avg_paid_order_value": 198127.4411764706}, {"variant": "b", "tour_operator": "RussianExpress", "total_orders": 39, "unique_users": 27, "paid_orders": 9, "total_gmv": 10241298.0, "paid_revenue": 1925518.0, "avg_paid_order_value": 213946.44444444444}, {"variant": "b", "tour_operator": "Space Travel", "total_orders": 129, "unique_users": 93, "paid_orders": 11, "total_gmv": 25983953.0, "paid_revenue": 2070973.0, "avg_paid_order_value": 188270.27272727274}, {"variant": "b", "tour_operator": "Sunmar", "total_orders": 80, "unique_users": 60, "paid_orders": 22, "total_gmv": 15063809.0, "paid_revenue": 3641251.0, "avg_paid_order_value": 165511.4090909091}, {"variant": "b", "tour_operator": "Tez Tour", "total_orders": 45, "unique_users": 30, "paid_orders": 2, "total_gmv": 11389886.0, "paid_revenue": 497653.0, "avg_paid_order_value": 248826.5}, {"variant": "b", "tour_operator": "Travelata", "total_orders": 377, "unique_users": 279, "paid_orders": 107, "total_gmv": 73386205.0, "paid_revenue": 14507878.0, "avg_paid_order_value": 135587.6448598131}],
-            daily_df: [{"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Anex", "orders": 7, "unique_users": 5, "paid_orders": 3, "paid_revenue": 1304065.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "orders": 3, "unique_users": 3, "paid_orders": 1, "paid_revenue": 286245.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "orders": 12, "unique_users": 8, "paid_orders": 5, "paid_revenue": 934461.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Intourist", "orders": 2, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Let’s Fly", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "PAKS", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "orders": 6, "unique_users": 3, "paid_orders": 2, "paid_revenue": 382176.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Space Travel", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Sunmar", "orders": 5, "unique_users": 5, "paid_orders": 3, "paid_revenue": 418788.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Tez Tour", "orders": 2, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Travelata", "orders": 13, "unique_users": 8, "paid_orders": 4, "paid_revenue": 508973.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "AleanTour", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Anex", "orders": 20, "unique_users": 19, "paid_orders": 6, "paid_revenue": 1260698.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "orders": 98, "unique_users": 77, "paid_orders": 26, "paid_revenue": 4005562.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "orders": 5, "unique_users": 4, "paid_orders": 2, "paid_revenue": 336835.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "orders": 45, "unique_users": 34, "paid_orders": 13, "paid_revenue": 2722743.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "orders": 34, "unique_users": 19, "paid_orders": 4, "paid_revenue": 747069.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "IZI Tour", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Intourist", "orders": 13, "unique_users": 13, "paid_orders": 4, "paid_revenue": 753581.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "orders": 18, "unique_users": 16, "paid_orders": 1, "paid_revenue": 195214.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "One Touch Travel", "orders": 7, "unique_users": 6, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "PAKS", "orders": 16, "unique_users": 12, "paid_orders": 2, "paid_revenue": 533615.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "orders": 43, "unique_users": 35, "paid_orders": 10, "paid_revenue": 2365538.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "orders": 18, "unique_users": 11, "paid_orders": 5, "paid_revenue": 1142410.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Space Travel", "orders": 25, "unique_users": 18, "paid_orders": 1, "paid_revenue": 291253.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Sunmar", "orders": 13, "unique_users": 12, "paid_orders": 4, "paid_revenue": 864695.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "orders": 4, "unique_users": 4, "paid_orders": 2, "paid_revenue": 497653.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Travelata", "orders": 89, "unique_users": 67, "paid_orders": 30, "paid_revenue": 4404393.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Anex", "orders": 6, "unique_users": 5, "paid_orders": 1, "paid_revenue": 357420.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "orders": 25, "unique_users": 20, "paid_orders": 8, "paid_revenue": 1502223.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Coral Travel", "orders": 2, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "orders": 7, "unique_users": 7, "paid_orders": 3, "paid_revenue": 466449.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "orders": 13, "unique_users": 9, "paid_orders": 2, "paid_revenue": 258003.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Intourist", "orders": 2, "unique_users": 2, "paid_orders": 1, "paid_revenue": 287907.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Let’s Fly", "orders": 8, "unique_users": 5, "paid_orders": 1, "paid_revenue": 111299.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "One Touch Travel", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "orders": 10, "unique_users": 9, "paid_orders": 1, "paid_revenue": 205213.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "RussianExpress", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Space Travel", "orders": 5, "unique_users": 5, "paid_orders": 2, "paid_revenue": 218537.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Sunmar", "orders": 9, "unique_users": 8, "paid_orders": 1, "paid_revenue": 316982.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Tez Tour", "orders": 4, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Travelata", "orders": 31, "unique_users": 20, "paid_orders": 12, "paid_revenue": 2094298.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "AleanTour", "orders": 4, "unique_users": 4, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Anex", "orders": 77, "unique_users": 61, "paid_orders": 13, "paid_revenue": 2486415.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "orders": 208, "unique_users": 155, "paid_orders": 48, "paid_revenue": 7629724.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "China Travel", "orders": 2, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "orders": 15, "unique_users": 13, "paid_orders": 4, "paid_revenue": 750313.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "orders": 61, "unique_users": 52, "paid_orders": 14, "paid_revenue": 1814741.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "orders": 85, "unique_users": 57, "paid_orders": 16, "paid_revenue": 2573435.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Intourist", "orders": 60, "unique_users": 46, "paid_orders": 10, "paid_revenue": 1368346.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "orders": 60, "unique_users": 52, "paid_orders": 6, "paid_revenue": 1291199.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "One Touch Travel", "orders": 30, "unique_users": 20, "paid_orders": 2, "paid_revenue": 805791.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "PAKS", "orders": 33, "unique_users": 26, "paid_orders": 4, "paid_revenue": 1263626.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "orders": 113, "unique_users": 82, "paid_orders": 21, "paid_revenue": 4039118.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "orders": 18, "unique_users": 13, "paid_orders": 4, "paid_revenue": 783108.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Space Travel", "orders": 84, "unique_users": 63, "paid_orders": 9, "paid_revenue": 1691197.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Sunmar", "orders": 44, "unique_users": 38, "paid_orders": 13, "paid_revenue": 1757170.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "orders": 27, "unique_users": 19, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Travelata", "orders": 205, "unique_users": 163, "paid_orders": 60, "paid_revenue": 7434490.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Anex", "orders": 3, "unique_users": 3, "paid_orders": 1, "paid_revenue": 200385.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "orders": 6, "unique_users": 5, "paid_orders": 1, "paid_revenue": 25012.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "orders": 4, "unique_users": 4, "paid_orders": 2, "paid_revenue": 353909.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "orders": 2, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Intourist", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 62114.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "One Touch Travel", "orders": 2, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "PAKS", "orders": 2, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Space Travel", "orders": 2, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Sunmar", "orders": 4, "unique_users": 3, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Tez Tour", "orders": 2, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Travelata", "orders": 4, "unique_users": 4, "paid_orders": 2, "paid_revenue": 192826.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "AleanTour", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Anex", "orders": 13, "unique_users": 11, "paid_orders": 2, "paid_revenue": 550912.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "orders": 57, "unique_users": 41, "paid_orders": 11, "paid_revenue": 1661228.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "orders": 5, "unique_users": 5, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "orders": 38, "unique_users": 30, "paid_orders": 7, "paid_revenue": 1253736.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "orders": 19, "unique_users": 17, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Intourist", "orders": 11, "unique_users": 10, "paid_orders": 2, "paid_revenue": 404848.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "orders": 11, "unique_users": 11, "paid_orders": 1, "paid_revenue": 186197.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "One Touch Travel", "orders": 2, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "PAKS", "orders": 12, "unique_users": 11, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "orders": 32, "unique_users": 23, "paid_orders": 3, "paid_revenue": 331677.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "orders": 3, "unique_users": 3, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Space Travel", "orders": 20, "unique_users": 14, "paid_orders": 1, "paid_revenue": 88523.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Sunmar", "orders": 23, "unique_users": 13, "paid_orders": 5, "paid_revenue": 1019386.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "orders": 14, "unique_users": 10, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Travelata", "orders": 83, "unique_users": 65, "paid_orders": 17, "paid_revenue": 2668995.0}],
+            df: [{"variant": "a", "tour_operator": "Anex", "total_orders": 18, "unique_users": 14, "paid_orders": 5, "total_gmv": 4481448.0, "paid_revenue": 1861870.0, "avg_paid_order_value": 372374.0}, {"variant": "a", "tour_operator": "Biblio Globus", "total_orders": 35, "unique_users": 27, "paid_orders": 10, "total_gmv": 6105423.0, "paid_revenue": 1813480.0, "avg_paid_order_value": 181348.0}, {"variant": "a", "tour_operator": "Coral Travel", "total_orders": 2, "unique_users": 2, "paid_orders": 0, "total_gmv": 397174.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "a", "tour_operator": "FUN&SUN", "total_orders": 23, "unique_users": 18, "paid_orders": 10, "total_gmv": 4474190.0, "paid_revenue": 1754819.0, "avg_paid_order_value": 175481.9}, {"variant": "a", "tour_operator": "ICS Travel Group", "total_orders": 16, "unique_users": 10, "paid_orders": 2, "total_gmv": 2991368.0, "paid_revenue": 258003.0, "avg_paid_order_value": 129001.5}, {"variant": "a", "tour_operator": "Intourist", "total_orders": 5, "unique_users": 5, "paid_orders": 2, "total_gmv": 816377.0, "paid_revenue": 350021.0, "avg_paid_order_value": 175010.5}, {"variant": "a", "tour_operator": "Let’s Fly", "total_orders": 9, "unique_users": 6, "paid_orders": 1, "total_gmv": 1523429.0, "paid_revenue": 111299.0, "avg_paid_order_value": 111299.0}, {"variant": "a", "tour_operator": "One Touch Travel", "total_orders": 3, "unique_users": 2, "paid_orders": 0, "total_gmv": 821184.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "a", "tour_operator": "PAKS", "total_orders": 4, "unique_users": 3, "paid_orders": 0, "total_gmv": 1128757.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "a", "tour_operator": "Pegas Touristik", "total_orders": 17, "unique_users": 13, "paid_orders": 3, "total_gmv": 2941247.0, "paid_revenue": 587389.0, "avg_paid_order_value": 195796.33333333334}, {"variant": "a", "tour_operator": "RussianExpress", "total_orders": 1, "unique_users": 1, "paid_orders": 0, "total_gmv": 121518.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "a", "tour_operator": "Space Travel", "total_orders": 8, "unique_users": 8, "paid_orders": 2, "total_gmv": 1538376.0, "paid_revenue": 218537.0, "avg_paid_order_value": 109268.5}, {"variant": "a", "tour_operator": "Sunmar", "total_orders": 18, "unique_users": 14, "paid_orders": 4, "total_gmv": 3468202.0, "paid_revenue": 735770.0, "avg_paid_order_value": 183942.5}, {"variant": "a", "tour_operator": "Tez Tour", "total_orders": 8, "unique_users": 5, "paid_orders": 0, "total_gmv": 2331274.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "a", "tour_operator": "Travelata", "total_orders": 49, "unique_users": 32, "paid_orders": 18, "total_gmv": 10244750.0, "paid_revenue": 2796097.0, "avg_paid_order_value": 155338.72222222222}, {"variant": "b", "tour_operator": "AleanTour", "total_orders": 6, "unique_users": 6, "paid_orders": 0, "total_gmv": 550840.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "b", "tour_operator": "Anex", "total_orders": 119, "unique_users": 94, "paid_orders": 21, "total_gmv": 28147069.0, "paid_revenue": 4298025.0, "avg_paid_order_value": 204667.85714285713}, {"variant": "b", "tour_operator": "Biblio Globus", "total_orders": 379, "unique_users": 268, "paid_orders": 89, "total_gmv": 68726800.0, "paid_revenue": 13955398.0, "avg_paid_order_value": 156802.22471910113}, {"variant": "b", "tour_operator": "China Travel", "total_orders": 2, "unique_users": 1, "paid_orders": 0, "total_gmv": 1099072.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "b", "tour_operator": "Coral Travel", "total_orders": 25, "unique_users": 21, "paid_orders": 6, "total_gmv": 4752379.0, "paid_revenue": 1087148.0, "avg_paid_order_value": 181191.33333333334}, {"variant": "b", "tour_operator": "FUN&SUN", "total_orders": 156, "unique_users": 121, "paid_orders": 35, "total_gmv": 33612815.0, "paid_revenue": 6406505.0, "avg_paid_order_value": 183043.0}, {"variant": "b", "tour_operator": "ICS Travel Group", "total_orders": 144, "unique_users": 93, "paid_orders": 20, "total_gmv": 24478522.0, "paid_revenue": 3320504.0, "avg_paid_order_value": 166025.2}, {"variant": "b", "tour_operator": "IZI Tour", "total_orders": 1, "unique_users": 1, "paid_orders": 0, "total_gmv": 224249.0, "paid_revenue": NaN, "avg_paid_order_value": NaN}, {"variant": "b", "tour_operator": "Intourist", "total_orders": 88, "unique_users": 70, "paid_orders": 17, "total_gmv": 17602214.0, "paid_revenue": 2690778.0, "avg_paid_order_value": 158281.0588235294}, {"variant": "b", "tour_operator": "Let’s Fly", "total_orders": 91, "unique_users": 80, "paid_orders": 8, "total_gmv": 20247668.0, "paid_revenue": 1672610.0, "avg_paid_order_value": 209076.25}, {"variant": "b", "tour_operator": "One Touch Travel", "total_orders": 40, "unique_users": 27, "paid_orders": 2, "total_gmv": 9879661.0, "paid_revenue": 805791.0, "avg_paid_order_value": 402895.5}, {"variant": "b", "tour_operator": "PAKS", "total_orders": 61, "unique_users": 49, "paid_orders": 6, "total_gmv": 18736275.0, "paid_revenue": 1797241.0, "avg_paid_order_value": 299540.1666666667}, {"variant": "b", "tour_operator": "Pegas Touristik", "total_orders": 191, "unique_users": 132, "paid_orders": 35, "total_gmv": 35960363.0, "paid_revenue": 6792974.0, "avg_paid_order_value": 194084.9714285714}, {"variant": "b", "tour_operator": "RussianExpress", "total_orders": 40, "unique_users": 28, "paid_orders": 9, "total_gmv": 10450578.0, "paid_revenue": 1925518.0, "avg_paid_order_value": 213946.44444444444}, {"variant": "b", "tour_operator": "Space Travel", "total_orders": 132, "unique_users": 95, "paid_orders": 11, "total_gmv": 26227631.0, "paid_revenue": 2070973.0, "avg_paid_order_value": 188270.27272727274}, {"variant": "b", "tour_operator": "Sunmar", "total_orders": 80, "unique_users": 60, "paid_orders": 22, "total_gmv": 15063809.0, "paid_revenue": 3641251.0, "avg_paid_order_value": 165511.4090909091}, {"variant": "b", "tour_operator": "Tez Tour", "total_orders": 47, "unique_users": 31, "paid_orders": 2, "total_gmv": 11746385.0, "paid_revenue": 497653.0, "avg_paid_order_value": 248826.5}, {"variant": "b", "tour_operator": "Travelata", "total_orders": 383, "unique_users": 282, "paid_orders": 108, "total_gmv": 73958606.0, "paid_revenue": 14547401.0, "avg_paid_order_value": 134698.15740740742}],
+            daily_df: [{"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Anex", "orders": 7, "unique_users": 5, "paid_orders": 3, "paid_revenue": 1304065.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "orders": 3, "unique_users": 3, "paid_orders": 1, "paid_revenue": 286245.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "orders": 12, "unique_users": 8, "paid_orders": 5, "paid_revenue": 934461.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Intourist", "orders": 2, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Let’s Fly", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "PAKS", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "orders": 6, "unique_users": 3, "paid_orders": 2, "paid_revenue": 382176.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Space Travel", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Sunmar", "orders": 5, "unique_users": 5, "paid_orders": 3, "paid_revenue": 418788.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Tez Tour", "orders": 2, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Travelata", "orders": 13, "unique_users": 8, "paid_orders": 4, "paid_revenue": 508973.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "AleanTour", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Anex", "orders": 20, "unique_users": 19, "paid_orders": 6, "paid_revenue": 1260698.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "orders": 98, "unique_users": 77, "paid_orders": 26, "paid_revenue": 4005562.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "orders": 5, "unique_users": 4, "paid_orders": 2, "paid_revenue": 336835.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "orders": 45, "unique_users": 34, "paid_orders": 13, "paid_revenue": 2722743.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "orders": 34, "unique_users": 19, "paid_orders": 4, "paid_revenue": 747069.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "IZI Tour", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Intourist", "orders": 13, "unique_users": 13, "paid_orders": 4, "paid_revenue": 753581.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "orders": 18, "unique_users": 16, "paid_orders": 1, "paid_revenue": 195214.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "One Touch Travel", "orders": 7, "unique_users": 6, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "PAKS", "orders": 16, "unique_users": 12, "paid_orders": 2, "paid_revenue": 533615.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "orders": 43, "unique_users": 35, "paid_orders": 10, "paid_revenue": 2365538.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "orders": 18, "unique_users": 11, "paid_orders": 5, "paid_revenue": 1142410.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Space Travel", "orders": 25, "unique_users": 18, "paid_orders": 1, "paid_revenue": 291253.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Sunmar", "orders": 13, "unique_users": 12, "paid_orders": 4, "paid_revenue": 864695.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "orders": 4, "unique_users": 4, "paid_orders": 2, "paid_revenue": 497653.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Travelata", "orders": 89, "unique_users": 67, "paid_orders": 30, "paid_revenue": 4404393.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Anex", "orders": 6, "unique_users": 5, "paid_orders": 1, "paid_revenue": 357420.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "orders": 25, "unique_users": 20, "paid_orders": 8, "paid_revenue": 1502223.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Coral Travel", "orders": 2, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "orders": 7, "unique_users": 7, "paid_orders": 3, "paid_revenue": 466449.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "orders": 13, "unique_users": 9, "paid_orders": 2, "paid_revenue": 258003.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Intourist", "orders": 2, "unique_users": 2, "paid_orders": 1, "paid_revenue": 287907.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Let’s Fly", "orders": 8, "unique_users": 5, "paid_orders": 1, "paid_revenue": 111299.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "One Touch Travel", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "orders": 10, "unique_users": 9, "paid_orders": 1, "paid_revenue": 205213.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "RussianExpress", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Space Travel", "orders": 5, "unique_users": 5, "paid_orders": 2, "paid_revenue": 218537.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Sunmar", "orders": 9, "unique_users": 8, "paid_orders": 1, "paid_revenue": 316982.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Tez Tour", "orders": 4, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Travelata", "orders": 31, "unique_users": 20, "paid_orders": 12, "paid_revenue": 2094298.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "AleanTour", "orders": 4, "unique_users": 4, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Anex", "orders": 77, "unique_users": 61, "paid_orders": 13, "paid_revenue": 2486415.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "orders": 208, "unique_users": 155, "paid_orders": 48, "paid_revenue": 7629724.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "China Travel", "orders": 2, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "orders": 15, "unique_users": 13, "paid_orders": 4, "paid_revenue": 750313.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "orders": 61, "unique_users": 52, "paid_orders": 14, "paid_revenue": 1814741.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "orders": 85, "unique_users": 57, "paid_orders": 16, "paid_revenue": 2573435.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Intourist", "orders": 60, "unique_users": 46, "paid_orders": 10, "paid_revenue": 1368346.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "orders": 60, "unique_users": 52, "paid_orders": 6, "paid_revenue": 1291199.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "One Touch Travel", "orders": 30, "unique_users": 20, "paid_orders": 2, "paid_revenue": 805791.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "PAKS", "orders": 33, "unique_users": 26, "paid_orders": 4, "paid_revenue": 1263626.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "orders": 113, "unique_users": 82, "paid_orders": 21, "paid_revenue": 4039118.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "orders": 18, "unique_users": 13, "paid_orders": 4, "paid_revenue": 783108.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Space Travel", "orders": 84, "unique_users": 63, "paid_orders": 9, "paid_revenue": 1691197.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Sunmar", "orders": 44, "unique_users": 38, "paid_orders": 13, "paid_revenue": 1757170.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "orders": 27, "unique_users": 19, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Travelata", "orders": 205, "unique_users": 163, "paid_orders": 60, "paid_revenue": 7434490.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Anex", "orders": 5, "unique_users": 5, "paid_orders": 1, "paid_revenue": 200385.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "orders": 7, "unique_users": 5, "paid_orders": 1, "paid_revenue": 25012.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "orders": 4, "unique_users": 4, "paid_orders": 2, "paid_revenue": 353909.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "orders": 2, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Intourist", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 62114.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "One Touch Travel", "orders": 2, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "PAKS", "orders": 3, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Space Travel", "orders": 2, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Sunmar", "orders": 4, "unique_users": 3, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Tez Tour", "orders": 2, "unique_users": 2, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Travelata", "orders": 5, "unique_users": 5, "paid_orders": 2, "paid_revenue": 192826.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "AleanTour", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Anex", "orders": 22, "unique_users": 19, "paid_orders": 2, "paid_revenue": 550912.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "orders": 73, "unique_users": 52, "paid_orders": 15, "paid_revenue": 2320112.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "orders": 5, "unique_users": 5, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "orders": 50, "unique_users": 36, "paid_orders": 8, "paid_revenue": 1869021.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "orders": 25, "unique_users": 22, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Intourist", "orders": 15, "unique_users": 13, "paid_orders": 3, "paid_revenue": 568851.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "orders": 13, "unique_users": 13, "paid_orders": 1, "paid_revenue": 186197.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "One Touch Travel", "orders": 3, "unique_users": 3, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "PAKS", "orders": 12, "unique_users": 11, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "orders": 35, "unique_users": 25, "paid_orders": 4, "paid_revenue": 388318.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "orders": 4, "unique_users": 4, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Space Travel", "orders": 23, "unique_users": 17, "paid_orders": 1, "paid_revenue": 88523.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Sunmar", "orders": 23, "unique_users": 13, "paid_orders": 5, "paid_revenue": 1019386.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "orders": 16, "unique_users": 11, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Travelata", "orders": 89, "unique_users": 68, "paid_orders": 18, "paid_revenue": 2708518.0}],
             dates: ["2026-01-20", "2026-01-21", "2026-01-22"]
         };
+        
+        // Normalize dates in rawData
+        rawData.dates = rawData.dates.map(normalizeDate);
+        rawData.daily_df.forEach(row => {
+            row.date = normalizeDate(row.date);
+        });
         
         // Filter function
         function filterByTourOperators(selectedOperators) {
@@ -440,17 +464,18 @@
             
             // Filter main data
             const filteredDf = rawData.df.filter(row => 
-                selectedOperators.includes(row.tour_operator)
+                row.tour_operator && selectedOperators.includes(row.tour_operator)
             );
             
             // Filter daily data
             const filteredDailyDf = rawData.daily_df.filter(row => 
-                selectedOperators.includes(row.tour_operator)
+                row.tour_operator && selectedOperators.includes(row.tour_operator)
             );
             
             // Aggregate by variant
             const aggregated = {};
             filteredDf.forEach(row => {
+                if (!row.variant) return;
                 if (!aggregated[row.variant]) {
                     aggregated[row.variant] = {
                         total_orders: 0,
@@ -460,11 +485,11 @@
                         paid_revenue: 0
                     };
                 }
-                aggregated[row.variant].total_orders += row.total_orders;
-                aggregated[row.variant].unique_users += row.unique_users;
-                aggregated[row.variant].paid_orders += row.paid_orders;
-                aggregated[row.variant].total_gmv += row.total_gmv;
-                aggregated[row.variant].paid_revenue += row.paid_revenue;
+                aggregated[row.variant].total_orders += Number(row.total_orders) || 0;
+                aggregated[row.variant].unique_users += Number(row.unique_users) || 0;
+                aggregated[row.variant].paid_orders += Number(row.paid_orders) || 0;
+                aggregated[row.variant].total_gmv += Number(row.total_gmv) || 0;
+                aggregated[row.variant].paid_revenue += Number(row.paid_revenue) || 0;
             });
             
             // Calculate AOV
@@ -478,10 +503,12 @@
             // Aggregate daily data by date and variant
             const dailyAggregated = {};
             filteredDailyDf.forEach(row => {
-                const key = `${row.date}_${row.variant}`;
+                if (!row.date || !row.variant) return;
+                const normalizedDate = normalizeDate(row.date);
+                const key = `${normalizedDate}_${row.variant}`;
                 if (!dailyAggregated[key]) {
                     dailyAggregated[key] = {
-                        date: row.date,
+                        date: normalizedDate,
                         variant: row.variant,
                         orders: 0,
                         unique_users: 0,
@@ -489,10 +516,10 @@
                         paid_revenue: 0
                     };
                 }
-                dailyAggregated[key].orders += row.orders;
-                dailyAggregated[key].unique_users += row.unique_users;
-                dailyAggregated[key].paid_orders += row.paid_orders;
-                dailyAggregated[key].paid_revenue += row.paid_revenue;
+                dailyAggregated[key].orders += Number(row.orders) || 0;
+                dailyAggregated[key].unique_users += Number(row.unique_users) || 0;
+                dailyAggregated[key].paid_orders += Number(row.paid_orders) || 0;
+                dailyAggregated[key].paid_revenue += Number(row.paid_revenue) || 0;
             });
             
             return {
@@ -521,8 +548,8 @@
             const bData = filtered.aggregated['b'] || {};
             
             // Calculate metrics
-            const users_search_a = 17578;
-            const users_search_b = 158958;
+            const users_search_a = 17608;
+            const users_search_b = 159231;
             const paid_a = aData.paid_orders || 0;
             const paid_b = bData.paid_orders || 0;
             const orders_a = aData.total_orders || 0;
@@ -537,35 +564,61 @@
             const aov_a = paid_a > 0 ? (revenue_a / paid_a) : 0;
             const aov_b = paid_b > 0 ? (revenue_b / paid_b) : 0;
             
-            // Prepare daily data
-            const dailyA = filtered.dailyAggregated.filter(r => r.variant === 'a').sort((a, b) => a.date.localeCompare(b.date));
-            const dailyB = filtered.dailyAggregated.filter(r => r.variant === 'b').sort((a, b) => a.date.localeCompare(b.date));
+            // Prepare daily data - normalize dates for comparison
+            const dailyA = filtered.dailyAggregated
+                .filter(r => r.variant === 'a')
+                .map(r => ({ ...r, date: normalizeDate(r.date) }))
+                .sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+            const dailyB = filtered.dailyAggregated
+                .filter(r => r.variant === 'b')
+                .map(r => ({ ...r, date: normalizeDate(r.date) }))
+                .sort((a, b) => (a.date || '').localeCompare(b.date || ''));
             
-            const dates = filtered.dates;
+            const dates = filtered.dates.map(normalizeDate);
             const orders_a_daily = dates.map(d => {
-                const dayData = dailyA.find(r => r.date === d);
-                return dayData ? dayData.orders : 0;
+                const normalizedD = normalizeDate(d);
+                const dayData = dailyA.find(r => normalizeDate(r.date) === normalizedD);
+                return dayData ? (Number(dayData.orders) || 0) : 0;
             });
             const orders_b_daily = dates.map(d => {
-                const dayData = dailyB.find(r => r.date === d);
-                return dayData ? dayData.orders : 0;
+                const normalizedD = normalizeDate(d);
+                const dayData = dailyB.find(r => normalizeDate(r.date) === normalizedD);
+                return dayData ? (Number(dayData.orders) || 0) : 0;
             });
             const paid_a_daily = dates.map(d => {
-                const dayData = dailyA.find(r => r.date === d);
-                return dayData ? dayData.paid_orders : 0;
+                const normalizedD = normalizeDate(d);
+                const dayData = dailyA.find(r => normalizeDate(r.date) === normalizedD);
+                return dayData ? (Number(dayData.paid_orders) || 0) : 0;
             });
             const paid_b_daily = dates.map(d => {
-                const dayData = dailyB.find(r => r.date === d);
-                return dayData ? dayData.paid_orders : 0;
+                const normalizedD = normalizeDate(d);
+                const dayData = dailyB.find(r => normalizeDate(r.date) === normalizedD);
+                return dayData ? (Number(dayData.paid_orders) || 0) : 0;
             });
             
-            const search_users_a_daily = [4381, 11285, 4575];
-            const search_users_b_daily = [39963, 102501, 40663];
+            const search_users_a_daily = [4381, 11285, 4610];
+            const search_users_b_daily = [39963, 102501, 41018];
             
-            const cvr_users_a_daily = paid_a_daily.map((p, i) => search_users_a_daily[i] > 0 ? (p / search_users_a_daily[i] * 100) : 0);
-            const cvr_users_b_daily = paid_b_daily.map((p, i) => search_users_b_daily[i] > 0 ? (p / search_users_b_daily[i] * 100) : 0);
-            const payrate_a_daily = orders_a_daily.map((o, i) => o > 0 ? (paid_a_daily[i] / o * 100) : 0);
-            const payrate_b_daily = orders_b_daily.map((o, i) => o > 0 ? (paid_b_daily[i] / o * 100) : 0);
+            const cvr_users_a_daily = paid_a_daily.map((p, i) => {
+                const paid = Number(p) || 0;
+                const users = Number(search_users_a_daily[i]) || 0;
+                return users > 0 ? (paid / users * 100) : 0;
+            });
+            const cvr_users_b_daily = paid_b_daily.map((p, i) => {
+                const paid = Number(p) || 0;
+                const users = Number(search_users_b_daily[i]) || 0;
+                return users > 0 ? (paid / users * 100) : 0;
+            });
+            const payrate_a_daily = orders_a_daily.map((o, i) => {
+                const orders = Number(o) || 0;
+                const paid = Number(paid_a_daily[i]) || 0;
+                return orders > 0 ? (paid / orders * 100) : 0;
+            });
+            const payrate_b_daily = orders_b_daily.map((o, i) => {
+                const orders = Number(o) || 0;
+                const paid = Number(paid_b_daily[i]) || 0;
+                return orders > 0 ? (paid / orders * 100) : 0;
+            });
             
             // Calculate additional metrics
             const orders_pct_a = users_search_a > 0 ? (orders_a / users_search_a * 100) : 0;
@@ -987,14 +1040,14 @@
         Plotly.newPlot('ordersChart', [
             {
                 x: ['2026-01-20', '2026-01-21', '2026-01-22'],
-                y: [54, 124, 33],
+                y: [54, 124, 38],
                 name: 'A (контроль)',
                 type: 'bar',
                 marker: { color: '#3498db' }
             },
             {
                 x: ['2026-01-20', '2026-01-21', '2026-01-22'],
-                y: [450, 1126, 344],
+                y: [450, 1126, 409],
                 name: 'B (скидка)',
                 type: 'bar',
                 marker: { color: '#9b59b6' }
@@ -1023,7 +1076,7 @@
             },
             {
                 x: ['2026-01-20', '2026-01-21', '2026-01-22'],
-                y: [110, 224, 49],
+                y: [110, 224, 57],
                 name: 'B (скидка)',
                 type: 'scatter',
                 mode: 'lines+markers',
@@ -1044,14 +1097,14 @@
         Plotly.newPlot('metricsCvrChart', [
             {
                 x: ['CVR (bps)'],
-                y: [32.42689725793606],
+                y: [32.37164925034075],
                 name: 'A (контроль)',
                 type: 'bar',
                 marker: { color: '#3498db' }
             },
             {
                 x: ['CVR (bps)'],
-                y: [24.09441487688572],
+                y: [24.555519967845456],
                 name: 'B (скидка)',
                 type: 'bar',
                 marker: { color: '#9b59b6' }
@@ -1071,14 +1124,14 @@
         Plotly.newPlot('metricsRpvChart', [
             {
                 x: ['RPV (₽)'],
-                y: [596.6142337012175],
+                y: [595.5977396637892],
                 name: 'A (контроль)',
                 type: 'bar',
                 marker: { color: '#3498db' }
             },
             {
                 x: ['RPV (₽)'],
-                y: [402.46753230413066],
+                y: [411.41341824142285],
                 name: 'B (скидка)',
                 type: 'bar',
                 marker: { color: '#9b59b6' }
@@ -1105,7 +1158,7 @@
             },
             {
                 x: ['AOV (тыс.₽)'],
-                y: [167.0376866840731],
+                y: [167.54416879795394],
                 name: 'B (скидка)',
                 type: 'bar',
                 marker: { color: '#9b59b6' }
@@ -1127,8 +1180,8 @@
                 type: 'funnel',
                 name: 'A (контроль)',
                 y: ['Поиск', 'Заказы'],
-                x: [100, 1.2003640914779838],
-                text: ['17,578', '211'],
+                x: [100, 1.226715129486597],
+                text: ['17,608', '216'],
                 textposition: 'inside',
                 marker: { color: '#3498db' },
                 textfont: { color: '#fff' },
@@ -1138,8 +1191,8 @@
                 type: 'funnel',
                 name: 'B (скидка)',
                 y: ['Поиск', 'Заказы'],
-                x: [100, 1.2078662288151587],
-                text: ['158,958', '1,920'],
+                x: [100, 1.2466165507972693],
+                text: ['159,231', '1,985'],
                 textposition: 'inside',
                 marker: { color: '#9b59b6' },
                 textfont: { color: '#fff' },
@@ -1160,8 +1213,8 @@
                 type: 'funnel',
                 name: 'A (контроль)',
                 y: ['Заказы', 'Оплаты'],
-                x: [100, 27.014218009478675],
-                text: ['211', '57'],
+                x: [100, 26.38888888888889],
+                text: ['216', '57'],
                 textposition: 'inside',
                 marker: { color: '#3498db' },
                 textfont: { color: '#fff' },
@@ -1171,8 +1224,8 @@
                 type: 'funnel',
                 name: 'B (скидка)',
                 y: ['Заказы', 'Оплаты'],
-                x: [100, 19.947916666666668],
-                text: ['1,920', '383'],
+                x: [100, 19.697732997481108],
+                text: ['1,985', '391'],
                 textposition: 'inside',
                 marker: { color: '#9b59b6' },
                 textfont: { color: '#fff' },
@@ -1201,7 +1254,7 @@
             },
             {
                 x: ['2026-01-20', '2026-01-21', '2026-01-22'],
-                y: [0.28, 0.22, 0.12],
+                y: [0.28, 0.22, 0.14],
                 name: 'B (скидка)',
                 type: 'scatter',
                 mode: 'lines+markers',
@@ -1223,18 +1276,18 @@
         Plotly.newPlot('payRateChart', [
             {
                 x: ['2026-01-20', '2026-01-21', '2026-01-22'],
-                y: [33.33, 25.81, 21.21],
+                y: [33.33, 25.81, 18.42],
                 name: 'A (контроль)',
                 type: 'scatter',
                 mode: 'lines+markers',
                 line: { color: '#3498db', width: 3 },
                 marker: { size: 8 },
-                text: [33.33, 25.81, 21.21],
+                text: [33.33, 25.81, 18.42],
                 hovertemplate: '%{x}<br>A: %{y:.1f}%<extra></extra>'
             },
             {
                 x: ['2026-01-20', '2026-01-21', '2026-01-22'],
-                y: [24.44, 19.89, 14.24],
+                y: [24.44, 19.89, 13.94],
                 name: 'B (скидка)',
                 type: 'scatter',
                 mode: 'lines+markers',
