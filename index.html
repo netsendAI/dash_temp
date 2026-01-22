@@ -261,7 +261,7 @@
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">596₽</div>
+                        <div class="value">595₽</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
@@ -291,14 +291,14 @@
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">17,608</div>
+                        <div class="value">17,637</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">159,231</div>
+                        <div class="value">159,470</div>
                     </div>
                 </div>
-                <div class="lift positive">Всего: 176,839</div>
+                <div class="lift positive">Всего: 177,107</div>
             </div>
         </div>
         
@@ -365,9 +365,9 @@
                 </tr>
                 <tr>
                     <td>Пользователей (поиск)</td>
-                    <td>17,608</td>
-                    <td>159,231</td>
-                    <td>+141,623</td>
+                    <td>17,637</td>
+                    <td>159,470</td>
+                    <td>+141,833</td>
                     <td>—</td>
                 </tr>
                 <tr>
@@ -400,7 +400,7 @@
                 </tr>
                 <tr style="font-weight: bold; background: rgba(255,255,255,0.05);">
                     <td>RPV</td>
-                    <td>596₽</td>
+                    <td>595₽</td>
                     <td>411₽</td>
                     <td style="color: #e74c3c">-184₽</td>
                     <td style="color: #e74c3c">-30.9%</td>
@@ -416,7 +416,7 @@
         </div>
         
         <div class="footer">
-            Отчёт сгенерирован: 2026-01-22 10:36:03 | WorkOS AB Test Dashboard
+            Отчёт сгенерирован: 2026-01-22 10:39:51 | WorkOS AB Test Dashboard
         </div>
     </div>
     
@@ -548,8 +548,8 @@
             const bData = filtered.aggregated['b'] || {};
             
             // Calculate metrics
-            const users_search_a = 17608;
-            const users_search_b = 159231;
+            const users_search_a = 17637;
+            const users_search_b = 159470;
             const paid_a = aData.paid_orders || 0;
             const paid_b = bData.paid_orders || 0;
             const orders_a = aData.total_orders || 0;
@@ -596,8 +596,8 @@
                 return dayData ? (Number(dayData.paid_orders) || 0) : 0;
             });
             
-            const search_users_a_daily = [4381, 11285, 4610];
-            const search_users_b_daily = [39963, 102501, 41018];
+            const search_users_a_daily = [4381, 11285, 4648];
+            const search_users_b_daily = [39963, 102501, 41339];
             
             const cvr_users_a_daily = paid_a_daily.map((p, i) => {
                 const paid = Number(p) || 0;
@@ -905,32 +905,52 @@
         
         // Update HTML metrics display
         function updateMetricsDisplay(metrics) {
-            // Update metric cards
-            const cvrCard = document.querySelector('.metric-card:nth-child(1)');
-            if (cvrCard) {
-                cvrCard.querySelector('.value-box.a .value').textContent = metrics.cvr_a.toFixed(2) + '%';
-                cvrCard.querySelector('.value-box.b .value').textContent = metrics.cvr_b.toFixed(2) + '%';
-                const liftEl = cvrCard.querySelector('.lift');
-                liftEl.textContent = (metrics.cvr_lift >= 0 ? '+' : '') + metrics.cvr_lift.toFixed(1) + '%';
-                liftEl.className = 'lift ' + (metrics.cvr_lift < 0 ? 'negative' : 'positive');
-            }
-            
-            const rpvCard = document.querySelector('.metric-card:nth-child(2)');
-            if (rpvCard) {
-                rpvCard.querySelector('.value-box.a .value').textContent = Math.round(metrics.rpv_a) + '₽';
-                rpvCard.querySelector('.value-box.b .value').textContent = Math.round(metrics.rpv_b) + '₽';
-                const liftEl = rpvCard.querySelector('.lift');
-                liftEl.textContent = (metrics.rpv_lift >= 0 ? '+' : '') + metrics.rpv_lift.toFixed(1) + '%';
-                liftEl.className = 'lift ' + (metrics.rpv_lift < 0 ? 'negative' : 'positive');
-            }
-            
-            const aovCard = document.querySelector('.metric-card:nth-child(3)');
-            if (aovCard) {
-                aovCard.querySelector('.value-box.a .value').textContent = Math.round(metrics.aov_a).toLocaleString('ru-RU') + '₽';
-                aovCard.querySelector('.value-box.b .value').textContent = Math.round(metrics.aov_b).toLocaleString('ru-RU') + '₽';
-                const liftEl = aovCard.querySelector('.lift');
-                liftEl.textContent = (metrics.aov_lift >= 0 ? '+' : '') + metrics.aov_lift.toFixed(1) + '%';
-                liftEl.className = 'lift ' + (metrics.aov_lift < 0 ? 'negative' : 'positive');
+            // Update metric cards - use more specific selectors
+            const metricsGrid = document.querySelector('.metrics-grid');
+            if (metricsGrid) {
+                const metricCards = metricsGrid.querySelectorAll('.metric-card');
+                
+                // CVR card (first card)
+                if (metricCards[0]) {
+                    const cvrCard = metricCards[0];
+                    const valueA = cvrCard.querySelector('.value-box.a .value');
+                    const valueB = cvrCard.querySelector('.value-box.b .value');
+                    const liftEl = cvrCard.querySelector('.lift');
+                    if (valueA) valueA.textContent = metrics.cvr_a.toFixed(2) + '%';
+                    if (valueB) valueB.textContent = metrics.cvr_b.toFixed(2) + '%';
+                    if (liftEl) {
+                        liftEl.textContent = (metrics.cvr_lift >= 0 ? '+' : '') + metrics.cvr_lift.toFixed(1) + '%';
+                        liftEl.className = 'lift ' + (metrics.cvr_lift < 0 ? 'negative' : 'positive');
+                    }
+                }
+                
+                // RPV card (second card)
+                if (metricCards[1]) {
+                    const rpvCard = metricCards[1];
+                    const valueA = rpvCard.querySelector('.value-box.a .value');
+                    const valueB = rpvCard.querySelector('.value-box.b .value');
+                    const liftEl = rpvCard.querySelector('.lift');
+                    if (valueA) valueA.textContent = Math.round(metrics.rpv_a).toLocaleString('ru-RU') + '₽';
+                    if (valueB) valueB.textContent = Math.round(metrics.rpv_b).toLocaleString('ru-RU') + '₽';
+                    if (liftEl) {
+                        liftEl.textContent = (metrics.rpv_lift >= 0 ? '+' : '') + metrics.rpv_lift.toFixed(1) + '%';
+                        liftEl.className = 'lift ' + (metrics.rpv_lift < 0 ? 'negative' : 'positive');
+                    }
+                }
+                
+                // AOV card (third card)
+                if (metricCards[2]) {
+                    const aovCard = metricCards[2];
+                    const valueA = aovCard.querySelector('.value-box.a .value');
+                    const valueB = aovCard.querySelector('.value-box.b .value');
+                    const liftEl = aovCard.querySelector('.lift');
+                    if (valueA) valueA.textContent = Math.round(metrics.aov_a).toLocaleString('ru-RU') + '₽';
+                    if (valueB) valueB.textContent = Math.round(metrics.aov_b).toLocaleString('ru-RU') + '₽';
+                    if (liftEl) {
+                        liftEl.textContent = (metrics.aov_lift >= 0 ? '+' : '') + metrics.aov_lift.toFixed(1) + '%';
+                        liftEl.className = 'lift ' + (metrics.aov_lift < 0 ? 'negative' : 'positive');
+                    }
+                }
             }
             
             // Update target card
@@ -965,7 +985,7 @@
             
             // Update table
             const tableRows = document.querySelectorAll('.funnel-table tr');
-            if (tableRows.length >= 6) {
+            if (tableRows.length >= 8) {  // Header + 7 data rows
                 // Users row
                 tableRows[1].cells[1].textContent = metrics.users_search_a.toLocaleString('ru-RU');
                 tableRows[1].cells[2].textContent = metrics.users_search_b.toLocaleString('ru-RU');
@@ -1097,14 +1117,14 @@
         Plotly.newPlot('metricsCvrChart', [
             {
                 x: ['CVR (bps)'],
-                y: [32.37164925034075],
+                y: [32.31842150025515],
                 name: 'A (контроль)',
                 type: 'bar',
                 marker: { color: '#3498db' }
             },
             {
                 x: ['CVR (bps)'],
-                y: [24.555519967845456],
+                y: [24.51871825421709],
                 name: 'B (скидка)',
                 type: 'bar',
                 marker: { color: '#9b59b6' }
@@ -1124,14 +1144,14 @@
         Plotly.newPlot('metricsRpvChart', [
             {
                 x: ['RPV (₽)'],
-                y: [595.5977396637892],
+                y: [594.6184158303566],
                 name: 'A (контроль)',
                 type: 'bar',
                 marker: { color: '#3498db' }
             },
             {
                 x: ['RPV (₽)'],
-                y: [411.41341824142285],
+                y: [410.7968269894024],
                 name: 'B (скидка)',
                 type: 'bar',
                 marker: { color: '#9b59b6' }
@@ -1180,8 +1200,8 @@
                 type: 'funnel',
                 name: 'A (контроль)',
                 y: ['Поиск', 'Заказы'],
-                x: [100, 1.226715129486597],
-                text: ['17,608', '216'],
+                x: [100, 1.2246980779044054],
+                text: ['17,637', '216'],
                 textposition: 'inside',
                 marker: { color: '#3498db' },
                 textfont: { color: '#fff' },
@@ -1191,8 +1211,8 @@
                 type: 'funnel',
                 name: 'B (скидка)',
                 y: ['Поиск', 'Заказы'],
-                x: [100, 1.2466165507972693],
-                text: ['159,231', '1,985'],
+                x: [100, 1.2447482285069291],
+                text: ['159,470', '1,985'],
                 textposition: 'inside',
                 marker: { color: '#9b59b6' },
                 textfont: { color: '#fff' },
