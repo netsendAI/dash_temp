@@ -4,257 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AB-тест IN-4868: Теневые скидки</title>
-    <link rel="icon" type="image/svg+xml" href="favicon-github.svg" id="favicon">
-    <script>
-        // Auto-detect localhost and use local favicon
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') {
-            document.getElementById('favicon').href = 'favicon-local.svg';
-        }
-    </script>
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #fff;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container { max-width: 1400px; margin: 0 auto; }
-        
-        .header {
-            text-align: center;
-            padding: 30px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            margin-bottom: 20px;
-        }
-        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
-        .header .subtitle { color: #888; font-size: 1.1em; }
-        .header .uuid { color: #666; font-size: 0.9em; font-family: monospace; }
-        
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .metric-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 25px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        .metric-card:hover { transform: translateY(-5px); }
-        .metric-card .label { color: #888; font-size: 0.9em; margin-bottom: 10px; }
-        .metric-card .values {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 15px;
-        }
-        .metric-card .value-box {
-            text-align: center;
-        }
-        .metric-card .value-box .variant { 
-            font-size: 0.8em; 
-            color: #888;
-            margin-bottom: 5px;
-        }
-        .metric-card .value-box .value { 
-            font-size: 1.8em; 
-            font-weight: bold;
-        }
-        .metric-card .value-box.a .value { color: #3498db; }
-        .metric-card .value-box.b .value { color: #9b59b6; }
-        .metric-card .lift {
-            font-size: 1.5em;
-            font-weight: bold;
-            padding: 10px;
-            border-radius: 8px;
-        }
-        .metric-card .lift.negative { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
-        .metric-card .lift.positive { background: rgba(39, 174, 96, 0.2); color: #27ae60; }
-        .metric-card .significance {
-            font-size: 0.85em;
-            color: #888;
-            margin-top: 8px;
-            font-weight: normal;
-        }
-        .metric-card .significance strong {
-            color: #f39c12;
-        }
-
-        .full-width-card {
-            grid-column: 1 / -1;
-            background: linear-gradient(135deg, rgba(231, 76, 60, 0.15) 0%, rgba(231, 76, 60, 0.05) 100%);
-            border: 1px solid rgba(231, 76, 60, 0.3);
-        }
-        .full-width-card .label {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-        .full-width-card .discount-values {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        .full-width-card .discount-item {
-            text-align: center;
-            flex: 1;
-            min-width: 200px;
-        }
-        .full-width-card .discount-item .label {
-            font-size: 0.9em;
-            color: #e74c3c;
-            margin-bottom: 8px;
-        }
-        .full-width-card .discount-item .value {
-            font-size: 2.2em;
-            font-weight: bold;
-            color: #e74c3c;
-        }
-        .full-width-card .discount-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(231, 76, 60, 0.2);
-        }
-        .full-width-card .discount-info .rate {
-            font-size: 1.2em;
-            color: #e74c3c;
-            font-weight: bold;
-        }
-        .full-width-card .discount-info .note {
-            font-size: 0.85em;
-            color: #888;
-        }
-        
-        .target-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-            border: 2px solid #e74c3c;
-            border-radius: 16px;
-            padding: 30px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .target-card h2 { margin-bottom: 15px; }
-        .target-card .status { font-size: 2em; color: #e74c3c; }
-        .target-card .details { color: #888; margin-top: 10px; }
-        
-        .filter-section {
-            background: rgba(255,255,255,0.05);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-        .filter-section h3 {
-            margin-bottom: 15px;
-            color: #fff;
-        }
-        .filter-checkboxes {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .filter-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .filter-checkbox input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-        .filter-checkbox label {
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        .charts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .daily-charts-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        @media (max-width: 1200px) {
-            .daily-charts-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .chart-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 20px;
-        }
-        .chart-card h3 { margin-bottom: 15px; color: #fff; }
-        .chart { height: 300px; }
-        
-        .split-bar {
-            background: rgba(255,255,255,0.1);
-            border-radius: 8px;
-            height: 40px;
-            display: flex;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-        .split-bar .a { background: #3498db; display: flex; align-items: center; justify-content: center; }
-        .split-bar .b { background: #9b59b6; display: flex; align-items: center; justify-content: center; }
-        
-        .legend {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 20px 0;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .legend-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-        .legend-dot.a { background: #3498db; }
-        .legend-dot.b { background: #9b59b6; }
-        
-        .funnel-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        .funnel-table th, .funnel-table td {
-            padding: 12px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .funnel-table th { color: #888; }
-        
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-            font-size: 0.9em;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -264,26 +15,26 @@
             <div class="subtitle" style="margin-top: 5px; font-size: 0.9em;">Витрины: desktop, android, ios, mobweb (без white-label)</div>
             <div class="uuid">UUID: 944ace4b-4521-4191-b02c-112d688c0460</div>
         </div>
-        
+
         <div class="filter-section">
             <h3>🔍 Фильтр по тур-операторам</h3>
-            <div class="filter-checkboxes">
+            <div class="filter-checkboxes" id="tour-operators-filters">
                 <div class="filter-checkbox">
                     <input type="checkbox" id="filter-all" checked>
                     <label for="filter-all">Все тур-операторы</label>
                 </div>
-                <div class="filter-checkbox"><input type="checkbox" id="filter-0" class="tour-operator-filter" value="AleanTour" checked><label for="filter-0">AleanTour</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-1" class="tour-operator-filter" value="Anex" checked><label for="filter-1">Anex</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-2" class="tour-operator-filter" value="Biblio Globus" checked><label for="filter-2">Biblio Globus</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-3" class="tour-operator-filter" value="Coral Travel" checked><label for="filter-3">Coral Travel</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-4" class="tour-operator-filter" value="FUN&SUN" checked><label for="filter-4">FUN&SUN</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-5" class="tour-operator-filter" value="ICS Travel Group" checked><label for="filter-5">ICS Travel Group</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-6" class="tour-operator-filter" value="Intourist" checked><label for="filter-6">Intourist</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-7" class="tour-operator-filter" value="Let’s Fly" checked><label for="filter-7">Let’s Fly</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-8" class="tour-operator-filter" value="One Touch Travel" checked><label for="filter-8">One Touch Travel</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-9" class="tour-operator-filter" value="PAKS" checked><label for="filter-9">PAKS</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-10" class="tour-operator-filter" value="Pegas Touristik" checked><label for="filter-10">Pegas Touristik</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-11" class="tour-operator-filter" value="RussianExpress" checked><label for="filter-11">RussianExpress</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-12" class="tour-operator-filter" value="Space Travel" checked><label for="filter-12">Space Travel</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-13" class="tour-operator-filter" value="Sunmar" checked><label for="filter-13">Sunmar</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-14" class="tour-operator-filter" value="Tez Tour" checked><label for="filter-14">Tez Tour</label></div><div class="filter-checkbox"><input type="checkbox" id="filter-15" class="tour-operator-filter" value="Travelata" checked><label for="filter-15">Travelata</label></div>
+                <!-- Генерируется динамически -->
             </div>
         </div>
 
         <div class="filter-section">
             <h3>💻 Фильтр по платформе</h3>
-            <div class="filter-checkboxes">
+            <div class="filter-checkboxes" id="platforms-filters">
                 <div class="filter-checkbox">
                     <input type="checkbox" id="platform-filter-all" checked>
                     <label for="platform-filter-all">Все платформы</label>
                 </div>
-                <div class="filter-checkbox"><input type="checkbox" id="platform-filter-0" class="platform-filter" value="android" checked><label for="platform-filter-0">android</label></div><div class="filter-checkbox"><input type="checkbox" id="platform-filter-1" class="platform-filter" value="desktop" checked><label for="platform-filter-1">desktop</label></div><div class="filter-checkbox"><input type="checkbox" id="platform-filter-2" class="platform-filter" value="ios" checked><label for="platform-filter-2">ios</label></div><div class="filter-checkbox"><input type="checkbox" id="platform-filter-3" class="platform-filter" value="mobweb" checked><label for="platform-filter-3">mobweb</label></div>
+                <!-- Генерируется динамически -->
             </div>
         </div>
 
@@ -291,34 +42,33 @@
             <div class="legend-item"><div class="legend-dot a"></div> Группа A (контроль)</div>
             <div class="legend-item"><div class="legend-dot b"></div> Группа B (скидка)</div>
         </div>
-        
+
         <h3 style="text-align: center; margin-bottom: 10px;">📊 Сплит трафика (уникальные пользователи поиска)</h3>
         <div class="split-bar">
-            <div class="a" style="width: 10.0%">10.0%</div>
-            <div class="b" style="width: 90.0%">90.0%</div>
+            <div class="a" style="width: 10%">10%</div>
+            <div class="b" style="width: 90%">90%</div>
         </div>
-        
+
         <div class="target-card">
             <h2>🎯 TARGET: RPV +5%</h2>
             <div class="status">❌ НЕ ДОСТИГНУТ</div>
-            <div class="details">Факт: -15.5%</div>
+            <div class="details">Факт: +0.0%</div>
         </div>
-        
+
         <div class="metrics-grid">
             <div class="metric-card">
                 <div class="label">📈 CVR (Конверсия)</div>
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">0.38%</div>
+                        <div class="value">0.00%</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">0.32%</div>
+                        <div class="value">0.00%</div>
                     </div>
                 </div>
-                <div class="lift negative">-14.7%</div>
-                <div class="significance">p < 0.10 ★</div>
+                <div class="lift positive">+0.0%</div>
             </div>
 
             <div class="metric-card">
@@ -326,15 +76,14 @@
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">688₽</div>
+                        <div class="value">0₽</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">582₽</div>
+                        <div class="value">0₽</div>
                     </div>
                 </div>
-                <div class="lift negative">-15.5%</div>
-                <div class="significance">p < 0.01 ★★★</div>
+                <div class="lift positive">+0.0%</div>
             </div>
 
             <div class="metric-card">
@@ -342,15 +91,14 @@
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">183,154₽</div>
+                        <div class="value">0₽</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">181,493₽</div>
+                        <div class="value">0₽</div>
                     </div>
                 </div>
-                <div class="lift negative">-0.9%</div>
-                <div class="significance">p = 0.594</div>
+                <div class="lift positive">+0.0%</div>
             </div>
 
             <div class="metric-card">
@@ -358,78 +106,34 @@
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">41,533</div>
+                        <div class="value">0</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">375,132</div>
+                        <div class="value">0</div>
                     </div>
                 </div>
-                <div class="lift positive">Всего: 416,665</div>
-            </div>
-
-            <div class="metric-card full-width-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, rgba(39, 174, 96, 0.15) 0%, rgba(39, 174, 96, 0.05) 100%); border: 1px solid rgba(39, 174, 96, 0.3);">
-                <div class="label">📈 Дополнительная выручка в группе B за счет увеличения среднего чека (AOV uplift)</div>
-                <div class="discount-values">
-                    <div class="discount-item">
-                        <div class="label">Прирост AOV</div>
-                        <div class="value">-1,661₽</div>
-                    </div>
-                    <div class="discount-item">
-                        <div class="label">Оплаченных заказов в B</div>
-                        <div class="value">1,202</div>
-                    </div>
-                    <div class="discount-item">
-                        <div class="label">Дополнительная выручка</div>
-                        <div class="value" style="color: #27ae60;">-1,996,750₽</div>
-                    </div>
-                </div>
-                <div class="discount-info">
-                    <div class="rate" style="color: #27ae60;">✅ Дополнительный заработок за счёт более высокого среднего чека</div>
-                    <div class="note">Формула: (AOV_B - AOV_A) × оплаченные заказы B</div>
-                </div>
-            </div>
-
-            <div class="metric-card full-width-card">
-                <div class="label">🏷️ Скидки в группе B (расходы на предоставление теневых скидок)</div>
-                <div class="discount-values">
-                    <div class="discount-item">
-                        <div class="label">TTV группы B</div>
-                        <div class="value" id="discount-ttv">218,154,820₽</div>
-                    </div>
-                    <div class="discount-item">
-                        <div class="label">Потеря на скидках</div>
-                        <div class="value" id="discount-loss">2,214,271₽</div>
-                    </div>
-                    <div class="discount-item">
-                        <div class="label">Доля от TTV</div>
-                        <div class="value">1.015%</div>
-                    </div>
-                </div>
-                <div class="discount-info">
-                    <div class="rate">⚠️ Ставка скидки: 1.015% от стоимости тура</div>
-                    <div class="note">Расходы на скидки уменьшают реальный прирост выручки</div>
-                </div>
+                <div class="lift positive">Всего: 0</div>
             </div>
         </div>
-        
-        <!-- Дневные графики в отдельной строке на всю ширину -->
+
+        <!-- Дневные графики -->
         <div class="daily-charts-grid">
             <div class="chart-card">
                 <h3>📊 Заказы по дням</h3>
                 <div id="ordersChart" class="chart"></div>
             </div>
-            
+
             <div class="chart-card">
                 <h3>💳 Оплаты по дням</h3>
                 <div id="paymentsChart" class="chart"></div>
             </div>
-            
+
             <div class="chart-card">
                 <h3>🧭 Конверсия: пользователи → оплаты (CVR, %)</h3>
                 <div id="cvrUsersChart" class="chart"></div>
             </div>
-            
+
             <div class="chart-card">
                 <h3>💳 Конверсия: заказ → оплата (Pay-through, %)</h3>
                 <div id="payRateChart" class="chart"></div>
@@ -448,906 +152,12 @@
                 <div id="funnelChart2" class="chart"></div>
             </div>
         </div>
-
-        <div class="chart-card">
-            <h3>📋 Детальная статистика</h3>
-            <table class="funnel-table">
-                <tr>
-                    <th>Метрика</th>
-                    <th>Группа A</th>
-                    <th>Группа B</th>
-                    <th>Δ абс.</th>
-                    <th>Δ отн.</th>
-                </tr>
-                <tr>
-                    <td>Пользователей (поиск)</td>
-                    <td>41,533</td>
-                    <td>375,132</td>
-                    <td>+333,599</td>
-                    <td>—</td>
-                </tr>
-                <tr>
-                    <td>Заказов</td>
-                    <td>158</td>
-                    <td>1,210</td>
-                    <td>+1,052</td>
-                    <td>—</td>
-                </tr>
-                <tr>
-                    <td>Оплат</td>
-                    <td>156</td>
-                    <td>1,202</td>
-                    <td>+1,046</td>
-                    <td>—</td>
-                </tr>
-                <tr>
-                    <td>Выручка</td>
-                    <td>28,572,084₽</td>
-                    <td>218,154,820₽</td>
-                    <td>+189,582,736₽</td>
-                    <td>—</td>
-                </tr>
-                <tr style="font-weight: bold; background: rgba(255,255,255,0.05);">
-                    <td>CVR</td>
-                    <td>0.38%</td>
-                    <td>0.32%</td>
-                    <td style="color: #e74c3c">-0.06%</td>
-                    <td style="color: #e74c3c">-14.7%</td>
-                </tr>
-                <tr style="font-weight: bold; background: rgba(255,255,255,0.05);">
-                    <td>RPV</td>
-                    <td>688₽</td>
-                    <td>582₽</td>
-                    <td style="color: #e74c3c">-106₽</td>
-                    <td style="color: #e74c3c">-15.5%</td>
-                </tr>
-                <tr style="font-weight: bold; background: rgba(255,255,255,0.05);">
-                    <td>AOV</td>
-                    <td>183,154₽</td>
-                    <td>181,493₽</td>
-                    <td style="color: #e74c3c">-1,661₽</td>
-                    <td style="color: #e74c3c">-0.9%</td>
-                </tr>
-            </table>
-        </div>
-        
-        <div class="footer">
-            Отчёт сгенерирован: 2026-01-26 09:56:04 | WorkOS AB Test Dashboard
-        </div>
     </div>
-    
-    <script>
-        // Helper function to normalize date to 'YYYY-MM-DD' format
-        function normalizeDate(date) {
-            if (!date) return null;
-            if (typeof date === 'string') {
-                // If already string, extract YYYY-MM-DD part
-                return date.substring(0, 10);
-            }
-            if (date instanceof Date) {
-                // If Date object, format it
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            }
-            // Try to convert to string and extract date part
-            return String(date).substring(0, 10);
-        }
-        
-        // Store data with tour operators and platforms for filtering
-        const rawData = {
-            df: [{"variant": "a", "tour_operator": "AleanTour", "platform": "android", "total_orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 57988.0, "avg_paid_order_value": 57988.0}, {"variant": "a", "tour_operator": "Anex", "platform": "android", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 473758.0, "avg_paid_order_value": 118439.5}, {"variant": "a", "tour_operator": "Anex", "platform": "desktop", "total_orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 2580218.0, "avg_paid_order_value": 368602.5714285714}, {"variant": "a", "tour_operator": "Anex", "platform": "ios", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 948843.0, "avg_paid_order_value": 237210.75}, {"variant": "a", "tour_operator": "Biblio Globus", "platform": "android", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 753256.0, "avg_paid_order_value": 188314.0}, {"variant": "a", "tour_operator": "Biblio Globus", "platform": "desktop", "total_orders": 12, "unique_users": 11, "paid_orders": 12, "paid_revenue": 2104527.0, "avg_paid_order_value": 175377.25}, {"variant": "a", "tour_operator": "Biblio Globus", "platform": "ios", "total_orders": 11, "unique_users": 11, "paid_orders": 11, "paid_revenue": 2029647.0, "avg_paid_order_value": 184513.36363636365}, {"variant": "a", "tour_operator": "Biblio Globus", "platform": "mobweb", "total_orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 45009.0, "avg_paid_order_value": 22504.5}, {"variant": "a", "tour_operator": "Coral Travel", "platform": "desktop", "total_orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 143802.0, "avg_paid_order_value": 143802.0}, {"variant": "a", "tour_operator": "Coral Travel", "platform": "ios", "total_orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 271719.0, "avg_paid_order_value": 135859.5}, {"variant": "a", "tour_operator": "FUN&SUN", "platform": "android", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 733170.0, "avg_paid_order_value": 183292.5}, {"variant": "a", "tour_operator": "FUN&SUN", "platform": "desktop", "total_orders": 9, "unique_users": 8, "paid_orders": 9, "paid_revenue": 1285377.0, "avg_paid_order_value": 142819.66666666666}, {"variant": "a", "tour_operator": "FUN&SUN", "platform": "ios", "total_orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 1061570.0, "avg_paid_order_value": 176928.33333333334}, {"variant": "a", "tour_operator": "FUN&SUN", "platform": "mobweb", "total_orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 132334.0, "avg_paid_order_value": 132334.0}, {"variant": "a", "tour_operator": "ICS Travel Group", "platform": "android", "total_orders": 5, "unique_users": 4, "paid_orders": 4, "paid_revenue": 685412.0, "avg_paid_order_value": 171353.0}, {"variant": "a", "tour_operator": "ICS Travel Group", "platform": "desktop", "total_orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 1043393.0, "avg_paid_order_value": 173898.83333333334}, {"variant": "a", "tour_operator": "ICS Travel Group", "platform": "ios", "total_orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 770994.0, "avg_paid_order_value": 256998.0}, {"variant": "a", "tour_operator": "Intourist", "platform": "desktop", "total_orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 278919.0, "avg_paid_order_value": 139459.5}, {"variant": "a", "tour_operator": "Intourist", "platform": "ios", "total_orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 477539.0, "avg_paid_order_value": 159179.66666666666}, {"variant": "a", "tour_operator": "Let’s Fly", "platform": "android", "total_orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 135409.0, "avg_paid_order_value": 135409.0}, {"variant": "a", "tour_operator": "Let’s Fly", "platform": "ios", "total_orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 180978.0, "avg_paid_order_value": 90489.0}, {"variant": "a", "tour_operator": "PAKS", "platform": "ios", "total_orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 110372.0, "avg_paid_order_value": 110372.0}, {"variant": "a", "tour_operator": "Pegas Touristik", "platform": "android", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 520137.0, "avg_paid_order_value": 130034.25}, {"variant": "a", "tour_operator": "Pegas Touristik", "platform": "desktop", "total_orders": 8, "unique_users": 8, "paid_orders": 8, "paid_revenue": 1732963.0, "avg_paid_order_value": 216620.375}, {"variant": "a", "tour_operator": "Pegas Touristik", "platform": "ios", "total_orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 401373.0, "avg_paid_order_value": 133791.0}, {"variant": "a", "tour_operator": "RussianExpress", "platform": "desktop", "total_orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 123263.0, "avg_paid_order_value": 123263.0}, {"variant": "a", "tour_operator": "Space Travel", "platform": "android", "total_orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 216109.0, "avg_paid_order_value": 108054.5}, {"variant": "a", "tour_operator": "Space Travel", "platform": "desktop", "total_orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 271833.0, "avg_paid_order_value": 271833.0}, {"variant": "a", "tour_operator": "Sunmar", "platform": "android", "total_orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 679178.0, "avg_paid_order_value": 226392.66666666666}, {"variant": "a", "tour_operator": "Sunmar", "platform": "desktop", "total_orders": 2, "unique_users": 2, "paid_orders": 1, "paid_revenue": 123497.0, "avg_paid_order_value": 123497.0}, {"variant": "a", "tour_operator": "Sunmar", "platform": "ios", "total_orders": 11, "unique_users": 11, "paid_orders": 11, "paid_revenue": 1957255.0, "avg_paid_order_value": 177932.27272727274}, {"variant": "a", "tour_operator": "Tez Tour", "platform": "desktop", "total_orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 414225.0, "avg_paid_order_value": 414225.0}, {"variant": "a", "tour_operator": "Tez Tour", "platform": "mobweb", "total_orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 160637.0, "avg_paid_order_value": 160637.0}, {"variant": "a", "tour_operator": "Travelata", "platform": "android", "total_orders": 6, "unique_users": 5, "paid_orders": 6, "paid_revenue": 919199.0, "avg_paid_order_value": 153199.83333333334}, {"variant": "a", "tour_operator": "Travelata", "platform": "desktop", "total_orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 1548002.0, "avg_paid_order_value": 221143.14285714287}, {"variant": "a", "tour_operator": "Travelata", "platform": "ios", "total_orders": 14, "unique_users": 14, "paid_orders": 14, "paid_revenue": 2781280.0, "avg_paid_order_value": 198662.85714285713}, {"variant": "a", "tour_operator": "Travelata", "platform": "mobweb", "total_orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 418899.0, "avg_paid_order_value": 139633.0}, {"variant": "b", "tour_operator": "AleanTour", "platform": "desktop", "total_orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 169948.0, "avg_paid_order_value": 169948.0}, {"variant": "b", "tour_operator": "AleanTour", "platform": "ios", "total_orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 53740.0, "avg_paid_order_value": 53740.0}, {"variant": "b", "tour_operator": "Anex", "platform": "android", "total_orders": 27, "unique_users": 25, "paid_orders": 26, "paid_revenue": 5385325.0, "avg_paid_order_value": 207127.88461538462}, {"variant": "b", "tour_operator": "Anex", "platform": "desktop", "total_orders": 31, "unique_users": 30, "paid_orders": 31, "paid_revenue": 8033104.0, "avg_paid_order_value": 259132.38709677418}, {"variant": "b", "tour_operator": "Anex", "platform": "ios", "total_orders": 43, "unique_users": 41, "paid_orders": 43, "paid_revenue": 10386839.0, "avg_paid_order_value": 241554.39534883722}, {"variant": "b", "tour_operator": "Anex", "platform": "mobweb", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 802626.0, "avg_paid_order_value": 200656.5}, {"variant": "b", "tour_operator": "Biblio Globus", "platform": "android", "total_orders": 53, "unique_users": 52, "paid_orders": 53, "paid_revenue": 6753808.0, "avg_paid_order_value": 127430.3396226415}, {"variant": "b", "tour_operator": "Biblio Globus", "platform": "desktop", "total_orders": 112, "unique_users": 106, "paid_orders": 111, "paid_revenue": 20429747.0, "avg_paid_order_value": 184051.77477477476}, {"variant": "b", "tour_operator": "Biblio Globus", "platform": "ios", "total_orders": 75, "unique_users": 73, "paid_orders": 75, "paid_revenue": 11314100.0, "avg_paid_order_value": 150854.66666666666}, {"variant": "b", "tour_operator": "Biblio Globus", "platform": "mobweb", "total_orders": 24, "unique_users": 23, "paid_orders": 24, "paid_revenue": 3150325.0, "avg_paid_order_value": 131263.54166666666}, {"variant": "b", "tour_operator": "Coral Travel", "platform": "android", "total_orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 947291.0, "avg_paid_order_value": 157881.83333333334}, {"variant": "b", "tour_operator": "Coral Travel", "platform": "desktop", "total_orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 759845.0, "avg_paid_order_value": 151969.0}, {"variant": "b", "tour_operator": "Coral Travel", "platform": "ios", "total_orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 224495.0, "avg_paid_order_value": 112247.5}, {"variant": "b", "tour_operator": "Coral Travel", "platform": "mobweb", "total_orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 657797.0, "avg_paid_order_value": 219265.66666666666}, {"variant": "b", "tour_operator": "FUN&SUN", "platform": "android", "total_orders": 30, "unique_users": 30, "paid_orders": 29, "paid_revenue": 6235985.0, "avg_paid_order_value": 215033.9655172414}, {"variant": "b", "tour_operator": "FUN&SUN", "platform": "desktop", "total_orders": 45, "unique_users": 39, "paid_orders": 45, "paid_revenue": 8174349.0, "avg_paid_order_value": 181652.2}, {"variant": "b", "tour_operator": "FUN&SUN", "platform": "ios", "total_orders": 41, "unique_users": 41, "paid_orders": 40, "paid_revenue": 7728898.0, "avg_paid_order_value": 193222.45}, {"variant": "b", "tour_operator": "FUN&SUN", "platform": "mobweb", "total_orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 506452.0, "avg_paid_order_value": 84408.66666666667}, {"variant": "b", "tour_operator": "ICS Travel Group", "platform": "android", "total_orders": 15, "unique_users": 13, "paid_orders": 15, "paid_revenue": 2433162.0, "avg_paid_order_value": 162210.8}, {"variant": "b", "tour_operator": "ICS Travel Group", "platform": "desktop", "total_orders": 29, "unique_users": 29, "paid_orders": 29, "paid_revenue": 5633644.0, "avg_paid_order_value": 194263.58620689655}, {"variant": "b", "tour_operator": "ICS Travel Group", "platform": "ios", "total_orders": 18, "unique_users": 18, "paid_orders": 18, "paid_revenue": 3054552.0, "avg_paid_order_value": 169697.33333333334}, {"variant": "b", "tour_operator": "ICS Travel Group", "platform": "mobweb", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 710632.0, "avg_paid_order_value": 177658.0}, {"variant": "b", "tour_operator": "Intourist", "platform": "android", "total_orders": 11, "unique_users": 11, "paid_orders": 11, "paid_revenue": 1483687.0, "avg_paid_order_value": 134880.63636363635}, {"variant": "b", "tour_operator": "Intourist", "platform": "desktop", "total_orders": 22, "unique_users": 22, "paid_orders": 22, "paid_revenue": 3888148.0, "avg_paid_order_value": 176734.0}, {"variant": "b", "tour_operator": "Intourist", "platform": "ios", "total_orders": 27, "unique_users": 27, "paid_orders": 27, "paid_revenue": 5075059.0, "avg_paid_order_value": 187965.14814814815}, {"variant": "b", "tour_operator": "Intourist", "platform": "mobweb", "total_orders": 8, "unique_users": 8, "paid_orders": 8, "paid_revenue": 1469845.0, "avg_paid_order_value": 183730.625}, {"variant": "b", "tour_operator": "Let’s Fly", "platform": "android", "total_orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 442152.0, "avg_paid_order_value": 221076.0}, {"variant": "b", "tour_operator": "Let’s Fly", "platform": "desktop", "total_orders": 15, "unique_users": 14, "paid_orders": 14, "paid_revenue": 2468707.0, "avg_paid_order_value": 176336.2142857143}, {"variant": "b", "tour_operator": "Let’s Fly", "platform": "ios", "total_orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 608236.0, "avg_paid_order_value": 121647.2}, {"variant": "b", "tour_operator": "Let’s Fly", "platform": "mobweb", "total_orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 471071.0, "avg_paid_order_value": 157023.66666666666}, {"variant": "b", "tour_operator": "One Touch Travel", "platform": "desktop", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 1173469.0, "avg_paid_order_value": 293367.25}, {"variant": "b", "tour_operator": "One Touch Travel", "platform": "ios", "total_orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 366388.0, "avg_paid_order_value": 122129.33333333333}, {"variant": "b", "tour_operator": "PAKS", "platform": "android", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 1027196.0, "avg_paid_order_value": 256799.0}, {"variant": "b", "tour_operator": "PAKS", "platform": "desktop", "total_orders": 8, "unique_users": 8, "paid_orders": 8, "paid_revenue": 1688021.0, "avg_paid_order_value": 211002.625}, {"variant": "b", "tour_operator": "PAKS", "platform": "ios", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 1077647.0, "avg_paid_order_value": 269411.75}, {"variant": "b", "tour_operator": "PAKS", "platform": "mobweb", "total_orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 733525.0, "avg_paid_order_value": 366762.5}, {"variant": "b", "tour_operator": "Pegas Touristik", "platform": "android", "total_orders": 21, "unique_users": 21, "paid_orders": 21, "paid_revenue": 3845891.0, "avg_paid_order_value": 183137.66666666666}, {"variant": "b", "tour_operator": "Pegas Touristik", "platform": "desktop", "total_orders": 66, "unique_users": 62, "paid_orders": 64, "paid_revenue": 14352135.0, "avg_paid_order_value": 224252.109375}, {"variant": "b", "tour_operator": "Pegas Touristik", "platform": "ios", "total_orders": 41, "unique_users": 40, "paid_orders": 41, "paid_revenue": 7015921.0, "avg_paid_order_value": 171120.0243902439}, {"variant": "b", "tour_operator": "Pegas Touristik", "platform": "mobweb", "total_orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 1142274.0, "avg_paid_order_value": 163182.0}, {"variant": "b", "tour_operator": "RussianExpress", "platform": "android", "total_orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 224191.0, "avg_paid_order_value": 224191.0}, {"variant": "b", "tour_operator": "RussianExpress", "platform": "desktop", "total_orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 1481841.0, "avg_paid_order_value": 246973.5}, {"variant": "b", "tour_operator": "RussianExpress", "platform": "ios", "total_orders": 12, "unique_users": 12, "paid_orders": 12, "paid_revenue": 2660678.0, "avg_paid_order_value": 221723.16666666666}, {"variant": "b", "tour_operator": "Space Travel", "platform": "android", "total_orders": 10, "unique_users": 10, "paid_orders": 10, "paid_revenue": 1616691.0, "avg_paid_order_value": 161669.1}, {"variant": "b", "tour_operator": "Space Travel", "platform": "desktop", "total_orders": 19, "unique_users": 18, "paid_orders": 19, "paid_revenue": 4187882.0, "avg_paid_order_value": 220414.84210526315}, {"variant": "b", "tour_operator": "Space Travel", "platform": "ios", "total_orders": 21, "unique_users": 21, "paid_orders": 21, "paid_revenue": 2800739.0, "avg_paid_order_value": 133368.52380952382}, {"variant": "b", "tour_operator": "Space Travel", "platform": "mobweb", "total_orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 414236.0, "avg_paid_order_value": 138078.66666666666}, {"variant": "b", "tour_operator": "Sunmar", "platform": "android", "total_orders": 21, "unique_users": 21, "paid_orders": 21, "paid_revenue": 3258254.0, "avg_paid_order_value": 155154.95238095237}, {"variant": "b", "tour_operator": "Sunmar", "platform": "desktop", "total_orders": 33, "unique_users": 30, "paid_orders": 33, "paid_revenue": 5897026.0, "avg_paid_order_value": 178697.75757575757}, {"variant": "b", "tour_operator": "Sunmar", "platform": "ios", "total_orders": 25, "unique_users": 25, "paid_orders": 25, "paid_revenue": 3869779.0, "avg_paid_order_value": 154791.16}, {"variant": "b", "tour_operator": "Sunmar", "platform": "mobweb", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 786081.0, "avg_paid_order_value": 196520.25}, {"variant": "b", "tour_operator": "Tez Tour", "platform": "android", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 786401.0, "avg_paid_order_value": 196600.25}, {"variant": "b", "tour_operator": "Tez Tour", "platform": "desktop", "total_orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 1550528.0, "avg_paid_order_value": 221504.0}, {"variant": "b", "tour_operator": "Tez Tour", "platform": "ios", "total_orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 1028542.0, "avg_paid_order_value": 257135.5}, {"variant": "b", "tour_operator": "Tez Tour", "platform": "mobweb", "total_orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 570603.0, "avg_paid_order_value": 190201.0}, {"variant": "b", "tour_operator": "Travelata", "platform": "android", "total_orders": 41, "unique_users": 40, "paid_orders": 40, "paid_revenue": 6132032.0, "avg_paid_order_value": 153300.8}, {"variant": "b", "tour_operator": "Travelata", "platform": "desktop", "total_orders": 83, "unique_users": 80, "paid_orders": 83, "paid_revenue": 15069233.0, "avg_paid_order_value": 181557.02409638555}, {"variant": "b", "tour_operator": "Travelata", "platform": "ios", "total_orders": 72, "unique_users": 71, "paid_orders": 72, "paid_revenue": 12407213.0, "avg_paid_order_value": 172322.40277777778}, {"variant": "b", "tour_operator": "Travelata", "platform": "mobweb", "total_orders": 13, "unique_users": 13, "paid_orders": 13, "paid_revenue": 1536834.0, "avg_paid_order_value": 118218.0}],
-            daily_df: [{"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Anex", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 187535.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Anex", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 1127249.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 286245.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 168574.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "platform": "desktop", "orders": 2, "unique_users": 1, "paid_orders": 2, "paid_revenue": 238425.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 518412.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 179232.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 198036.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Sunmar", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 123497.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Sunmar", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 295291.0}, {"date": "2026-01-20 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 282464.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 498562.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "desktop", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 588490.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 88193.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 76185.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "android", "orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 765612.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "desktop", "orders": 10, "unique_users": 10, "paid_orders": 10, "paid_revenue": 1914399.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "ios", "orders": 8, "unique_users": 8, "paid_orders": 8, "paid_revenue": 1102252.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "mobweb", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 394424.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 135410.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 185383.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "android", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 897850.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "desktop", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 857001.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "ios", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 964239.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 392587.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 181666.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 178614.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 112474.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 474047.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 182467.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 197214.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 319775.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 216112.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "android", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 595567.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "desktop", "orders": 7, "unique_users": 6, "paid_orders": 7, "paid_revenue": 1674854.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 239673.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 127488.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 383392.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "platform": "ios", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 777311.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 294292.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 391241.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 208847.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 264607.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 344534.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 161460.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "android", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 620553.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "desktop", "orders": 11, "unique_users": 9, "paid_orders": 11, "paid_revenue": 2145037.0}, {"date": "2026-01-20 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "ios", "orders": 9, "unique_users": 9, "paid_orders": 9, "paid_revenue": 1194280.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Anex", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 356430.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 226930.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "desktop", "orders": 4, "unique_users": 3, "paid_orders": 4, "paid_revenue": 469781.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "ios", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 763858.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 101596.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 357675.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "platform": "android", "orders": 2, "unique_users": 1, "paid_orders": 2, "paid_revenue": 280150.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 113680.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 297032.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Intourist", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 290917.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Let’s Fly", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 115299.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 205213.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "RussianExpress", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 123263.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Space Travel", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 216109.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Sunmar", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 299000.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "android", "orders": 3, "unique_users": 2, "paid_orders": 3, "paid_revenue": 393262.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 456520.0}, {"date": "2026-01-21 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "ios", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 1024163.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 60855.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "desktop", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 762974.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "ios", "orders": 9, "unique_users": 8, "paid_orders": 9, "paid_revenue": 1509562.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 238999.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "android", "orders": 14, "unique_users": 14, "paid_orders": 14, "paid_revenue": 1669445.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "desktop", "orders": 18, "unique_users": 18, "paid_orders": 17, "paid_revenue": 3300381.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "ios", "orders": 14, "unique_users": 14, "paid_orders": 14, "paid_revenue": 1708681.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "mobweb", "orders": 6, "unique_users": 5, "paid_orders": 6, "paid_revenue": 866417.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 266237.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 114637.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 359746.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "android", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 507587.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "desktop", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 660082.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "ios", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 485492.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "mobweb", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 265197.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "android", "orders": 4, "unique_users": 3, "paid_orders": 4, "paid_revenue": 518552.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "desktop", "orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 1355867.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "ios", "orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 1193238.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "mobweb", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 273838.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "android", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 251994.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "desktop", "orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 997812.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "ios", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 585023.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 170364.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 253404.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "desktop", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 916463.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 173655.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 263396.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "One Touch Travel", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 599800.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "One Touch Travel", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 141377.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 288815.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 389648.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 149655.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 593882.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "android", "orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 1288451.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "desktop", "orders": 11, "unique_users": 11, "paid_orders": 11, "paid_revenue": 2300819.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "ios", "orders": 9, "unique_users": 9, "paid_orders": 9, "paid_revenue": 1570989.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 185521.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 281805.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "platform": "ios", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 660290.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 353824.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "desktop", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 894741.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "ios", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 619953.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 79921.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "android", "orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 840870.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "desktop", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 718116.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "ios", "orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 889075.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "android", "orders": 10, "unique_users": 9, "paid_orders": 10, "paid_revenue": 1701548.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "desktop", "orders": 11, "unique_users": 11, "paid_orders": 11, "paid_revenue": 1990140.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "ios", "orders": 8, "unique_users": 8, "paid_orders": 8, "paid_revenue": 1657244.0}, {"date": "2026-01-21 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 67220.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "AleanTour", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 57988.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Anex", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 65828.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Anex", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 315561.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 304121.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "desktop", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 287710.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 119475.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Coral Travel", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 271719.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 379684.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 185483.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 132334.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 302542.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "platform": "desktop", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 740662.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 314611.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Intourist", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 62114.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 117780.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Sunmar", "platform": "ios", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 660617.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Tez Tour", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 414225.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Tez Tour", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 160637.0}, {"date": "2026-01-22 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 279841.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "android", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 336318.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "desktop", "orders": 10, "unique_users": 9, "paid_orders": 10, "paid_revenue": 2289352.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "ios", "orders": 10, "unique_users": 10, "paid_orders": 10, "paid_revenue": 2211600.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 207824.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "android", "orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 799236.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "desktop", "orders": 24, "unique_users": 23, "paid_orders": 24, "paid_revenue": 4800469.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "ios", "orders": 15, "unique_users": 14, "paid_orders": 15, "paid_revenue": 2266722.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "mobweb", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 417454.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 431287.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 262060.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "android", "orders": 8, "unique_users": 8, "paid_orders": 8, "paid_revenue": 1528490.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "desktop", "orders": 15, "unique_users": 9, "paid_orders": 15, "paid_revenue": 3033948.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "ios", "orders": 12, "unique_users": 12, "paid_orders": 11, "paid_revenue": 2111190.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "desktop", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 1326339.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "ios", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 795873.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "android", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 487499.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "desktop", "orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 845137.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "ios", "orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 1811945.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "mobweb", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 587865.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 188748.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 1, "paid_revenue": 188175.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "One Touch Travel", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 472282.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 418606.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 339750.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 470886.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "android", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 356180.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "desktop", "orders": 13, "unique_users": 11, "paid_orders": 13, "paid_revenue": 3099851.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "ios", "orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 939047.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "mobweb", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 287984.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 139225.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "desktop", "orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 1917739.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "ios", "orders": 8, "unique_users": 8, "paid_orders": 8, "paid_revenue": 948036.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 120071.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "desktop", "orders": 11, "unique_users": 11, "paid_orders": 11, "paid_revenue": 2139831.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "ios", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 606989.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 137814.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 464915.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 288637.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "android", "orders": 6, "unique_users": 6, "paid_orders": 5, "paid_revenue": 753799.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "desktop", "orders": 16, "unique_users": 16, "paid_orders": 16, "paid_revenue": 3002769.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "ios", "orders": 14, "unique_users": 14, "paid_orders": 14, "paid_revenue": 2812717.0}, {"date": "2026-01-22 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "mobweb", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 278554.0}, {"date": "2026-01-23 00:00:00", "variant": "a", "tour_operator": "Anex", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 151999.0}, {"date": "2026-01-23 00:00:00", "variant": "a", "tour_operator": "Anex", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 156291.0}, {"date": "2026-01-23 00:00:00", "variant": "a", "tour_operator": "Anex", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 341808.0}, {"date": "2026-01-23 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 259693.0}, {"date": "2026-01-23 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 169609.0}, {"date": "2026-01-23 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 1, "paid_revenue": 102720.0}, {"date": "2026-01-23 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 111230.0}, {"date": "2026-01-23 00:00:00", "variant": "a", "tour_operator": "Sunmar", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 356015.0}, {"date": "2026-01-23 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 217049.0}, {"date": "2026-01-23 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 222687.0}, {"date": "2026-01-23 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "ios", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 752389.0}, {"date": "2026-01-23 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "mobweb", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 361218.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 387180.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "desktop", "orders": 10, "unique_users": 10, "paid_orders": 10, "paid_revenue": 3170716.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "ios", "orders": 14, "unique_users": 14, "paid_orders": 14, "paid_revenue": 4121532.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "android", "orders": 9, "unique_users": 9, "paid_orders": 9, "paid_revenue": 1215667.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "desktop", "orders": 18, "unique_users": 17, "paid_orders": 18, "paid_revenue": 2921335.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "ios", "orders": 12, "unique_users": 12, "paid_orders": 12, "paid_revenue": 1983819.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "mobweb", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 652704.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 125230.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 113240.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 109858.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "android", "orders": 7, "unique_users": 7, "paid_orders": 6, "paid_revenue": 1252020.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "desktop", "orders": 10, "unique_users": 10, "paid_orders": 10, "paid_revenue": 1677881.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "ios", "orders": 8, "unique_users": 8, "paid_orders": 8, "paid_revenue": 1606507.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 119651.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 47151.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "desktop", "orders": 9, "unique_users": 9, "paid_orders": 9, "paid_revenue": 1668740.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "ios", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 731183.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 130668.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "desktop", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 1175695.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "ios", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 879373.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 114185.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "desktop", "orders": 3, "unique_users": 2, "paid_orders": 3, "paid_revenue": 329557.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 256913.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 141262.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 139643.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 456958.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "desktop", "orders": 14, "unique_users": 13, "paid_orders": 13, "paid_revenue": 2965741.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "ios", "orders": 13, "unique_users": 12, "paid_orders": 13, "paid_revenue": 2243771.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 224191.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 386462.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "platform": "ios", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 546677.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "android", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 235506.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 544426.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "ios", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 412173.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "android", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 778382.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "desktop", "orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 1139524.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "ios", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 677717.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "mobweb", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 371760.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 254302.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 227462.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 532957.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "android", "orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 753676.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "desktop", "orders": 14, "unique_users": 13, "paid_orders": 14, "paid_revenue": 2434402.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "ios", "orders": 15, "unique_users": 14, "paid_orders": 15, "paid_revenue": 2854295.0}, {"date": "2026-01-23 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "mobweb", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 428557.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "Anex", "platform": "desktop", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 940248.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 467267.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 175094.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 189051.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "ICS Travel Group", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 159351.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "Let’s Fly", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 135409.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 92742.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 271182.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 164413.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "Space Travel", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 271833.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "Sunmar", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 191979.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 308888.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 166191.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 516297.0}, {"date": "2026-01-24 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 57681.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "android", "orders": 9, "unique_users": 9, "paid_orders": 9, "paid_revenue": 1782945.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "desktop", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 620982.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 66015.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 279618.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "android", "orders": 10, "unique_users": 9, "paid_orders": 10, "paid_revenue": 1275937.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "desktop", "orders": 13, "unique_users": 13, "paid_orders": 13, "paid_revenue": 2900146.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "ios", "orders": 14, "unique_users": 13, "paid_orders": 14, "paid_revenue": 2453692.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "mobweb", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 630066.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 122056.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 118308.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "android", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 1200951.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "desktop", "orders": 8, "unique_users": 8, "paid_orders": 8, "paid_revenue": 1448197.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "ios", "orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 1359945.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 60115.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "android", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 715307.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "desktop", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 390731.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "desktop", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 563809.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "ios", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 748943.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 122454.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 260405.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 250067.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "One Touch Travel", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 101387.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "One Touch Travel", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 225011.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "android", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 591948.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "desktop", "orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 1831489.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "ios", "orders": 8, "unique_users": 8, "paid_orders": 8, "paid_revenue": 1334369.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "mobweb", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 541281.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 430182.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 159660.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "android", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 523721.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 199806.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "ios", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 697408.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "android", "orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 1127690.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 344573.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "ios", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 432764.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "desktop", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 513617.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 206948.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 159841.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "android", "orders": 6, "unique_users": 6, "paid_orders": 6, "paid_revenue": 627141.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "desktop", "orders": 19, "unique_users": 19, "paid_orders": 19, "paid_revenue": 3495675.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "ios", "orders": 9, "unique_users": 9, "paid_orders": 9, "paid_revenue": 1252749.0}, {"date": "2026-01-24 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "mobweb", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 425613.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Anex", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 68396.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Anex", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 291474.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 222205.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "desktop", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 801098.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "ios", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 509438.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Biblio Globus", "platform": "mobweb", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 45009.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Coral Travel", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 143802.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 389502.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 301294.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Intourist", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 216805.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Intourist", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 186622.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Let’s Fly", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 65679.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "PAKS", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 110372.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 130383.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "platform": "desktop", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 1058532.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Pegas Touristik", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 125730.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Sunmar", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 380178.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Sunmar", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 0, "paid_revenue": NaN}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Sunmar", "platform": "ios", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 453353.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 422763.0}, {"date": "2026-01-25 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 116958.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "AleanTour", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 169948.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "AleanTour", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 53740.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "android", "orders": 10, "unique_users": 8, "paid_orders": 9, "paid_revenue": 1968235.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 600590.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "ios", "orders": 7, "unique_users": 6, "paid_orders": 7, "paid_revenue": 2004372.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "android", "orders": 7, "unique_users": 7, "paid_orders": 7, "paid_revenue": 1027911.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "desktop", "orders": 25, "unique_users": 22, "paid_orders": 25, "paid_revenue": 4007155.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "ios", "orders": 12, "unique_users": 12, "paid_orders": 12, "paid_revenue": 1798934.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "mobweb", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 189260.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 133308.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Coral Travel", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 112668.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "android", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 849087.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 497240.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "ios", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 1073861.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 61489.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "android", "orders": 5, "unique_users": 4, "paid_orders": 5, "paid_revenue": 1152152.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "desktop", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 499380.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 152592.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "ICS Travel Group", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 258180.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "android", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 501052.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 238814.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "ios", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 476167.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 292510.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "desktop", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 576893.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "ios", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 184514.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Let’s Fly", "platform": "mobweb", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 207675.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 485598.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "PAKS", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 315844.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "android", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 556787.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "desktop", "orders": 13, "unique_users": 13, "paid_orders": 12, "paid_revenue": 2267672.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "ios", "orders": 3, "unique_users": 3, "paid_orders": 3, "paid_revenue": 688072.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "RussianExpress", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 377515.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 209348.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "desktop", "orders": 4, "unique_users": 3, "paid_orders": 4, "paid_revenue": 631170.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "mobweb", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 334315.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "desktop", "orders": 9, "unique_users": 6, "paid_orders": 9, "paid_revenue": 1346135.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "ios", "orders": 8, "unique_users": 8, "paid_orders": 8, "paid_revenue": 1263234.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Sunmar", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 149714.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "android", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 394285.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Tez Tour", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 249302.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "android", "orders": 9, "unique_users": 9, "paid_orders": 9, "paid_revenue": 1675315.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "desktop", "orders": 8, "unique_users": 8, "paid_orders": 8, "paid_revenue": 1419165.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "ios", "orders": 12, "unique_users": 12, "paid_orders": 12, "paid_revenue": 2194449.0}, {"date": "2026-01-25 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "mobweb", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 151284.0}, {"date": "2026-01-26 00:00:00", "variant": "a", "tour_operator": "FUN&SUN", "platform": "desktop", "orders": 2, "unique_users": 2, "paid_orders": 2, "paid_revenue": 264378.0}, {"date": "2026-01-26 00:00:00", "variant": "a", "tour_operator": "Travelata", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 89009.0}, {"date": "2026-01-26 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "android", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 351230.0}, {"date": "2026-01-26 00:00:00", "variant": "b", "tour_operator": "Anex", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 385565.0}, {"date": "2026-01-26 00:00:00", "variant": "b", "tour_operator": "Biblio Globus", "platform": "desktop", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 585862.0}, {"date": "2026-01-26 00:00:00", "variant": "b", "tour_operator": "FUN&SUN", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 127664.0}, {"date": "2026-01-26 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 66881.0}, {"date": "2026-01-26 00:00:00", "variant": "b", "tour_operator": "Intourist", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 99561.0}, {"date": "2026-01-26 00:00:00", "variant": "b", "tour_operator": "Pegas Touristik", "platform": "desktop", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 211709.0}, {"date": "2026-01-26 00:00:00", "variant": "b", "tour_operator": "Space Travel", "platform": "ios", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 123169.0}, {"date": "2026-01-26 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "desktop", "orders": 4, "unique_users": 4, "paid_orders": 4, "paid_revenue": 582045.0}, {"date": "2026-01-26 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "ios", "orders": 5, "unique_users": 5, "paid_orders": 5, "paid_revenue": 441479.0}, {"date": "2026-01-26 00:00:00", "variant": "b", "tour_operator": "Travelata", "platform": "mobweb", "orders": 1, "unique_users": 1, "paid_orders": 1, "paid_revenue": 185606.0}],
-            dates: ["2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-25", "2026-01-26"]
-        };
-        const platforms = ["android", "desktop", "ios", "mobweb"];
-        
-        // Normalize dates in rawData
-        rawData.dates = rawData.dates.map(normalizeDate);
-        rawData.daily_df.forEach(row => {
-            row.date = normalizeDate(row.date);
-        });
-        
-        // Filter function - now filters by both tour operators and platforms
-        function filterData(selectedOperators, selectedPlatforms) {
-            if (selectedOperators.length === 0 || selectedPlatforms.length === 0) {
-                return {
-                    aggregated: {},
-                    dailyAggregated: [],
-                    dates: rawData.dates
-                };
-            }
 
-            // Filter main data by both tour operators and platforms
-            const filteredDf = rawData.df.filter(row =>
-                row.tour_operator && selectedOperators.includes(row.tour_operator) &&
-                row.platform && selectedPlatforms.includes(row.platform)
-            );
+    <div class="footer">
+        Отчёт сгенерирован: 2026-01-26 | WorkOS AB Test Dashboard
+    </div>
 
-            // Filter daily data by both tour operators and platforms
-            const filteredDailyDf = rawData.daily_df.filter(row =>
-                row.tour_operator && selectedOperators.includes(row.tour_operator) &&
-                row.platform && selectedPlatforms.includes(row.platform)
-            );
-
-            // Aggregate by variant (sum across filtered tour operators and platforms)
-            const aggregated = {};
-            filteredDf.forEach(row => {
-                if (!row.variant) return;
-                if (!aggregated[row.variant]) {
-                    aggregated[row.variant] = {
-                        total_orders: 0,
-                        unique_users: 0,
-                        paid_orders: 0,
-                        paid_revenue: 0
-                    };
-                }
-                aggregated[row.variant].total_orders += Number(row.total_orders) || 0;
-                aggregated[row.variant].unique_users += Number(row.unique_users) || 0;
-                aggregated[row.variant].paid_orders += Number(row.paid_orders) || 0;
-                aggregated[row.variant].paid_revenue += Number(row.paid_revenue) || 0;
-            });
-
-            // Calculate AOV
-            Object.keys(aggregated).forEach(variant => {
-                aggregated[variant].avg_paid_order_value =
-                    aggregated[variant].paid_orders > 0
-                        ? aggregated[variant].paid_revenue / aggregated[variant].paid_orders
-                        : 0;
-            });
-
-            // Aggregate daily data by date and variant
-            const dailyAggregated = {};
-            filteredDailyDf.forEach(row => {
-                if (!row.date || !row.variant) return;
-                const normalizedDate = normalizeDate(row.date);
-                const key = `${normalizedDate}_${row.variant}`;
-                if (!dailyAggregated[key]) {
-                    dailyAggregated[key] = {
-                        date: normalizedDate,
-                        variant: row.variant,
-                        orders: 0,
-                        unique_users: 0,
-                        paid_orders: 0,
-                        paid_revenue: 0
-                    };
-                }
-                dailyAggregated[key].orders += Number(row.orders) || 0;
-                dailyAggregated[key].unique_users += Number(row.unique_users) || 0;
-                dailyAggregated[key].paid_orders += Number(row.paid_orders) || 0;
-                dailyAggregated[key].paid_revenue += Number(row.paid_revenue) || 0;
-            });
-
-            return {
-                aggregated,
-                dailyAggregated: Object.values(dailyAggregated),
-                dates: rawData.dates
-            };
-        }
-
-        // Keep old function name for compatibility
-        function filterByTourOperators(selectedOperators) {
-            // Get selected platforms
-            const platformCheckboxes = document.querySelectorAll('.platform-filter:checked');
-            const selectedPlatforms = Array.from(platformCheckboxes).map(cb => cb.value);
-            return filterData(selectedOperators, selectedPlatforms);
-        }
-        
-        // Update charts based on selected tour operators
-        function updateCharts() {
-            const checkboxes = document.querySelectorAll('.tour-operator-filter:checked');
-            let selectedOperators = Array.from(checkboxes).map(cb => cb.value);
-
-            // If no operators selected, use all operators
-            if (selectedOperators.length === 0) {
-                const allOperatorCheckboxes = document.querySelectorAll('.tour-operator-filter');
-                selectedOperators = Array.from(allOperatorCheckboxes).map(cb => cb.value);
-            }
-
-            const platformCheckboxes = document.querySelectorAll('.platform-filter:checked');
-            let selectedPlatforms = Array.from(platformCheckboxes).map(cb => cb.value);
-
-            // If no platforms selected, use all platforms
-            if (selectedPlatforms.length === 0) {
-                const allPlatformCheckboxes = document.querySelectorAll('.platform-filter');
-                selectedPlatforms = Array.from(allPlatformCheckboxes).map(cb => cb.value);
-            }
-
-            const filtered = filterData(selectedOperators, selectedPlatforms);
-
-            if (Object.keys(filtered.aggregated).length === 0) {
-                return;
-            }
-            
-            const aData = filtered.aggregated['a'] || {};
-            const bData = filtered.aggregated['b'] || {};
-
-            // Calculate metrics
-            const users_search_a = 41533;
-            const users_search_b = 375132;
-            const paid_a = aData.paid_orders || 0;
-            const paid_b = bData.paid_orders || 0;
-            const orders_a = aData.total_orders || 0;
-            const orders_b = bData.total_orders || 0;
-            const revenue_a = aData.paid_revenue || 0;
-            const revenue_b = bData.paid_revenue || 0;
-            const ttv_b = revenue_b;  // TTV is the same as paid_revenue
-
-            // Calculate discount loss (1.015% of TTV for group B)
-            const discount_rate = 0.01015;
-            const discount_loss_b = ttv_b * discount_rate;
-
-            // Calculate AOV uplift earnings
-            const aov_uplift_earnings = (aov_b - aov_a) * paid_b;
-
-            const cvr_a = users_search_a > 0 ? (paid_a / users_search_a * 100) : 0;
-            const cvr_b = users_search_b > 0 ? (paid_b / users_search_b * 100) : 0;
-            const rpv_a = users_search_a > 0 ? (revenue_a / users_search_a) : 0;
-            const rpv_b = users_search_b > 0 ? (revenue_b / users_search_b) : 0;
-            const aov_a = paid_a > 0 ? (revenue_a / paid_a) : 0;
-            const aov_b = paid_b > 0 ? (revenue_b / paid_b) : 0;
-            
-            // Prepare daily data - normalize dates for comparison
-            const dailyA = filtered.dailyAggregated
-                .filter(r => r.variant === 'a')
-                .map(r => ({ ...r, date: normalizeDate(r.date) }))
-                .sort((a, b) => (a.date || '').localeCompare(b.date || ''));
-            const dailyB = filtered.dailyAggregated
-                .filter(r => r.variant === 'b')
-                .map(r => ({ ...r, date: normalizeDate(r.date) }))
-                .sort((a, b) => (a.date || '').localeCompare(b.date || ''));
-            
-            const dates = filtered.dates.map(normalizeDate);
-            const orders_a_daily = dates.map(d => {
-                const normalizedD = normalizeDate(d);
-                const dayData = dailyA.find(r => normalizeDate(r.date) === normalizedD);
-                return dayData ? (Number(dayData.orders) || 0) : 0;
-            });
-            const orders_b_daily = dates.map(d => {
-                const normalizedD = normalizeDate(d);
-                const dayData = dailyB.find(r => normalizeDate(r.date) === normalizedD);
-                return dayData ? (Number(dayData.orders) || 0) : 0;
-            });
-            const paid_a_daily = dates.map(d => {
-                const normalizedD = normalizeDate(d);
-                const dayData = dailyA.find(r => normalizeDate(r.date) === normalizedD);
-                return dayData ? (Number(dayData.paid_orders) || 0) : 0;
-            });
-            const paid_b_daily = dates.map(d => {
-                const normalizedD = normalizeDate(d);
-                const dayData = dailyB.find(r => normalizeDate(r.date) === normalizedD);
-                return dayData ? (Number(dayData.paid_orders) || 0) : 0;
-            });
-            
-            const search_users_a_daily = [4382, 11286, 9516, 9444, 8878, 9316, 4235];
-            const search_users_b_daily = [39966, 102515, 86039, 85316, 79289, 83837, 37494];
-            
-            const cvr_users_a_daily = paid_a_daily.map((p, i) => {
-                const paid = Number(p) || 0;
-                const users = Number(search_users_a_daily[i]) || 0;
-                return users > 0 ? (paid / users * 100) : 0;
-            });
-            const cvr_users_b_daily = paid_b_daily.map((p, i) => {
-                const paid = Number(p) || 0;
-                const users = Number(search_users_b_daily[i]) || 0;
-                return users > 0 ? (paid / users * 100) : 0;
-            });
-            const payrate_a_daily = orders_a_daily.map((o, i) => {
-                const orders = Number(o) || 0;
-                const paid = Number(paid_a_daily[i]) || 0;
-                return orders > 0 ? (paid / orders * 100) : 0;
-            });
-            const payrate_b_daily = orders_b_daily.map((o, i) => {
-                const orders = Number(o) || 0;
-                const paid = Number(paid_b_daily[i]) || 0;
-                return orders > 0 ? (paid / orders * 100) : 0;
-            });
-            
-            // Calculate additional metrics
-            const orders_pct_a = users_search_a > 0 ? (orders_a / users_search_a * 100) : 0;
-            const orders_pct_b = users_search_b > 0 ? (orders_b / users_search_b * 100) : 0;
-            const pay_through_pct_a = orders_a > 0 ? (paid_a / orders_a * 100) : 0;
-            const pay_through_pct_b = orders_b > 0 ? (paid_b / orders_b * 100) : 0;
-            const cvr_lift = cvr_a > 0 ? ((cvr_b - cvr_a) / cvr_a * 100) : 0;
-            const rpv_lift = rpv_a > 0 ? ((rpv_b - rpv_a) / rpv_a * 100) : 0;
-            const aov_lift = aov_a > 0 ? ((aov_b - aov_a) / aov_a * 100) : 0;
-            
-            // Update HTML elements (metrics cards, table, split bar)
-            updateMetricsDisplay({
-                cvr_a, cvr_b, cvr_lift,
-                rpv_a, rpv_b, rpv_lift,
-                aov_a, aov_b, aov_lift,
-                users_search_a, users_search_b,
-                orders_a, orders_b,
-                paid_a, paid_b,
-                revenue_a, revenue_b,
-                ttv_b, discount_loss_b,
-                aov_uplift_earnings
-            });
-            
-            // Redraw all charts completely
-            Plotly.redraw('ordersChart');
-            Plotly.react('ordersChart', [
-                {
-                    x: dates,
-                    y: orders_a_daily,
-                    name: 'A (контроль)',
-                    type: 'bar',
-                    marker: { color: '#3498db' }
-                },
-                {
-                    x: dates,
-                    y: orders_b_daily,
-                    name: 'B (скидка)',
-                    type: 'bar',
-                    marker: { color: '#9b59b6' }
-                }
-            ], {
-                barmode: 'group',
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                font: { color: '#fff' },
-                margin: { t: 20, r: 20, b: 40, l: 50 },
-                legend: { orientation: 'h', y: -0.2 },
-                xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
-                yaxis: { gridcolor: 'rgba(255,255,255,0.1)', title: 'Заказы' }
-            }, { responsive: true });
-            
-            Plotly.react('paymentsChart', [
-                {
-                    x: dates,
-                    y: paid_a_daily,
-                    name: 'A (контроль)',
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    line: { color: '#3498db', width: 3 },
-                    marker: { size: 8 }
-                },
-                {
-                    x: dates,
-                    y: paid_b_daily,
-                    name: 'B (скидка)',
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    line: { color: '#9b59b6', width: 3 },
-                    marker: { size: 8 }
-                }
-            ], {
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                font: { color: '#fff' },
-                margin: { t: 20, r: 20, b: 40, l: 50 },
-                legend: { orientation: 'h', y: -0.2 },
-                xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
-                yaxis: { gridcolor: 'rgba(255,255,255,0.1)', title: 'Оплаты' }
-            }, { responsive: true });
-            
-            Plotly.react('cvrUsersChart', [
-                {
-                    x: dates,
-                    y: cvr_users_a_daily,
-                    name: 'A (контроль)',
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    line: { color: '#3498db', width: 3 },
-                    marker: { size: 8 },
-                    hovertemplate: '%{x}<br>A: %{y:.1f}%<extra></extra>'
-                },
-                {
-                    x: dates,
-                    y: cvr_users_b_daily,
-                    name: 'B (скидка)',
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    line: { color: '#9b59b6', width: 3 },
-                    marker: { size: 8 },
-                    hovertemplate: '%{x}<br>B: %{y:.1f}%<extra></extra>'
-                }
-            ], {
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                font: { color: '#fff' },
-                margin: { t: 20, r: 20, b: 40, l: 60 },
-                legend: { orientation: 'h', y: -0.2 },
-                xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
-                yaxis: { gridcolor: 'rgba(255,255,255,0.1)', title: 'CVR', ticksuffix: '%' }
-            }, { responsive: true });
-            
-            Plotly.react('payRateChart', [
-                {
-                    x: dates,
-                    y: payrate_a_daily,
-                    name: 'A (контроль)',
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    line: { color: '#3498db', width: 3 },
-                    marker: { size: 8 },
-                    text: payrate_a_daily,
-                    hovertemplate: '%{x}<br>A: %{y:.1f}%<extra></extra>'
-                },
-                {
-                    x: dates,
-                    y: payrate_b_daily,
-                    name: 'B (скидка)',
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    line: { color: '#9b59b6', width: 3 },
-                    marker: { size: 8 },
-                    hovertemplate: '%{x}<br>B: %{y:.1f}%<extra></extra>'
-                }
-            ], {
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                font: { color: '#fff' },
-                margin: { t: 20, r: 20, b: 40, l: 60 },
-                legend: { orientation: 'h', y: -0.2 },
-                xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
-                yaxis: { gridcolor: 'rgba(255,255,255,0.1)', title: 'Pay-through', ticksuffix: '%' }
-            }, { responsive: true });
-
-            Plotly.react('funnelChart1', [
-                {
-                    type: 'funnel',
-                    name: 'A (контроль)',
-                    y: ['Поиск', 'Заказы'],
-                    x: [100, orders_pct_a],
-                    text: [String(users_search_a).replace(/\B(?=(\d{3})+(?!\d))/g, ','), String(orders_a).replace(/\B(?=(\d{3})+(?!\d))/g, ',')],
-                    textposition: 'inside',
-                    marker: { color: '#3498db' },
-                    textfont: { color: '#fff' },
-                    hovertemplate: '%{y}<br>Пользователей: %{text}<br>Доля от поиска: %{x:.2f}%<extra></extra>'
-                },
-                {
-                    type: 'funnel',
-                    name: 'B (скидка)',
-                    y: ['Поиск', 'Заказы'],
-                    x: [100, orders_pct_b],
-                    text: [String(users_search_b).replace(/\B(?=(\d{3})+(?!\d))/g, ','), String(orders_b).replace(/\B(?=(\d{3})+(?!\d))/g, ',')],
-                    textposition: 'inside',
-                    marker: { color: '#9b59b6' },
-                    textfont: { color: '#fff' },
-                    hovertemplate: '%{y}<br>Пользователей: %{text}<br>Доля от поиска: %{x:.2f}%<extra></extra>'
-                }
-            ], {
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                font: { color: '#fff' },
-                margin: { t: 20, r: 20, b: 20, l: 100 },
-                legend: { orientation: 'h', y: -0.1 },
-                funnelmode: 'group'
-            }, { responsive: true });
-            
-            Plotly.react('funnelChart2', [
-                {
-                    type: 'funnel',
-                    name: 'A (контроль)',
-                    y: ['Заказы', 'Оплаты'],
-                    x: [100, pay_through_pct_a],
-                    text: [String(orders_a).replace(/\B(?=(\d{3})+(?!\d))/g, ','), String(paid_a).replace(/\B(?=(\d{3})+(?!\d))/g, ',')],
-                    textposition: 'inside',
-                    marker: { color: '#3498db' },
-                    textfont: { color: '#fff' },
-                    hovertemplate: '%{y}<br>Количество: %{text}<br>Доля от заказов: %{x:.2f}%<extra></extra>'
-                },
-                {
-                    type: 'funnel',
-                    name: 'B (скидка)',
-                    y: ['Заказы', 'Оплаты'],
-                    x: [100, pay_through_pct_b],
-                    text: [String(orders_b).replace(/\B(?=(\d{3})+(?!\d))/g, ','), String(paid_b).replace(/\B(?=(\d{3})+(?!\d))/g, ',')],
-                    textposition: 'inside',
-                    marker: { color: '#9b59b6' },
-                    textfont: { color: '#fff' },
-                    hovertemplate: '%{y}<br>Количество: %{text}<br>Доля от заказов: %{x:.2f}%<extra></extra>'
-                }
-            ], {
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                font: { color: '#fff' },
-                margin: { t: 20, r: 20, b: 20, l: 100 },
-                legend: { orientation: 'h', y: -0.1 },
-                funnelmode: 'group'
-            }, { responsive: true });
-        }
-        
-        // Update HTML metrics display
-        function updateMetricsDisplay(metrics) {
-            // Update metric cards - use more specific selectors
-            const metricsGrid = document.querySelector('.metrics-grid');
-            if (metricsGrid) {
-                const metricCards = metricsGrid.querySelectorAll('.metric-card');
-                
-                // CVR card (first card)
-                if (metricCards[0]) {
-                    const cvrCard = metricCards[0];
-                    const valueA = cvrCard.querySelector('.value-box.a .value');
-                    const valueB = cvrCard.querySelector('.value-box.b .value');
-                    const liftEl = cvrCard.querySelector('.lift');
-                    if (valueA) valueA.textContent = metrics.cvr_a.toFixed(2) + '%';
-                    if (valueB) valueB.textContent = metrics.cvr_b.toFixed(2) + '%';
-                    if (liftEl) {
-                        liftEl.textContent = (metrics.cvr_lift >= 0 ? '+' : '') + metrics.cvr_lift.toFixed(1) + '%';
-                        liftEl.className = 'lift ' + (metrics.cvr_lift < 0 ? 'negative' : 'positive');
-                    }
-                }
-                
-                // RPV card (second card)
-                if (metricCards[1]) {
-                    const rpvCard = metricCards[1];
-                    const valueA = rpvCard.querySelector('.value-box.a .value');
-                    const valueB = rpvCard.querySelector('.value-box.b .value');
-                    const liftEl = rpvCard.querySelector('.lift');
-                    if (valueA) valueA.textContent = Math.round(metrics.rpv_a).toLocaleString('ru-RU') + '₽';
-                    if (valueB) valueB.textContent = Math.round(metrics.rpv_b).toLocaleString('ru-RU') + '₽';
-                    if (liftEl) {
-                        liftEl.textContent = (metrics.rpv_lift >= 0 ? '+' : '') + metrics.rpv_lift.toFixed(1) + '%';
-                        liftEl.className = 'lift ' + (metrics.rpv_lift < 0 ? 'negative' : 'positive');
-                    }
-                }
-                
-                // AOV card (third card)
-                if (metricCards[2]) {
-                    const aovCard = metricCards[2];
-                    const valueA = aovCard.querySelector('.value-box.a .value');
-                    const valueB = aovCard.querySelector('.value-box.b .value');
-                    const liftEl = aovCard.querySelector('.lift');
-                    if (valueA) valueA.textContent = Math.round(metrics.aov_a).toLocaleString('ru-RU') + '₽';
-                    if (valueB) valueB.textContent = Math.round(metrics.aov_b).toLocaleString('ru-RU') + '₽';
-                    if (liftEl) {
-                        liftEl.textContent = (metrics.aov_lift >= 0 ? '+' : '') + metrics.aov_lift.toFixed(1) + '%';
-                        liftEl.className = 'lift ' + (metrics.aov_lift < 0 ? 'negative' : 'positive');
-                    }
-                }
-
-                // Discount card (full-width card) - Update discount values
-                const ttvEl = document.getElementById('discount-ttv');
-                const lossEl = document.getElementById('discount-loss');
-                if (ttvEl) ttvEl.textContent = Math.round(metrics.ttv_b).toLocaleString('ru-RU') + '₽';
-                if (lossEl) lossEl.textContent = Math.round(metrics.discount_loss_b).toLocaleString('ru-RU') + '₽';
-
-                // AOV uplift card - update dynamically calculated values
-                // Find the AOV uplift card (green card with specific label)
-                const allFullWidthCards = document.querySelectorAll('.full-width-card');
-                allFullWidthCards.forEach(card => {
-                    const labelEl = card.querySelector('.label');
-                    if (labelEl && labelEl.textContent.includes('Дополнительная выручка в группе B за счет увеличения среднего чека')) {
-                        const valueEls = card.querySelectorAll('.discount-item .value');
-                        // Update AOV uplift and additional revenue values
-                        if (valueEls.length >= 3) {
-                            const aovDiff = metrics.aov_b - metrics.aov_a;
-                            valueEls[0].textContent = Math.round(aovDiff).toLocaleString('ru-RU') + '₽';
-                            valueEls[1].textContent = metrics.paid_b.toLocaleString('ru-RU');
-                            valueEls[2].textContent = Math.round(metrics.aov_uplift_earnings).toLocaleString('ru-RU') + '₽';
-                        }
-                    }
-                });
-            }
-            
-            // Update target card
-            const targetCard = document.querySelector('.target-card');
-            if (targetCard) {
-                const statusEl = targetCard.querySelector('.status');
-                const detailsEl = targetCard.querySelector('.details');
-                if (metrics.rpv_lift >= 5) {
-                    statusEl.textContent = '✅ ДОСТИГНУТ';
-                    statusEl.style.color = '#27ae60';
-                } else {
-                    statusEl.textContent = '❌ НЕ ДОСТИГНУТ';
-                    statusEl.style.color = '#e74c3c';
-                }
-                detailsEl.textContent = 'Факт: ' + (metrics.rpv_lift >= 0 ? '+' : '') + metrics.rpv_lift.toFixed(1) + '%';
-            }
-            
-            // Update split bar
-            const totalUsers = metrics.users_search_a + metrics.users_search_b;
-            if (totalUsers > 0) {
-                const splitA = document.querySelector('.split-bar .a');
-                const splitB = document.querySelector('.split-bar .b');
-                if (splitA && splitB) {
-                    const pctA = (metrics.users_search_a / totalUsers * 100).toFixed(1);
-                    const pctB = (metrics.users_search_b / totalUsers * 100).toFixed(1);
-                    splitA.style.width = pctA + '%';
-                    splitA.textContent = pctA + '%';
-                    splitB.style.width = pctB + '%';
-                    splitB.textContent = pctB + '%';
-                }
-            }
-            
-            // Update table
-            const tableRows = document.querySelectorAll('.funnel-table tr');
-            if (tableRows.length >= 8) {  // Header + 7 data rows
-                // Users row
-                tableRows[1].cells[1].textContent = metrics.users_search_a.toLocaleString('ru-RU');
-                tableRows[1].cells[2].textContent = metrics.users_search_b.toLocaleString('ru-RU');
-                tableRows[1].cells[3].textContent = '+' + (metrics.users_search_b - metrics.users_search_a).toLocaleString('ru-RU');
-                
-                // Orders row
-                tableRows[2].cells[1].textContent = metrics.orders_a.toLocaleString('ru-RU');
-                tableRows[2].cells[2].textContent = metrics.orders_b.toLocaleString('ru-RU');
-                tableRows[2].cells[3].textContent = '+' + (metrics.orders_b - metrics.orders_a).toLocaleString('ru-RU');
-                
-                // Paid row
-                tableRows[3].cells[1].textContent = metrics.paid_a.toLocaleString('ru-RU');
-                tableRows[3].cells[2].textContent = metrics.paid_b.toLocaleString('ru-RU');
-                tableRows[3].cells[3].textContent = '+' + (metrics.paid_b - metrics.paid_a).toLocaleString('ru-RU');
-                
-                // Revenue row
-                tableRows[4].cells[1].textContent = Math.round(metrics.revenue_a).toLocaleString('ru-RU') + '₽';
-                tableRows[4].cells[2].textContent = Math.round(metrics.revenue_b).toLocaleString('ru-RU') + '₽';
-                tableRows[4].cells[3].textContent = '+' + Math.round(metrics.revenue_b - metrics.revenue_a).toLocaleString('ru-RU') + '₽';
-                
-                // CVR row
-                const cvrDiff = metrics.cvr_b - metrics.cvr_a;
-                tableRows[5].cells[1].textContent = metrics.cvr_a.toFixed(2) + '%';
-                tableRows[5].cells[2].textContent = metrics.cvr_b.toFixed(2) + '%';
-                tableRows[5].cells[3].textContent = (cvrDiff >= 0 ? '+' : '') + cvrDiff.toFixed(2) + '%';
-                tableRows[5].cells[3].style.color = cvrDiff < 0 ? '#e74c3c' : '#27ae60';
-                tableRows[5].cells[4].textContent = (metrics.cvr_lift >= 0 ? '+' : '') + metrics.cvr_lift.toFixed(1) + '%';
-                tableRows[5].cells[4].style.color = metrics.cvr_lift < 0 ? '#e74c3c' : '#27ae60';
-                
-                // RPV row
-                const rpvDiff = metrics.rpv_b - metrics.rpv_a;
-                tableRows[6].cells[1].textContent = Math.round(metrics.rpv_a).toLocaleString('ru-RU') + '₽';
-                tableRows[6].cells[2].textContent = Math.round(metrics.rpv_b).toLocaleString('ru-RU') + '₽';
-                tableRows[6].cells[3].textContent = (rpvDiff >= 0 ? '+' : '') + Math.round(rpvDiff).toLocaleString('ru-RU') + '₽';
-                tableRows[6].cells[3].style.color = rpvDiff < 0 ? '#e74c3c' : '#27ae60';
-                tableRows[6].cells[4].textContent = (metrics.rpv_lift >= 0 ? '+' : '') + metrics.rpv_lift.toFixed(1) + '%';
-                tableRows[6].cells[4].style.color = metrics.rpv_lift < 0 ? '#e74c3c' : '#27ae60';
-                
-                // AOV row
-                const aovDiff = metrics.aov_b - metrics.aov_a;
-                tableRows[7].cells[1].textContent = Math.round(metrics.aov_a).toLocaleString('ru-RU') + '₽';
-                tableRows[7].cells[2].textContent = Math.round(metrics.aov_b).toLocaleString('ru-RU') + '₽';
-                tableRows[7].cells[3].textContent = (aovDiff >= 0 ? '+' : '') + Math.round(aovDiff).toLocaleString('ru-RU') + '₽';
-                tableRows[7].cells[3].style.color = aovDiff < 0 ? '#e74c3c' : '#27ae60';
-                tableRows[7].cells[4].textContent = (metrics.aov_lift >= 0 ? '+' : '') + metrics.aov_lift.toFixed(1) + '%';
-                tableRows[7].cells[4].style.color = metrics.aov_lift < 0 ? '#e74c3c' : '#27ae60';
-            }
-        }
-        
-        // Setup filter event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            // Tour operator filter handlers
-            const allCheckbox = document.getElementById('filter-all');
-            const operatorCheckboxes = document.querySelectorAll('.tour-operator-filter');
-
-            allCheckbox.addEventListener('change', function() {
-                operatorCheckboxes.forEach(cb => {
-                    cb.checked = this.checked;
-                });
-                updateCharts();
-            });
-
-            operatorCheckboxes.forEach(cb => {
-                cb.addEventListener('change', function() {
-                    const allChecked = Array.from(operatorCheckboxes).every(c => c.checked);
-                    const someChecked = Array.from(operatorCheckboxes).some(c => c.checked);
-                    allCheckbox.checked = allChecked;
-                    // Update the "all" checkbox to indeterminate if some but not all are checked
-                    if (someChecked && !allChecked) {
-                        allCheckbox.indeterminate = true;
-                    } else {
-                        allCheckbox.indeterminate = false;
-                    }
-                    updateCharts();
-                });
-            });
-
-            // Platform filter handlers
-            const platformAllCheckbox = document.getElementById('platform-filter-all');
-            const platformCheckboxes = document.querySelectorAll('.platform-filter');
-
-            platformAllCheckbox.addEventListener('change', function() {
-                platformCheckboxes.forEach(cb => {
-                    cb.checked = this.checked;
-                });
-                updateCharts();
-            });
-
-            platformCheckboxes.forEach(cb => {
-                cb.addEventListener('change', function() {
-                    const allChecked = Array.from(platformCheckboxes).every(c => c.checked);
-                    const someChecked = Array.from(platformCheckboxes).some(c => c.checked);
-                    platformAllCheckbox.checked = allChecked;
-                    // Update the "all" checkbox to indeterminate if some but not all are checked
-                    if (someChecked && !allChecked) {
-                        platformAllCheckbox.indeterminate = true;
-                    } else {
-                        platformAllCheckbox.indeterminate = false;
-                    }
-                    updateCharts();
-                });
-            });
-        });
-        
-        // Orders chart
-        Plotly.newPlot('ordersChart', [
-            {
-                x: ['2026-01-20', '2026-01-21', '2026-01-22', '2026-01-23', '2026-01-24', '2026-01-25', '2026-01-26'],
-                y: [16, 31, 33, 20, 20, 35, 3],
-                name: 'A (контроль)',
-                type: 'bar',
-                marker: { color: '#3498db' }
-            },
-            {
-                x: ['2026-01-20', '2026-01-21', '2026-01-22', '2026-01-23', '2026-01-24', '2026-01-25', '2026-01-26'],
-                y: [107, 225, 252, 232, 183, 190, 21],
-                name: 'B (скидка)',
-                type: 'bar',
-                marker: { color: '#9b59b6' }
-            }
-        ], {
-            barmode: 'group',
-            paper_bgcolor: 'rgba(0,0,0,0)',
-            plot_bgcolor: 'rgba(0,0,0,0)',
-            font: { color: '#fff' },
-            margin: { t: 20, r: 20, b: 40, l: 50 },
-            legend: { orientation: 'h', y: -0.2 },
-            xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
-            yaxis: { gridcolor: 'rgba(255,255,255,0.1)', title: 'Заказы' }
-        }, { responsive: true });
-        
-        // Payments chart
-        Plotly.newPlot('paymentsChart', [
-            {
-                x: ['2026-01-20', '2026-01-21', '2026-01-22', '2026-01-23', '2026-01-24', '2026-01-25', '2026-01-26'],
-                y: [16, 31, 33, 19, 20, 34, 3],
-                name: 'A (контроль)',
-                type: 'scatter',
-                mode: 'lines+markers',
-                line: { color: '#3498db', width: 3 },
-                marker: { size: 8 }
-            },
-            {
-                x: ['2026-01-20', '2026-01-21', '2026-01-22', '2026-01-23', '2026-01-24', '2026-01-25', '2026-01-26'],
-                y: [107, 224, 249, 230, 183, 188, 21],
-                name: 'B (скидка)',
-                type: 'scatter',
-                mode: 'lines+markers',
-                line: { color: '#9b59b6', width: 3 },
-                marker: { size: 8 }
-            }
-        ], {
-            paper_bgcolor: 'rgba(0,0,0,0)',
-            plot_bgcolor: 'rgba(0,0,0,0)',
-            font: { color: '#fff' },
-            margin: { t: 20, r: 20, b: 40, l: 50 },
-            legend: { orientation: 'h', y: -0.2 },
-            xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
-            yaxis: { gridcolor: 'rgba(255,255,255,0.1)', title: 'Оплаты' }
-        }, { responsive: true });
-
-        // Funnel chart 1: Поиск → Заказы (нормированная, % от поиска)
-        Plotly.newPlot('funnelChart1', [
-            {
-                type: 'funnel',
-                name: 'A (контроль)',
-                y: ['Поиск', 'Заказы'],
-                x: [100, 0.3804203886066501],
-                text: ['41,533', '158'],
-                textposition: 'inside',
-                marker: { color: '#3498db' },
-                textfont: { color: '#fff' },
-                hovertemplate: '%{y}<br>Пользователей: %{text}<br>Доля от поиска: %{x:.2f}%<extra></extra>'
-            },
-            {
-                type: 'funnel',
-                name: 'B (скидка)',
-                y: ['Поиск', 'Заказы'],
-                x: [100, 0.32255312796562274],
-                text: ['375,132', '1,210'],
-                textposition: 'inside',
-                marker: { color: '#9b59b6' },
-                textfont: { color: '#fff' },
-                hovertemplate: '%{y}<br>Пользователей: %{text}<br>Доля от поиска: %{x:.2f}%<extra></extra>'
-            }
-        ], {
-            paper_bgcolor: 'rgba(0,0,0,0)',
-            plot_bgcolor: 'rgba(0,0,0,0)',
-            font: { color: '#fff' },
-            margin: { t: 20, r: 20, b: 20, l: 100 },
-            legend: { orientation: 'h', y: -0.1 },
-            funnelmode: 'group'
-        }, { responsive: true });
-        
-        // Funnel chart 2: Заказы → Оплаты (нормированная, % от заказов)
-        Plotly.newPlot('funnelChart2', [
-            {
-                type: 'funnel',
-                name: 'A (контроль)',
-                y: ['Заказы', 'Оплаты'],
-                x: [100, 98.73417721518987],
-                text: ['158', '156'],
-                textposition: 'inside',
-                marker: { color: '#3498db' },
-                textfont: { color: '#fff' },
-                hovertemplate: '%{y}<br>Количество: %{text}<br>Доля от заказов: %{x:.2f}%<extra></extra>'
-            },
-            {
-                type: 'funnel',
-                name: 'B (скидка)',
-                y: ['Заказы', 'Оплаты'],
-                x: [100, 99.3388429752066],
-                text: ['1,210', '1,202'],
-                textposition: 'inside',
-                marker: { color: '#9b59b6' },
-                textfont: { color: '#fff' },
-                hovertemplate: '%{y}<br>Количество: %{text}<br>Доля от заказов: %{x:.2f}%<extra></extra>'
-            }
-        ], {
-            paper_bgcolor: 'rgba(0,0,0,0)',
-            plot_bgcolor: 'rgba(0,0,0,0)',
-            font: { color: '#fff' },
-            margin: { t: 20, r: 20, b: 20, l: 100 },
-            legend: { orientation: 'h', y: -0.1 },
-            funnelmode: 'group'
-        }, { responsive: true });
-        
-        // CVR users -> paid
-        Plotly.newPlot('cvrUsersChart', [
-            {
-                x: ['2026-01-20', '2026-01-21', '2026-01-22', '2026-01-23', '2026-01-24', '2026-01-25', '2026-01-26'],
-                y: [0.37, 0.27, 0.35, 0.2, 0.23, 0.36, 0.07],
-                name: 'A (контроль)',
-                type: 'scatter',
-                mode: 'lines+markers',
-                line: { color: '#3498db', width: 3 },
-                marker: { size: 8 },
-                hovertemplate: '%{x}<br>A: %{y:.1f}%<extra></extra>'
-            },
-            {
-                x: ['2026-01-20', '2026-01-21', '2026-01-22', '2026-01-23', '2026-01-24', '2026-01-25', '2026-01-26'],
-                y: [0.27, 0.22, 0.29, 0.27, 0.23, 0.22, 0.06],
-                name: 'B (скидка)',
-                type: 'scatter',
-                mode: 'lines+markers',
-                line: { color: '#9b59b6', width: 3 },
-                marker: { size: 8 },
-                hovertemplate: '%{x}<br>B: %{y:.1f}%<extra></extra>'
-            }
-        ], {
-            paper_bgcolor: 'rgba(0,0,0,0)',
-            plot_bgcolor: 'rgba(0,0,0,0)',
-            font: { color: '#fff' },
-            margin: { t: 20, r: 20, b: 40, l: 60 },
-            legend: { orientation: 'h', y: -0.2 },
-            xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
-            yaxis: { gridcolor: 'rgba(255,255,255,0.1)', title: 'CVR', ticksuffix: '%' }
-        }, { responsive: true });
-        
-        // Pay-through orders -> paid
-        Plotly.newPlot('payRateChart', [
-            {
-                x: ['2026-01-20', '2026-01-21', '2026-01-22', '2026-01-23', '2026-01-24', '2026-01-25', '2026-01-26'],
-                y: [100.0, 100.0, 100.0, 95.0, 100.0, 97.14, 100.0],
-                name: 'A (контроль)',
-                type: 'scatter',
-                mode: 'lines+markers',
-                line: { color: '#3498db', width: 3 },
-                marker: { size: 8 },
-                text: [100.0, 100.0, 100.0, 95.0, 100.0, 97.14, 100.0],
-                hovertemplate: '%{x}<br>A: %{y:.1f}%<extra></extra>'
-            },
-            {
-                x: ['2026-01-20', '2026-01-21', '2026-01-22', '2026-01-23', '2026-01-24', '2026-01-25', '2026-01-26'],
-                y: [100.0, 99.56, 98.81, 99.14, 100.0, 98.95, 100.0],
-                name: 'B (скидка)',
-                type: 'scatter',
-                mode: 'lines+markers',
-                line: { color: '#9b59b6', width: 3 },
-                marker: { size: 8 },
-                hovertemplate: '%{x}<br>B: %{y:.1f}%<extra></extra>'
-            }
-        ], {
-            paper_bgcolor: 'rgba(0,0,0,0)',
-            plot_bgcolor: 'rgba(0,0,0,0)',
-            font: { color: '#fff' },
-            margin: { t: 20, r: 20, b: 40, l: 60 },
-            legend: { orientation: 'h', y: -0.2 },
-            xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
-            yaxis: { gridcolor: 'rgba(255,255,255,0.1)', title: 'Pay-through', ticksuffix: '%' }
-        }, { responsive: true });
-    </script>
+    <script src="dashboard.js"></script>
 </body>
 </html>
