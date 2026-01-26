@@ -260,11 +260,11 @@
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">743₽</div>
+                        <div class="value">742₽</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">601₽</div>
+                        <div class="value">600₽</div>
                     </div>
                 </div>
                 <div class="lift negative">-19.1%</div>
@@ -290,14 +290,29 @@
                 <div class="values">
                     <div class="value-box a">
                         <div class="variant">A</div>
-                        <div class="value">40,976</div>
+                        <div class="value">41,027</div>
                     </div>
                     <div class="value-box b">
                         <div class="variant">B</div>
-                        <div class="value">370,132</div>
+                        <div class="value">370,582</div>
                     </div>
                 </div>
-                <div class="lift positive">Всего: 411,108</div>
+                <div class="lift positive">Всего: 411,609</div>
+            </div>
+
+            <div class="metric-card" style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.15) 0%, rgba(231, 76, 60, 0.05) 100%); border: 1px solid rgba(231, 76, 60, 0.3);">
+                <div class="label">🏷️ Скидки в группе B (1.015% от GMV)</div>
+                <div class="values">
+                    <div class="value-box">
+                        <div class="variant" style="color: #e74c3c;">GMV группы B</div>
+                        <div class="value">1,238,165,315₽</div>
+                    </div>
+                    <div class="value-box">
+                        <div class="variant" style="color: #e74c3c;">Потеря на скидках</div>
+                        <div class="value" style="color: #e74c3c;">12,567,378₽</div>
+                    </div>
+                </div>
+                <div class="lift" style="color: #e74c3c; background: rgba(231, 76, 60, 0.2);">Ставка: 1.015%</div>
             </div>
         </div>
         
@@ -364,9 +379,9 @@
                 </tr>
                 <tr>
                     <td>Пользователей (поиск)</td>
-                    <td>40,976</td>
-                    <td>370,132</td>
-                    <td>+329,156</td>
+                    <td>41,027</td>
+                    <td>370,582</td>
+                    <td>+329,555</td>
                     <td>—</td>
                 </tr>
                 <tr>
@@ -399,8 +414,8 @@
                 </tr>
                 <tr style="font-weight: bold; background: rgba(255,255,255,0.05);">
                     <td>RPV</td>
-                    <td>743₽</td>
-                    <td>601₽</td>
+                    <td>742₽</td>
+                    <td>600₽</td>
                     <td style="color: #e74c3c">-142₽</td>
                     <td style="color: #e74c3c">-19.1%</td>
                 </tr>
@@ -415,7 +430,7 @@
         </div>
         
         <div class="footer">
-            Отчёт сгенерирован: 2026-01-26 08:24:00 | WorkOS AB Test Dashboard
+            Отчёт сгенерирован: 2026-01-26 08:32:34 | WorkOS AB Test Dashboard
         </div>
     </div>
     
@@ -556,17 +571,22 @@
             
             const aData = filtered.aggregated['a'] || {};
             const bData = filtered.aggregated['b'] || {};
-            
+
             // Calculate metrics
-            const users_search_a = 40976;
-            const users_search_b = 370132;
+            const users_search_a = 41027;
+            const users_search_b = 370582;
             const paid_a = aData.paid_orders || 0;
             const paid_b = bData.paid_orders || 0;
             const orders_a = aData.total_orders || 0;
             const orders_b = bData.total_orders || 0;
             const revenue_a = aData.paid_revenue || 0;
             const revenue_b = bData.paid_revenue || 0;
-            
+            const gmv_b = bData.total_gmv || 0;
+
+            // Calculate discount loss (1.015% of GMV for group B)
+            const discount_rate = 0.01015;
+            const discount_loss_b = gmv_b * discount_rate;
+
             const cvr_a = users_search_a > 0 ? (paid_a / users_search_a * 100) : 0;
             const cvr_b = users_search_b > 0 ? (paid_b / users_search_b * 100) : 0;
             const rpv_a = users_search_a > 0 ? (revenue_a / users_search_a) : 0;
@@ -606,8 +626,8 @@
                 return dayData ? (Number(dayData.paid_orders) || 0) : 0;
             });
             
-            const search_users_a_daily = [4382, 11286, 9516, 9444, 8878, 9316, 3282];
-            const search_users_b_daily = [39966, 102515, 86037, 85316, 79288, 83835, 28966];
+            const search_users_a_daily = [4382, 11286, 9516, 9444, 8878, 9316, 3385];
+            const search_users_b_daily = [39966, 102515, 86037, 85316, 79288, 83835, 29872];
             
             const cvr_users_a_daily = paid_a_daily.map((p, i) => {
                 const paid = Number(p) || 0;
@@ -647,7 +667,8 @@
                 users_search_a, users_search_b,
                 orders_a, orders_b,
                 paid_a, paid_b,
-                revenue_a, revenue_b
+                revenue_a, revenue_b,
+                gmv_b, discount_loss_b
             });
             
             // Redraw all charts completely
@@ -961,6 +982,18 @@
                         liftEl.className = 'lift ' + (metrics.aov_lift < 0 ? 'negative' : 'positive');
                     }
                 }
+
+                // Discount card (fifth card) - Update discount values
+                if (metricCards[4]) {
+                    const discountCard = metricCards[4];
+                    const valueBoxes = discountCard.querySelectorAll('.value-box .value');
+                    if (valueBoxes.length >= 2) {
+                        // First value box: GMV
+                        valueBoxes[0].textContent = Math.round(metrics.gmv_b).toLocaleString('ru-RU') + '₽';
+                        // Second value box: Discount loss
+                        valueBoxes[1].textContent = Math.round(metrics.discount_loss_b).toLocaleString('ru-RU') + '₽';
+                    }
+                }
             }
             
             // Update target card
@@ -1147,14 +1180,14 @@
         Plotly.newPlot('metricsCvrChart', [
             {
                 x: ['CVR (bps)'],
-                y: [40.999609527528314],
+                y: [40.948643576181546],
                 name: 'A (контроль)',
                 type: 'bar',
                 marker: { color: '#3498db' }
             },
             {
                 x: ['CVR (bps)'],
-                y: [35.33874401564847],
+                y: [35.29583196161713],
                 name: 'B (скидка)',
                 type: 'bar',
                 marker: { color: '#9b59b6' }
@@ -1174,14 +1207,14 @@
         Plotly.newPlot('metricsRpvChart', [
             {
                 x: ['RPV (₽)'],
-                y: [742.6832048028114],
+                y: [741.7599873254198],
                 name: 'A (контроль)',
                 type: 'bar',
                 marker: { color: '#3498db' }
             },
             {
                 x: ['RPV (₽)'],
-                y: [600.6273869862644],
+                y: [599.8980414591102],
                 name: 'B (скидка)',
                 type: 'bar',
                 marker: { color: '#9b59b6' }
@@ -1230,8 +1263,8 @@
                 type: 'funnel',
                 name: 'A (контроль)',
                 y: ['Поиск', 'Заказы'],
-                x: [100, 1.632663022256931],
-                text: ['40,976', '669'],
+                x: [100, 1.6306334852658004],
+                text: ['41,027', '669'],
                 textposition: 'inside',
                 marker: { color: '#3498db' },
                 textfont: { color: '#fff' },
@@ -1241,8 +1274,8 @@
                 type: 'funnel',
                 name: 'B (скидка)',
                 y: ['Поиск', 'Заказы'],
-                x: [100, 1.6561659083786324],
-                text: ['370,132', '6,130'],
+                x: [100, 1.654154815938173],
+                text: ['370,582', '6,130'],
                 textposition: 'inside',
                 marker: { color: '#9b59b6' },
                 textfont: { color: '#fff' },
