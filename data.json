@@ -17,8 +17,8 @@
       "total_orders": 4,
       "unique_users": 4,
       "paid_orders": 4,
-      "paid_revenue": 473758.0,
-      "avg_paid_order_value": 118439.5
+      "paid_revenue": 473310.0,
+      "avg_paid_order_value": 118327.5
     },
     {
       "variant": "a",
@@ -27,8 +27,8 @@
       "total_orders": 7,
       "unique_users": 7,
       "paid_orders": 7,
-      "paid_revenue": 2580218.0,
-      "avg_paid_order_value": 368602.5714285714
+      "paid_revenue": 2583965.0,
+      "avg_paid_order_value": 369137.85714285716
     },
     {
       "variant": "a",
@@ -37,8 +37,8 @@
       "total_orders": 4,
       "unique_users": 4,
       "paid_orders": 4,
-      "paid_revenue": 948843.0,
-      "avg_paid_order_value": 237210.75
+      "paid_revenue": 954973.0,
+      "avg_paid_order_value": 238743.25
     },
     {
       "variant": "a",
@@ -117,8 +117,8 @@
       "total_orders": 9,
       "unique_users": 8,
       "paid_orders": 9,
-      "paid_revenue": 1285377.0,
-      "avg_paid_order_value": 142819.66666666666
+      "paid_revenue": 1286695.0,
+      "avg_paid_order_value": 142966.11111111112
     },
     {
       "variant": "a",
@@ -127,8 +127,8 @@
       "total_orders": 6,
       "unique_users": 6,
       "paid_orders": 6,
-      "paid_revenue": 1061570.0,
-      "avg_paid_order_value": 176928.33333333334
+      "paid_revenue": 1059672.0,
+      "avg_paid_order_value": 176612.0
     },
     {
       "variant": "a",
@@ -203,6 +203,16 @@
     {
       "variant": "a",
       "tour_operator": "Let’s Fly",
+      "platform": "desktop",
+      "total_orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 187168.0,
+      "avg_paid_order_value": 187168.0
+    },
+    {
+      "variant": "a",
+      "tour_operator": "Let’s Fly",
       "platform": "ios",
       "total_orders": 2,
       "unique_users": 2,
@@ -227,18 +237,18 @@
       "total_orders": 4,
       "unique_users": 4,
       "paid_orders": 4,
-      "paid_revenue": 520137.0,
-      "avg_paid_order_value": 130034.25
+      "paid_revenue": 521058.0,
+      "avg_paid_order_value": 130264.5
     },
     {
       "variant": "a",
       "tour_operator": "Pegas Touristik",
       "platform": "desktop",
-      "total_orders": 8,
-      "unique_users": 8,
-      "paid_orders": 8,
-      "paid_revenue": 1732963.0,
-      "avg_paid_order_value": 216620.375
+      "total_orders": 9,
+      "unique_users": 9,
+      "paid_orders": 9,
+      "paid_revenue": 1817414.0,
+      "avg_paid_order_value": 201934.88888888888
     },
     {
       "variant": "a",
@@ -247,8 +257,8 @@
       "total_orders": 3,
       "unique_users": 3,
       "paid_orders": 3,
-      "paid_revenue": 401373.0,
-      "avg_paid_order_value": 133791.0
+      "paid_revenue": 403057.0,
+      "avg_paid_order_value": 134352.33333333334
     },
     {
       "variant": "a",
@@ -284,11 +294,11 @@
       "variant": "a",
       "tour_operator": "Sunmar",
       "platform": "android",
-      "total_orders": 3,
-      "unique_users": 3,
-      "paid_orders": 3,
-      "paid_revenue": 679178.0,
-      "avg_paid_order_value": 226392.66666666666
+      "total_orders": 6,
+      "unique_users": 5,
+      "paid_orders": 6,
+      "paid_revenue": 1118923.0,
+      "avg_paid_order_value": 186487.16666666666
     },
     {
       "variant": "a",
@@ -307,8 +317,8 @@
       "total_orders": 11,
       "unique_users": 11,
       "paid_orders": 11,
-      "paid_revenue": 1957255.0,
-      "avg_paid_order_value": 177932.27272727274
+      "paid_revenue": 1965389.0,
+      "avg_paid_order_value": 178671.72727272726
     },
     {
       "variant": "a",
@@ -334,31 +344,31 @@
       "variant": "a",
       "tour_operator": "Travelata",
       "platform": "android",
-      "total_orders": 6,
-      "unique_users": 5,
-      "paid_orders": 6,
-      "paid_revenue": 919199.0,
-      "avg_paid_order_value": 153199.83333333334
+      "total_orders": 7,
+      "unique_users": 6,
+      "paid_orders": 7,
+      "paid_revenue": 1161330.0,
+      "avg_paid_order_value": 165904.2857142857
     },
     {
       "variant": "a",
       "tour_operator": "Travelata",
       "platform": "desktop",
-      "total_orders": 7,
-      "unique_users": 7,
-      "paid_orders": 7,
-      "paid_revenue": 1548002.0,
-      "avg_paid_order_value": 221143.14285714287
+      "total_orders": 11,
+      "unique_users": 11,
+      "paid_orders": 11,
+      "paid_revenue": 2117810.0,
+      "avg_paid_order_value": 192528.18181818182
     },
     {
       "variant": "a",
       "tour_operator": "Travelata",
       "platform": "ios",
-      "total_orders": 14,
-      "unique_users": 14,
-      "paid_orders": 14,
-      "paid_revenue": 2781280.0,
-      "avg_paid_order_value": 198662.85714285713
+      "total_orders": 15,
+      "unique_users": 15,
+      "paid_orders": 15,
+      "paid_revenue": 2887012.0,
+      "avg_paid_order_value": 192467.46666666667
     },
     {
       "variant": "a",
@@ -394,31 +404,31 @@
       "variant": "b",
       "tour_operator": "Anex",
       "platform": "android",
-      "total_orders": 27,
-      "unique_users": 25,
-      "paid_orders": 26,
-      "paid_revenue": 5385325.0,
-      "avg_paid_order_value": 207127.88461538462
+      "total_orders": 31,
+      "unique_users": 29,
+      "paid_orders": 30,
+      "paid_revenue": 6042882.0,
+      "avg_paid_order_value": 201429.4
     },
     {
       "variant": "b",
       "tour_operator": "Anex",
       "platform": "desktop",
-      "total_orders": 31,
-      "unique_users": 30,
-      "paid_orders": 31,
-      "paid_revenue": 8033104.0,
-      "avg_paid_order_value": 259132.38709677418
+      "total_orders": 38,
+      "unique_users": 35,
+      "paid_orders": 37,
+      "paid_revenue": 9402557.0,
+      "avg_paid_order_value": 254123.16216216216
     },
     {
       "variant": "b",
       "tour_operator": "Anex",
       "platform": "ios",
-      "total_orders": 43,
-      "unique_users": 41,
-      "paid_orders": 43,
-      "paid_revenue": 10386839.0,
-      "avg_paid_order_value": 241554.39534883722
+      "total_orders": 48,
+      "unique_users": 46,
+      "paid_orders": 48,
+      "paid_revenue": 11800938.0,
+      "avg_paid_order_value": 245852.875
     },
     {
       "variant": "b",
@@ -427,48 +437,48 @@
       "total_orders": 4,
       "unique_users": 4,
       "paid_orders": 4,
-      "paid_revenue": 802626.0,
-      "avg_paid_order_value": 200656.5
+      "paid_revenue": 809575.0,
+      "avg_paid_order_value": 202393.75
     },
     {
       "variant": "b",
       "tour_operator": "Biblio Globus",
       "platform": "android",
-      "total_orders": 55,
-      "unique_users": 54,
-      "paid_orders": 55,
-      "paid_revenue": 7397809.0,
-      "avg_paid_order_value": 134505.6181818182
+      "total_orders": 66,
+      "unique_users": 65,
+      "paid_orders": 66,
+      "paid_revenue": 9386100.0,
+      "avg_paid_order_value": 142213.63636363635
     },
     {
       "variant": "b",
       "tour_operator": "Biblio Globus",
       "platform": "desktop",
-      "total_orders": 112,
-      "unique_users": 106,
-      "paid_orders": 111,
-      "paid_revenue": 20429747.0,
-      "avg_paid_order_value": 185724.97272727272
+      "total_orders": 124,
+      "unique_users": 116,
+      "paid_orders": 123,
+      "paid_revenue": 23104537.0,
+      "avg_paid_order_value": 189381.45081967214
     },
     {
       "variant": "b",
       "tour_operator": "Biblio Globus",
       "platform": "ios",
-      "total_orders": 76,
-      "unique_users": 74,
-      "paid_orders": 76,
-      "paid_revenue": 11737747.0,
-      "avg_paid_order_value": 154444.0394736842
+      "total_orders": 85,
+      "unique_users": 83,
+      "paid_orders": 85,
+      "paid_revenue": 13951090.0,
+      "avg_paid_order_value": 164130.4705882353
     },
     {
       "variant": "b",
       "tour_operator": "Biblio Globus",
       "platform": "mobweb",
-      "total_orders": 24,
-      "unique_users": 23,
-      "paid_orders": 24,
-      "paid_revenue": 3150325.0,
-      "avg_paid_order_value": 131263.54166666666
+      "total_orders": 26,
+      "unique_users": 25,
+      "paid_orders": 26,
+      "paid_revenue": 3563026.0,
+      "avg_paid_order_value": 137039.46153846153
     },
     {
       "variant": "b",
@@ -477,8 +487,8 @@
       "total_orders": 6,
       "unique_users": 6,
       "paid_orders": 6,
-      "paid_revenue": 947291.0,
-      "avg_paid_order_value": 157881.83333333334
+      "paid_revenue": 947451.0,
+      "avg_paid_order_value": 157908.5
     },
     {
       "variant": "b",
@@ -514,151 +524,151 @@
       "variant": "b",
       "tour_operator": "FUN&SUN",
       "platform": "android",
-      "total_orders": 30,
-      "unique_users": 30,
-      "paid_orders": 29,
-      "paid_revenue": 6235985.0,
-      "avg_paid_order_value": 215033.9655172414
-    },
-    {
-      "variant": "b",
-      "tour_operator": "FUN&SUN",
-      "platform": "desktop",
-      "total_orders": 45,
+      "total_orders": 39,
       "unique_users": 39,
-      "paid_orders": 45,
-      "paid_revenue": 8174349.0,
-      "avg_paid_order_value": 181652.2
+      "paid_orders": 38,
+      "paid_revenue": 8004600.0,
+      "avg_paid_order_value": 210647.36842105264
+    },
+    {
+      "variant": "b",
+      "tour_operator": "FUN&SUN",
+      "platform": "desktop",
+      "total_orders": 60,
+      "unique_users": 54,
+      "paid_orders": 60,
+      "paid_revenue": 11824020.0,
+      "avg_paid_order_value": 197067.0
     },
     {
       "variant": "b",
       "tour_operator": "FUN&SUN",
       "platform": "ios",
-      "total_orders": 41,
-      "unique_users": 41,
-      "paid_orders": 40,
-      "paid_revenue": 7728898.0,
-      "avg_paid_order_value": 193222.45
+      "total_orders": 50,
+      "unique_users": 50,
+      "paid_orders": 49,
+      "paid_revenue": 10247670.0,
+      "avg_paid_order_value": 209136.1224489796
     },
     {
       "variant": "b",
       "tour_operator": "FUN&SUN",
       "platform": "mobweb",
-      "total_orders": 6,
-      "unique_users": 6,
-      "paid_orders": 6,
-      "paid_revenue": 506452.0,
-      "avg_paid_order_value": 84408.66666666667
+      "total_orders": 9,
+      "unique_users": 9,
+      "paid_orders": 9,
+      "paid_revenue": 758047.0,
+      "avg_paid_order_value": 84227.44444444444
     },
     {
       "variant": "b",
       "tour_operator": "ICS Travel Group",
       "platform": "android",
-      "total_orders": 16,
-      "unique_users": 14,
-      "paid_orders": 16,
-      "paid_revenue": 2607844.0,
-      "avg_paid_order_value": 162990.25
+      "total_orders": 18,
+      "unique_users": 16,
+      "paid_orders": 18,
+      "paid_revenue": 3151522.0,
+      "avg_paid_order_value": 175084.55555555556
     },
     {
       "variant": "b",
       "tour_operator": "ICS Travel Group",
       "platform": "desktop",
-      "total_orders": 29,
-      "unique_users": 29,
-      "paid_orders": 29,
-      "paid_revenue": 5633644.0,
-      "avg_paid_order_value": 194263.58620689655
+      "total_orders": 32,
+      "unique_users": 32,
+      "paid_orders": 32,
+      "paid_revenue": 6427821.0,
+      "avg_paid_order_value": 200869.40625
     },
     {
       "variant": "b",
       "tour_operator": "ICS Travel Group",
       "platform": "ios",
-      "total_orders": 19,
-      "unique_users": 19,
-      "paid_orders": 19,
-      "paid_revenue": 3276677.0,
-      "avg_paid_order_value": 172456.68421052632
+      "total_orders": 20,
+      "unique_users": 20,
+      "paid_orders": 20,
+      "paid_revenue": 3445125.0,
+      "avg_paid_order_value": 172256.25
     },
     {
       "variant": "b",
       "tour_operator": "ICS Travel Group",
       "platform": "mobweb",
-      "total_orders": 4,
-      "unique_users": 4,
-      "paid_orders": 4,
-      "paid_revenue": 710632.0,
-      "avg_paid_order_value": 177658.0
-    },
-    {
-      "variant": "b",
-      "tour_operator": "Intourist",
-      "platform": "android",
-      "total_orders": 12,
-      "unique_users": 11,
-      "paid_orders": 12,
-      "paid_revenue": 1594386.0,
-      "avg_paid_order_value": 132865.5
-    },
-    {
-      "variant": "b",
-      "tour_operator": "Intourist",
-      "platform": "desktop",
-      "total_orders": 22,
-      "unique_users": 22,
-      "paid_orders": 22,
-      "paid_revenue": 3888148.0,
-      "avg_paid_order_value": 176734.0
-    },
-    {
-      "variant": "b",
-      "tour_operator": "Intourist",
-      "platform": "ios",
-      "total_orders": 27,
-      "unique_users": 27,
-      "paid_orders": 27,
-      "paid_revenue": 5075059.0,
-      "avg_paid_order_value": 187965.14814814815
-    },
-    {
-      "variant": "b",
-      "tour_operator": "Intourist",
-      "platform": "mobweb",
-      "total_orders": 8,
-      "unique_users": 8,
-      "paid_orders": 8,
-      "paid_revenue": 1469845.0,
-      "avg_paid_order_value": 183730.625
-    },
-    {
-      "variant": "b",
-      "tour_operator": "Let’s Fly",
-      "platform": "android",
-      "total_orders": 2,
-      "unique_users": 2,
-      "paid_orders": 2,
-      "paid_revenue": 442152.0,
-      "avg_paid_order_value": 221076.0
-    },
-    {
-      "variant": "b",
-      "tour_operator": "Let’s Fly",
-      "platform": "desktop",
-      "total_orders": 15,
-      "unique_users": 14,
-      "paid_orders": 14,
-      "paid_revenue": 2468707.0,
-      "avg_paid_order_value": 176336.2142857143
-    },
-    {
-      "variant": "b",
-      "tour_operator": "Let’s Fly",
-      "platform": "ios",
       "total_orders": 5,
       "unique_users": 5,
       "paid_orders": 5,
-      "paid_revenue": 608236.0,
-      "avg_paid_order_value": 121647.2
+      "paid_revenue": 893886.0,
+      "avg_paid_order_value": 178777.2
+    },
+    {
+      "variant": "b",
+      "tour_operator": "Intourist",
+      "platform": "android",
+      "total_orders": 14,
+      "unique_users": 13,
+      "paid_orders": 14,
+      "paid_revenue": 2264981.0,
+      "avg_paid_order_value": 161784.35714285713
+    },
+    {
+      "variant": "b",
+      "tour_operator": "Intourist",
+      "platform": "desktop",
+      "total_orders": 27,
+      "unique_users": 27,
+      "paid_orders": 27,
+      "paid_revenue": 4686928.0,
+      "avg_paid_order_value": 173589.92592592593
+    },
+    {
+      "variant": "b",
+      "tour_operator": "Intourist",
+      "platform": "ios",
+      "total_orders": 29,
+      "unique_users": 29,
+      "paid_orders": 29,
+      "paid_revenue": 5262973.0,
+      "avg_paid_order_value": 181481.8275862069
+    },
+    {
+      "variant": "b",
+      "tour_operator": "Intourist",
+      "platform": "mobweb",
+      "total_orders": 11,
+      "unique_users": 11,
+      "paid_orders": 11,
+      "paid_revenue": 1863426.0,
+      "avg_paid_order_value": 169402.36363636365
+    },
+    {
+      "variant": "b",
+      "tour_operator": "Let’s Fly",
+      "platform": "android",
+      "total_orders": 3,
+      "unique_users": 3,
+      "paid_orders": 3,
+      "paid_revenue": 628577.0,
+      "avg_paid_order_value": 209525.66666666666
+    },
+    {
+      "variant": "b",
+      "tour_operator": "Let’s Fly",
+      "platform": "desktop",
+      "total_orders": 16,
+      "unique_users": 15,
+      "paid_orders": 14,
+      "paid_revenue": 2426266.0,
+      "avg_paid_order_value": 173304.7142857143
+    },
+    {
+      "variant": "b",
+      "tour_operator": "Let’s Fly",
+      "platform": "ios",
+      "total_orders": 6,
+      "unique_users": 6,
+      "paid_orders": 6,
+      "paid_revenue": 762859.0,
+      "avg_paid_order_value": 127143.16666666667
     },
     {
       "variant": "b",
@@ -669,6 +679,16 @@
       "paid_orders": 3,
       "paid_revenue": 471071.0,
       "avg_paid_order_value": 157023.66666666666
+    },
+    {
+      "variant": "b",
+      "tour_operator": "One Touch Travel",
+      "platform": "android",
+      "total_orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 328040.0,
+      "avg_paid_order_value": 164020.0
     },
     {
       "variant": "b",
@@ -684,21 +704,21 @@
       "variant": "b",
       "tour_operator": "One Touch Travel",
       "platform": "ios",
-      "total_orders": 3,
-      "unique_users": 3,
-      "paid_orders": 3,
-      "paid_revenue": 366388.0,
-      "avg_paid_order_value": 122129.33333333333
+      "total_orders": 6,
+      "unique_users": 5,
+      "paid_orders": 6,
+      "paid_revenue": 1127171.0,
+      "avg_paid_order_value": 187861.83333333334
     },
     {
       "variant": "b",
       "tour_operator": "PAKS",
       "platform": "android",
-      "total_orders": 5,
-      "unique_users": 5,
-      "paid_orders": 5,
-      "paid_revenue": 1164174.0,
-      "avg_paid_order_value": 232834.8
+      "total_orders": 6,
+      "unique_users": 6,
+      "paid_orders": 6,
+      "paid_revenue": 1368259.0,
+      "avg_paid_order_value": 228043.16666666666
     },
     {
       "variant": "b",
@@ -714,11 +734,11 @@
       "variant": "b",
       "tour_operator": "PAKS",
       "platform": "ios",
-      "total_orders": 4,
-      "unique_users": 4,
-      "paid_orders": 4,
-      "paid_revenue": 1077647.0,
-      "avg_paid_order_value": 269411.75
+      "total_orders": 5,
+      "unique_users": 5,
+      "paid_orders": 5,
+      "paid_revenue": 1306819.0,
+      "avg_paid_order_value": 261363.8
     },
     {
       "variant": "b",
@@ -734,41 +754,41 @@
       "variant": "b",
       "tour_operator": "Pegas Touristik",
       "platform": "android",
-      "total_orders": 21,
-      "unique_users": 21,
-      "paid_orders": 21,
-      "paid_revenue": 3845891.0,
-      "avg_paid_order_value": 183137.66666666666
+      "total_orders": 34,
+      "unique_users": 32,
+      "paid_orders": 34,
+      "paid_revenue": 6463063.0,
+      "avg_paid_order_value": 190090.08823529413
     },
     {
       "variant": "b",
       "tour_operator": "Pegas Touristik",
       "platform": "desktop",
-      "total_orders": 66,
-      "unique_users": 62,
-      "paid_orders": 64,
-      "paid_revenue": 14352135.0,
-      "avg_paid_order_value": 224252.109375
+      "total_orders": 73,
+      "unique_users": 68,
+      "paid_orders": 71,
+      "paid_revenue": 15786106.0,
+      "avg_paid_order_value": 222339.52112676058
     },
     {
       "variant": "b",
       "tour_operator": "Pegas Touristik",
       "platform": "ios",
-      "total_orders": 42,
-      "unique_users": 41,
-      "paid_orders": 42,
-      "paid_revenue": 7087387.0,
-      "avg_paid_order_value": 168747.30952380953
+      "total_orders": 50,
+      "unique_users": 49,
+      "paid_orders": 50,
+      "paid_revenue": 8906073.0,
+      "avg_paid_order_value": 178121.46
     },
     {
       "variant": "b",
       "tour_operator": "Pegas Touristik",
       "platform": "mobweb",
-      "total_orders": 7,
-      "unique_users": 7,
-      "paid_orders": 7,
-      "paid_revenue": 1142274.0,
-      "avg_paid_order_value": 163182.0
+      "total_orders": 9,
+      "unique_users": 9,
+      "paid_orders": 8,
+      "paid_revenue": 1354147.0,
+      "avg_paid_order_value": 169268.375
     },
     {
       "variant": "b",
@@ -784,51 +804,51 @@
       "variant": "b",
       "tour_operator": "RussianExpress",
       "platform": "desktop",
-      "total_orders": 6,
-      "unique_users": 6,
-      "paid_orders": 6,
-      "paid_revenue": 1481841.0,
-      "avg_paid_order_value": 246973.5
+      "total_orders": 7,
+      "unique_users": 7,
+      "paid_orders": 7,
+      "paid_revenue": 1650898.0,
+      "avg_paid_order_value": 235842.57142857142
     },
     {
       "variant": "b",
       "tour_operator": "RussianExpress",
       "platform": "ios",
-      "total_orders": 12,
-      "unique_users": 12,
-      "paid_orders": 12,
-      "paid_revenue": 2660678.0,
-      "avg_paid_order_value": 221723.16666666666
+      "total_orders": 13,
+      "unique_users": 13,
+      "paid_orders": 13,
+      "paid_revenue": 2937440.0,
+      "avg_paid_order_value": 225956.92307692306
     },
     {
       "variant": "b",
       "tour_operator": "Space Travel",
       "platform": "android",
-      "total_orders": 10,
-      "unique_users": 10,
-      "paid_orders": 10,
-      "paid_revenue": 1616691.0,
-      "avg_paid_order_value": 161669.1
+      "total_orders": 15,
+      "unique_users": 15,
+      "paid_orders": 15,
+      "paid_revenue": 2257762.0,
+      "avg_paid_order_value": 150517.46666666667
     },
     {
       "variant": "b",
       "tour_operator": "Space Travel",
       "platform": "desktop",
-      "total_orders": 20,
-      "unique_users": 19,
-      "paid_orders": 20,
-      "paid_revenue": 4580537.0,
-      "avg_paid_order_value": 229026.85
+      "total_orders": 25,
+      "unique_users": 24,
+      "paid_orders": 25,
+      "paid_revenue": 5437399.0,
+      "avg_paid_order_value": 217495.96
     },
     {
       "variant": "b",
       "tour_operator": "Space Travel",
       "platform": "ios",
-      "total_orders": 21,
-      "unique_users": 21,
-      "paid_orders": 21,
-      "paid_revenue": 2800739.0,
-      "avg_paid_order_value": 133368.52380952382
+      "total_orders": 25,
+      "unique_users": 25,
+      "paid_orders": 25,
+      "paid_revenue": 3571754.0,
+      "avg_paid_order_value": 148823.08333333334
     },
     {
       "variant": "b",
@@ -844,41 +864,41 @@
       "variant": "b",
       "tour_operator": "Sunmar",
       "platform": "android",
-      "total_orders": 21,
-      "unique_users": 21,
-      "paid_orders": 21,
-      "paid_revenue": 3258254.0,
-      "avg_paid_order_value": 155154.95238095237
+      "total_orders": 25,
+      "unique_users": 25,
+      "paid_orders": 25,
+      "paid_revenue": 4104312.0,
+      "avg_paid_order_value": 164172.48
     },
     {
       "variant": "b",
       "tour_operator": "Sunmar",
       "platform": "desktop",
-      "total_orders": 33,
-      "unique_users": 30,
-      "paid_orders": 33,
-      "paid_revenue": 5897026.0,
-      "avg_paid_order_value": 178697.75757575757
+      "total_orders": 35,
+      "unique_users": 32,
+      "paid_orders": 35,
+      "paid_revenue": 6152394.0,
+      "avg_paid_order_value": 175782.6857142857
     },
     {
       "variant": "b",
       "tour_operator": "Sunmar",
       "platform": "ios",
-      "total_orders": 25,
-      "unique_users": 25,
-      "paid_orders": 25,
-      "paid_revenue": 3869779.0,
-      "avg_paid_order_value": 154791.16
+      "total_orders": 26,
+      "unique_users": 26,
+      "paid_orders": 26,
+      "paid_revenue": 4091172.0,
+      "avg_paid_order_value": 157352.76923076922
     },
     {
       "variant": "b",
       "tour_operator": "Sunmar",
       "platform": "mobweb",
-      "total_orders": 5,
-      "unique_users": 5,
-      "paid_orders": 5,
-      "paid_revenue": 944255.0,
-      "avg_paid_order_value": 188851.0
+      "total_orders": 6,
+      "unique_users": 6,
+      "paid_orders": 6,
+      "paid_revenue": 1104338.0,
+      "avg_paid_order_value": 184056.33333333334
     },
     {
       "variant": "b",
@@ -894,11 +914,11 @@
       "variant": "b",
       "tour_operator": "Tez Tour",
       "platform": "desktop",
-      "total_orders": 7,
-      "unique_users": 7,
-      "paid_orders": 7,
-      "paid_revenue": 1550528.0,
-      "avg_paid_order_value": 221504.0
+      "total_orders": 8,
+      "unique_users": 8,
+      "paid_orders": 8,
+      "paid_revenue": 1858245.0,
+      "avg_paid_order_value": 232280.625
     },
     {
       "variant": "b",
@@ -924,41 +944,41 @@
       "variant": "b",
       "tour_operator": "Travelata",
       "platform": "android",
-      "total_orders": 42,
-      "unique_users": 41,
-      "paid_orders": 41,
-      "paid_revenue": 6239706.0,
-      "avg_paid_order_value": 152187.9512195122
+      "total_orders": 50,
+      "unique_users": 49,
+      "paid_orders": 49,
+      "paid_revenue": 7754349.0,
+      "avg_paid_order_value": 158252.02040816325
     },
     {
       "variant": "b",
       "tour_operator": "Travelata",
       "platform": "desktop",
-      "total_orders": 83,
-      "unique_users": 80,
-      "paid_orders": 83,
-      "paid_revenue": 15069233.0,
-      "avg_paid_order_value": 181557.02409638555
+      "total_orders": 100,
+      "unique_users": 97,
+      "paid_orders": 100,
+      "paid_revenue": 18200748.0,
+      "avg_paid_order_value": 182007.48
     },
     {
       "variant": "b",
       "tour_operator": "Travelata",
       "platform": "ios",
-      "total_orders": 72,
-      "unique_users": 71,
-      "paid_orders": 72,
-      "paid_revenue": 12407213.0,
-      "avg_paid_order_value": 172322.40277777778
+      "total_orders": 87,
+      "unique_users": 86,
+      "paid_orders": 87,
+      "paid_revenue": 14338395.0,
+      "avg_paid_order_value": 164809.1379310345
     },
     {
       "variant": "b",
       "tour_operator": "Travelata",
       "platform": "mobweb",
-      "total_orders": 14,
-      "unique_users": 14,
-      "paid_orders": 14,
-      "paid_revenue": 1902826.0,
-      "avg_paid_order_value": 135916.14285714287
+      "total_orders": 21,
+      "unique_users": 21,
+      "paid_orders": 21,
+      "paid_revenue": 2792681.0,
+      "avg_paid_order_value": 132984.80952380953
     }
   ],
   "daily_df": [
@@ -970,7 +990,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 187535.0
+      "paid_revenue": 187087.0
     },
     {
       "date": "2026-01-20",
@@ -980,7 +1000,7 @@
       "orders": 2,
       "unique_users": 2,
       "paid_orders": 2,
-      "paid_revenue": 1127249.0
+      "paid_revenue": 1122043.0
     },
     {
       "date": "2026-01-20",
@@ -1020,7 +1040,7 @@
       "orders": 2,
       "unique_users": 2,
       "paid_orders": 2,
-      "paid_revenue": 518412.0
+      "paid_revenue": 516514.0
     },
     {
       "date": "2026-01-20",
@@ -1030,7 +1050,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 179232.0
+      "paid_revenue": 178406.0
     },
     {
       "date": "2026-01-20",
@@ -1080,7 +1100,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 498562.0
+      "paid_revenue": 496260.0
     },
     {
       "date": "2026-01-20",
@@ -1090,7 +1110,7 @@
       "orders": 3,
       "unique_users": 3,
       "paid_orders": 3,
-      "paid_revenue": 588490.0
+      "paid_revenue": 588998.0
     },
     {
       "date": "2026-01-20",
@@ -1140,7 +1160,7 @@
       "orders": 8,
       "unique_users": 8,
       "paid_orders": 8,
-      "paid_revenue": 1102252.0
+      "paid_revenue": 1101895.0
     },
     {
       "date": "2026-01-20",
@@ -1200,7 +1220,7 @@
       "orders": 4,
       "unique_users": 4,
       "paid_orders": 4,
-      "paid_revenue": 964239.0
+      "paid_revenue": 961618.0
     },
     {
       "date": "2026-01-20",
@@ -1320,7 +1340,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 239673.0
+      "paid_revenue": 242885.0
     },
     {
       "date": "2026-01-20",
@@ -1650,7 +1670,7 @@
       "orders": 9,
       "unique_users": 8,
       "paid_orders": 9,
-      "paid_revenue": 1509562.0
+      "paid_revenue": 1509225.0
     },
     {
       "date": "2026-01-21",
@@ -1660,7 +1680,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 238999.0
+      "paid_revenue": 242201.0
     },
     {
       "date": "2026-01-21",
@@ -1687,10 +1707,10 @@
       "variant": "b",
       "tour_operator": "Biblio Globus",
       "platform": "ios",
-      "orders": 14,
-      "unique_users": 14,
-      "paid_orders": 14,
-      "paid_revenue": 1708681.0
+      "orders": 15,
+      "unique_users": 15,
+      "paid_orders": 15,
+      "paid_revenue": 1939939.0
     },
     {
       "date": "2026-01-21",
@@ -1869,8 +1889,8 @@
       "platform": "desktop",
       "orders": 5,
       "unique_users": 5,
-      "paid_orders": 5,
-      "paid_revenue": 916463.0
+      "paid_orders": 4,
+      "paid_revenue": 831357.0
     },
     {
       "date": "2026-01-21",
@@ -2070,7 +2090,7 @@
       "orders": 4,
       "unique_users": 4,
       "paid_orders": 4,
-      "paid_revenue": 718116.0
+      "paid_revenue": 717434.0
     },
     {
       "date": "2026-01-21",
@@ -2097,20 +2117,20 @@
       "variant": "b",
       "tour_operator": "Travelata",
       "platform": "desktop",
-      "orders": 11,
-      "unique_users": 11,
-      "paid_orders": 11,
-      "paid_revenue": 1990140.0
+      "orders": 12,
+      "unique_users": 12,
+      "paid_orders": 12,
+      "paid_revenue": 2555140.0
     },
     {
       "date": "2026-01-21",
       "variant": "b",
       "tour_operator": "Travelata",
       "platform": "ios",
-      "orders": 8,
-      "unique_users": 8,
-      "paid_orders": 8,
-      "paid_revenue": 1657244.0
+      "orders": 9,
+      "unique_users": 9,
+      "paid_orders": 9,
+      "paid_revenue": 2022902.0
     },
     {
       "date": "2026-01-21",
@@ -2150,7 +2170,7 @@
       "orders": 2,
       "unique_users": 2,
       "paid_orders": 2,
-      "paid_revenue": 315561.0
+      "paid_revenue": 315070.0
     },
     {
       "date": "2026-01-22",
@@ -2280,7 +2300,7 @@
       "orders": 4,
       "unique_users": 4,
       "paid_orders": 4,
-      "paid_revenue": 660617.0
+      "paid_revenue": 664153.0
     },
     {
       "date": "2026-01-22",
@@ -2320,7 +2340,7 @@
       "orders": 3,
       "unique_users": 3,
       "paid_orders": 3,
-      "paid_revenue": 336318.0
+      "paid_revenue": 335505.0
     },
     {
       "date": "2026-01-22",
@@ -2330,7 +2350,7 @@
       "orders": 10,
       "unique_users": 9,
       "paid_orders": 10,
-      "paid_revenue": 2289352.0
+      "paid_revenue": 2286935.0
     },
     {
       "date": "2026-01-22",
@@ -2340,7 +2360,7 @@
       "orders": 10,
       "unique_users": 10,
       "paid_orders": 10,
-      "paid_revenue": 2211600.0
+      "paid_revenue": 2216120.0
     },
     {
       "date": "2026-01-22",
@@ -2420,7 +2440,7 @@
       "orders": 8,
       "unique_users": 8,
       "paid_orders": 8,
-      "paid_revenue": 1528490.0
+      "paid_revenue": 1525250.0
     },
     {
       "date": "2026-01-22",
@@ -2430,7 +2450,7 @@
       "orders": 15,
       "unique_users": 9,
       "paid_orders": 15,
-      "paid_revenue": 3033948.0
+      "paid_revenue": 3036416.0
     },
     {
       "date": "2026-01-22",
@@ -2440,7 +2460,7 @@
       "orders": 12,
       "unique_users": 12,
       "paid_orders": 11,
-      "paid_revenue": 2111190.0
+      "paid_revenue": 2113462.0
     },
     {
       "date": "2026-01-22",
@@ -2570,7 +2590,7 @@
       "orders": 3,
       "unique_users": 3,
       "paid_orders": 3,
-      "paid_revenue": 356180.0
+      "paid_revenue": 356114.0
     },
     {
       "date": "2026-01-22",
@@ -2599,8 +2619,8 @@
       "platform": "mobweb",
       "orders": 3,
       "unique_users": 3,
-      "paid_orders": 3,
-      "paid_revenue": 287984.0
+      "paid_orders": 2,
+      "paid_revenue": 127841.0
     },
     {
       "date": "2026-01-22",
@@ -2650,7 +2670,7 @@
       "orders": 11,
       "unique_users": 11,
       "paid_orders": 11,
-      "paid_revenue": 2139831.0
+      "paid_revenue": 2140020.0
     },
     {
       "date": "2026-01-22",
@@ -2710,7 +2730,7 @@
       "orders": 16,
       "unique_users": 16,
       "paid_orders": 16,
-      "paid_revenue": 3002769.0
+      "paid_revenue": 3019434.0
     },
     {
       "date": "2026-01-22",
@@ -2760,7 +2780,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 341808.0
+      "paid_revenue": 346388.0
     },
     {
       "date": "2026-01-23",
@@ -2810,7 +2830,7 @@
       "orders": 2,
       "unique_users": 2,
       "paid_orders": 2,
-      "paid_revenue": 356015.0
+      "paid_revenue": 357721.0
     },
     {
       "date": "2026-01-23",
@@ -2860,7 +2880,7 @@
       "orders": 2,
       "unique_users": 2,
       "paid_orders": 2,
-      "paid_revenue": 387180.0
+      "paid_revenue": 391253.0
     },
     {
       "date": "2026-01-23",
@@ -2869,8 +2889,8 @@
       "platform": "desktop",
       "orders": 10,
       "unique_users": 10,
-      "paid_orders": 10,
-      "paid_revenue": 3170716.0
+      "paid_orders": 9,
+      "paid_revenue": 2994056.0
     },
     {
       "date": "2026-01-23",
@@ -2880,7 +2900,7 @@
       "orders": 14,
       "unique_users": 14,
       "paid_orders": 14,
-      "paid_revenue": 4121532.0
+      "paid_revenue": 4162518.0
     },
     {
       "date": "2026-01-23",
@@ -2897,10 +2917,10 @@
       "variant": "b",
       "tour_operator": "Biblio Globus",
       "platform": "desktop",
-      "orders": 18,
-      "unique_users": 17,
-      "paid_orders": 18,
-      "paid_revenue": 2921335.0
+      "orders": 19,
+      "unique_users": 18,
+      "paid_orders": 19,
+      "paid_revenue": 3238776.0
     },
     {
       "date": "2026-01-23",
@@ -2960,7 +2980,7 @@
       "orders": 7,
       "unique_users": 7,
       "paid_orders": 6,
-      "paid_revenue": 1252020.0
+      "paid_revenue": 1253901.0
     },
     {
       "date": "2026-01-23",
@@ -2970,7 +2990,7 @@
       "orders": 10,
       "unique_users": 10,
       "paid_orders": 10,
-      "paid_revenue": 1677881.0
+      "paid_revenue": 1680592.0
     },
     {
       "date": "2026-01-23",
@@ -2980,7 +3000,7 @@
       "orders": 8,
       "unique_users": 8,
       "paid_orders": 8,
-      "paid_revenue": 1606507.0
+      "paid_revenue": 1610177.0
     },
     {
       "date": "2026-01-23",
@@ -2997,10 +3017,10 @@
       "variant": "b",
       "tour_operator": "ICS Travel Group",
       "platform": "android",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 47151.0
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 524916.0
     },
     {
       "date": "2026-01-23",
@@ -3120,7 +3140,7 @@
       "orders": 14,
       "unique_users": 13,
       "paid_orders": 13,
-      "paid_revenue": 2965741.0
+      "paid_revenue": 2973649.0
     },
     {
       "date": "2026-01-23",
@@ -3130,7 +3150,7 @@
       "orders": 13,
       "unique_users": 12,
       "paid_orders": 13,
-      "paid_revenue": 2243771.0
+      "paid_revenue": 2245049.0
     },
     {
       "date": "2026-01-23",
@@ -3190,7 +3210,7 @@
       "orders": 3,
       "unique_users": 3,
       "paid_orders": 3,
-      "paid_revenue": 412173.0
+      "paid_revenue": 199323.0
     },
     {
       "date": "2026-01-23",
@@ -3200,7 +3220,7 @@
       "orders": 4,
       "unique_users": 4,
       "paid_orders": 4,
-      "paid_revenue": 778382.0
+      "paid_revenue": 783746.0
     },
     {
       "date": "2026-01-23",
@@ -3210,7 +3230,7 @@
       "orders": 6,
       "unique_users": 6,
       "paid_orders": 6,
-      "paid_revenue": 1139524.0
+      "paid_revenue": 1143192.0
     },
     {
       "date": "2026-01-23",
@@ -3220,7 +3240,7 @@
       "orders": 5,
       "unique_users": 5,
       "paid_orders": 5,
-      "paid_revenue": 677717.0
+      "paid_revenue": 682917.0
     },
     {
       "date": "2026-01-23",
@@ -3310,7 +3330,7 @@
       "orders": 3,
       "unique_users": 3,
       "paid_orders": 3,
-      "paid_revenue": 940248.0
+      "paid_revenue": 949201.0
     },
     {
       "date": "2026-01-24",
@@ -3365,6 +3385,16 @@
     {
       "date": "2026-01-24",
       "variant": "a",
+      "tour_operator": "Let’s Fly",
+      "platform": "desktop",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 187168.0
+    },
+    {
+      "date": "2026-01-24",
+      "variant": "a",
       "tour_operator": "Pegas Touristik",
       "platform": "android",
       "orders": 1,
@@ -3380,7 +3410,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 271182.0
+      "paid_revenue": 273055.0
     },
     {
       "date": "2026-01-24",
@@ -3410,7 +3440,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 191979.0
+      "paid_revenue": 194553.0
     },
     {
       "date": "2026-01-24",
@@ -3460,7 +3490,7 @@
       "orders": 9,
       "unique_users": 9,
       "paid_orders": 9,
-      "paid_revenue": 1782945.0
+      "paid_revenue": 1794009.0
     },
     {
       "date": "2026-01-24",
@@ -3470,17 +3500,17 @@
       "orders": 3,
       "unique_users": 3,
       "paid_orders": 3,
-      "paid_revenue": 620982.0
+      "paid_revenue": 628078.0
     },
     {
       "date": "2026-01-24",
       "variant": "b",
       "tour_operator": "Anex",
       "platform": "ios",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 66015.0
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 461821.0
     },
     {
       "date": "2026-01-24",
@@ -3490,7 +3520,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 279618.0
+      "paid_revenue": 283365.0
     },
     {
       "date": "2026-01-24",
@@ -3500,27 +3530,27 @@
       "orders": 11,
       "unique_users": 10,
       "paid_orders": 11,
-      "paid_revenue": 1777810.0
+      "paid_revenue": 1778094.0
     },
     {
       "date": "2026-01-24",
       "variant": "b",
       "tour_operator": "Biblio Globus",
       "platform": "desktop",
-      "orders": 13,
-      "unique_users": 13,
-      "paid_orders": 13,
-      "paid_revenue": 2900146.0
+      "orders": 14,
+      "unique_users": 14,
+      "paid_orders": 14,
+      "paid_revenue": 3213504.0
     },
     {
       "date": "2026-01-24",
       "variant": "b",
       "tour_operator": "Biblio Globus",
       "platform": "ios",
-      "orders": 14,
-      "unique_users": 13,
-      "paid_orders": 14,
-      "paid_revenue": 2453692.0
+      "orders": 15,
+      "unique_users": 14,
+      "paid_orders": 15,
+      "paid_revenue": 2684511.0
     },
     {
       "date": "2026-01-24",
@@ -3560,7 +3590,7 @@
       "orders": 5,
       "unique_users": 5,
       "paid_orders": 5,
-      "paid_revenue": 1200951.0
+      "paid_revenue": 1206885.0
     },
     {
       "date": "2026-01-24",
@@ -3570,7 +3600,7 @@
       "orders": 8,
       "unique_users": 8,
       "paid_orders": 8,
-      "paid_revenue": 1448197.0
+      "paid_revenue": 1450372.0
     },
     {
       "date": "2026-01-24",
@@ -3685,12 +3715,32 @@
     {
       "date": "2026-01-24",
       "variant": "b",
+      "tour_operator": "PAKS",
+      "platform": "android",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 204085.0
+    },
+    {
+      "date": "2026-01-24",
+      "variant": "b",
+      "tour_operator": "PAKS",
+      "platform": "ios",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 229172.0
+    },
+    {
+      "date": "2026-01-24",
+      "variant": "b",
       "tour_operator": "Pegas Touristik",
       "platform": "android",
       "orders": 3,
       "unique_users": 3,
       "paid_orders": 3,
-      "paid_revenue": 591948.0
+      "paid_revenue": 595324.0
     },
     {
       "date": "2026-01-24",
@@ -3700,17 +3750,17 @@
       "orders": 7,
       "unique_users": 7,
       "paid_orders": 7,
-      "paid_revenue": 1831489.0
+      "paid_revenue": 1835790.0
     },
     {
       "date": "2026-01-24",
       "variant": "b",
       "tour_operator": "Pegas Touristik",
       "platform": "ios",
-      "orders": 9,
-      "unique_users": 9,
-      "paid_orders": 9,
-      "paid_revenue": 1405075.0
+      "orders": 10,
+      "unique_users": 10,
+      "paid_orders": 10,
+      "paid_revenue": 1772599.0
     },
     {
       "date": "2026-01-24",
@@ -3740,7 +3790,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 159660.0
+      "paid_revenue": 170874.0
     },
     {
       "date": "2026-01-24",
@@ -3780,7 +3830,7 @@
       "orders": 7,
       "unique_users": 7,
       "paid_orders": 7,
-      "paid_revenue": 1127690.0
+      "paid_revenue": 1136156.0
     },
     {
       "date": "2026-01-24",
@@ -3800,7 +3850,7 @@
       "orders": 3,
       "unique_users": 3,
       "paid_orders": 3,
-      "paid_revenue": 432764.0
+      "paid_revenue": 437015.0
     },
     {
       "date": "2026-01-24",
@@ -3890,7 +3940,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 291474.0
+      "paid_revenue": 293515.0
     },
     {
       "date": "2026-01-25",
@@ -3960,7 +4010,7 @@
       "orders": 2,
       "unique_users": 2,
       "paid_orders": 2,
-      "paid_revenue": 301294.0
+      "paid_revenue": 302612.0
     },
     {
       "date": "2026-01-25",
@@ -4010,7 +4060,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 130383.0
+      "paid_revenue": 132130.0
     },
     {
       "date": "2026-01-25",
@@ -4020,7 +4070,7 @@
       "orders": 5,
       "unique_users": 5,
       "paid_orders": 5,
-      "paid_revenue": 1058532.0
+      "paid_revenue": 1063589.0
     },
     {
       "date": "2026-01-25",
@@ -4030,7 +4080,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 125730.0
+      "paid_revenue": 127414.0
     },
     {
       "date": "2026-01-25",
@@ -4040,7 +4090,7 @@
       "orders": 2,
       "unique_users": 2,
       "paid_orders": 2,
-      "paid_revenue": 380178.0
+      "paid_revenue": 384412.0
     },
     {
       "date": "2026-01-25",
@@ -4060,7 +4110,7 @@
       "orders": 2,
       "unique_users": 2,
       "paid_orders": 2,
-      "paid_revenue": 453353.0
+      "paid_revenue": 453671.0
     },
     {
       "date": "2026-01-25",
@@ -4110,7 +4160,7 @@
       "orders": 10,
       "unique_users": 8,
       "paid_orders": 9,
-      "paid_revenue": 1968235.0
+      "paid_revenue": 1974305.0
     },
     {
       "date": "2026-01-25",
@@ -4120,7 +4170,7 @@
       "orders": 2,
       "unique_users": 2,
       "paid_orders": 2,
-      "paid_revenue": 600590.0
+      "paid_revenue": 602467.0
     },
     {
       "date": "2026-01-25",
@@ -4130,17 +4180,17 @@
       "orders": 7,
       "unique_users": 6,
       "paid_orders": 7,
-      "paid_revenue": 2004372.0
+      "paid_revenue": 2006553.0
     },
     {
       "date": "2026-01-25",
       "variant": "b",
       "tour_operator": "Biblio Globus",
       "platform": "android",
-      "orders": 8,
-      "unique_users": 8,
-      "paid_orders": 8,
-      "paid_revenue": 1170039.0
+      "orders": 10,
+      "unique_users": 10,
+      "paid_orders": 10,
+      "paid_revenue": 1692175.0
     },
     {
       "date": "2026-01-25",
@@ -4150,7 +4200,7 @@
       "orders": 25,
       "unique_users": 22,
       "paid_orders": 25,
-      "paid_revenue": 4007155.0
+      "paid_revenue": 4007558.0
     },
     {
       "date": "2026-01-25",
@@ -4160,7 +4210,7 @@
       "orders": 13,
       "unique_users": 13,
       "paid_orders": 13,
-      "paid_revenue": 2222581.0
+      "paid_revenue": 2225226.0
     },
     {
       "date": "2026-01-25",
@@ -4180,7 +4230,7 @@
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 133308.0
+      "paid_revenue": 133468.0
     },
     {
       "date": "2026-01-25",
@@ -4197,10 +4247,10 @@
       "variant": "b",
       "tour_operator": "FUN&SUN",
       "platform": "android",
-      "orders": 3,
-      "unique_users": 3,
-      "paid_orders": 3,
-      "paid_revenue": 849087.0
+      "orders": 4,
+      "unique_users": 4,
+      "paid_orders": 4,
+      "paid_revenue": 996870.0
     },
     {
       "date": "2026-01-25",
@@ -4210,7 +4260,7 @@
       "orders": 2,
       "unique_users": 2,
       "paid_orders": 2,
-      "paid_revenue": 497240.0
+      "paid_revenue": 498667.0
     },
     {
       "date": "2026-01-25",
@@ -4247,30 +4297,30 @@
       "variant": "b",
       "tour_operator": "ICS Travel Group",
       "platform": "desktop",
-      "orders": 3,
-      "unique_users": 3,
-      "paid_orders": 3,
-      "paid_revenue": 499380.0
+      "orders": 5,
+      "unique_users": 5,
+      "paid_orders": 5,
+      "paid_revenue": 1096380.0
     },
     {
       "date": "2026-01-25",
       "variant": "b",
       "tour_operator": "ICS Travel Group",
       "platform": "ios",
-      "orders": 2,
-      "unique_users": 2,
-      "paid_orders": 2,
-      "paid_revenue": 374717.0
+      "orders": 3,
+      "unique_users": 3,
+      "paid_orders": 3,
+      "paid_revenue": 543165.0
     },
     {
       "date": "2026-01-25",
       "variant": "b",
       "tour_operator": "ICS Travel Group",
       "platform": "mobweb",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 258180.0
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 441434.0
     },
     {
       "date": "2026-01-25",
@@ -4287,20 +4337,20 @@
       "variant": "b",
       "tour_operator": "Intourist",
       "platform": "desktop",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 238814.0
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 499468.0
     },
     {
       "date": "2026-01-25",
       "variant": "b",
       "tour_operator": "Intourist",
       "platform": "ios",
-      "orders": 3,
-      "unique_users": 3,
-      "paid_orders": 3,
-      "paid_revenue": 476167.0
+      "orders": 4,
+      "unique_users": 4,
+      "paid_orders": 4,
+      "paid_revenue": 592675.0
     },
     {
       "date": "2026-01-25",
@@ -4317,10 +4367,10 @@
       "variant": "b",
       "tour_operator": "Let’s Fly",
       "platform": "desktop",
-      "orders": 3,
-      "unique_users": 3,
-      "paid_orders": 3,
-      "paid_revenue": 576893.0
+      "orders": 4,
+      "unique_users": 4,
+      "paid_orders": 4,
+      "paid_revenue": 619558.0
     },
     {
       "date": "2026-01-25",
@@ -4341,6 +4391,16 @@
       "unique_users": 2,
       "paid_orders": 2,
       "paid_revenue": 207675.0
+    },
+    {
+      "date": "2026-01-25",
+      "variant": "b",
+      "tour_operator": "One Touch Travel",
+      "platform": "android",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 154214.0
     },
     {
       "date": "2026-01-25",
@@ -4377,10 +4437,10 @@
       "variant": "b",
       "tour_operator": "Pegas Touristik",
       "platform": "android",
-      "orders": 4,
-      "unique_users": 4,
-      "paid_orders": 4,
-      "paid_revenue": 556787.0
+      "orders": 7,
+      "unique_users": 6,
+      "paid_orders": 7,
+      "paid_revenue": 1137692.0
     },
     {
       "date": "2026-01-25",
@@ -4390,7 +4450,7 @@
       "orders": 13,
       "unique_users": 13,
       "paid_orders": 12,
-      "paid_revenue": 2267672.0
+      "paid_revenue": 2271261.0
     },
     {
       "date": "2026-01-25",
@@ -4400,37 +4460,47 @@
       "orders": 3,
       "unique_users": 3,
       "paid_orders": 3,
-      "paid_revenue": 688072.0
+      "paid_revenue": 690554.0
     },
     {
       "date": "2026-01-25",
       "variant": "b",
       "tour_operator": "RussianExpress",
       "platform": "ios",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 377515.0
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 643063.0
     },
     {
       "date": "2026-01-25",
       "variant": "b",
       "tour_operator": "Space Travel",
       "platform": "android",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 209348.0
+      "orders": 5,
+      "unique_users": 5,
+      "paid_orders": 5,
+      "paid_revenue": 715446.0
     },
     {
       "date": "2026-01-25",
       "variant": "b",
       "tour_operator": "Space Travel",
       "platform": "desktop",
-      "orders": 5,
-      "unique_users": 4,
-      "paid_orders": 5,
-      "paid_revenue": 1023825.0
+      "orders": 8,
+      "unique_users": 7,
+      "paid_orders": 8,
+      "paid_revenue": 1553176.0
+    },
+    {
+      "date": "2026-01-25",
+      "variant": "b",
+      "tour_operator": "Space Travel",
+      "platform": "ios",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 216386.0
     },
     {
       "date": "2026-01-25",
@@ -4450,7 +4520,7 @@
       "orders": 9,
       "unique_users": 6,
       "paid_orders": 9,
-      "paid_revenue": 1346135.0
+      "paid_revenue": 1347998.0
     },
     {
       "date": "2026-01-25",
@@ -4460,7 +4530,7 @@
       "orders": 8,
       "unique_users": 8,
       "paid_orders": 8,
-      "paid_revenue": 1263234.0
+      "paid_revenue": 1264646.0
     },
     {
       "date": "2026-01-25",
@@ -4486,6 +4556,16 @@
       "date": "2026-01-25",
       "variant": "b",
       "tour_operator": "Tez Tour",
+      "platform": "desktop",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 307717.0
+    },
+    {
+      "date": "2026-01-25",
+      "variant": "b",
+      "tour_operator": "Tez Tour",
       "platform": "mobweb",
       "orders": 1,
       "unique_users": 1,
@@ -4497,20 +4577,20 @@
       "variant": "b",
       "tour_operator": "Travelata",
       "platform": "android",
-      "orders": 9,
-      "unique_users": 9,
-      "paid_orders": 9,
-      "paid_revenue": 1675315.0
+      "orders": 10,
+      "unique_users": 10,
+      "paid_orders": 10,
+      "paid_revenue": 1803782.0
     },
     {
       "date": "2026-01-25",
       "variant": "b",
       "tour_operator": "Travelata",
       "platform": "desktop",
-      "orders": 8,
-      "unique_users": 8,
-      "paid_orders": 8,
-      "paid_revenue": 1419165.0
+      "orders": 9,
+      "unique_users": 9,
+      "paid_orders": 9,
+      "paid_revenue": 1732409.0
     },
     {
       "date": "2026-01-25",
@@ -4545,204 +4625,614 @@
     {
       "date": "2026-01-26",
       "variant": "a",
-      "tour_operator": "Travelata",
-      "platform": "ios",
+      "tour_operator": "Pegas Touristik",
+      "platform": "desktop",
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 89009.0
+      "paid_revenue": 77521.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "a",
+      "tour_operator": "Sunmar",
+      "platform": "android",
+      "orders": 2,
+      "unique_users": 1,
+      "paid_orders": 2,
+      "paid_revenue": 318689.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "a",
+      "tour_operator": "Travelata",
+      "platform": "android",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 242131.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "a",
+      "tour_operator": "Travelata",
+      "platform": "desktop",
+      "orders": 3,
+      "unique_users": 3,
+      "paid_orders": 3,
+      "paid_revenue": 533478.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "a",
+      "tour_operator": "Travelata",
+      "platform": "ios",
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 194741.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Anex",
       "platform": "android",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 351230.0
+      "orders": 5,
+      "unique_users": 5,
+      "paid_orders": 5,
+      "paid_revenue": 990695.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Anex",
+      "platform": "desktop",
+      "orders": 7,
+      "unique_users": 5,
+      "paid_orders": 7,
+      "paid_revenue": 1539049.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Anex",
       "platform": "ios",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 385565.0
+      "orders": 5,
+      "unique_users": 5,
+      "paid_orders": 5,
+      "paid_revenue": 1356508.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Biblio Globus",
+      "platform": "android",
+      "orders": 9,
+      "unique_users": 9,
+      "paid_orders": 9,
+      "paid_revenue": 1465871.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Biblio Globus",
       "platform": "desktop",
-      "orders": 4,
-      "unique_users": 4,
-      "paid_orders": 4,
-      "paid_revenue": 585862.0
+      "orders": 12,
+      "unique_users": 11,
+      "paid_orders": 12,
+      "paid_revenue": 2331583.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Biblio Globus",
+      "platform": "ios",
+      "orders": 7,
+      "unique_users": 7,
+      "paid_orders": 7,
+      "paid_revenue": 1748978.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Biblio Globus",
+      "platform": "mobweb",
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 412701.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "FUN&SUN",
+      "platform": "android",
+      "orders": 6,
+      "unique_users": 6,
+      "paid_orders": 6,
+      "paid_revenue": 1329741.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "FUN&SUN",
+      "platform": "desktop",
+      "orders": 11,
+      "unique_users": 11,
+      "paid_orders": 11,
+      "paid_revenue": 2682554.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "FUN&SUN",
       "platform": "ios",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 127664.0
+      "orders": 9,
+      "unique_users": 9,
+      "paid_orders": 9,
+      "paid_revenue": 2474081.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "FUN&SUN",
+      "platform": "mobweb",
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 194631.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "ICS Travel Group",
       "platform": "android",
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 240595.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "ICS Travel Group",
+      "platform": "desktop",
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 174682.0
+      "paid_revenue": 197177.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Intourist",
       "platform": "android",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 110699.0
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 555360.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Intourist",
       "platform": "desktop",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 66881.0
+      "orders": 5,
+      "unique_users": 5,
+      "paid_orders": 5,
+      "paid_revenue": 605007.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Intourist",
       "platform": "ios",
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 170967.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Intourist",
+      "platform": "mobweb",
+      "orders": 3,
+      "unique_users": 3,
+      "paid_orders": 3,
+      "paid_revenue": 393581.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Let’s Fly",
+      "platform": "android",
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 99561.0
+      "paid_revenue": 186425.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Let’s Fly",
+      "platform": "ios",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 154623.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "One Touch Travel",
+      "platform": "android",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 173826.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "One Touch Travel",
+      "platform": "ios",
+      "orders": 3,
+      "unique_users": 2,
+      "paid_orders": 3,
+      "paid_revenue": 760783.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Pegas Touristik",
+      "platform": "android",
+      "orders": 7,
+      "unique_users": 6,
+      "paid_orders": 7,
+      "paid_revenue": 1499345.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Pegas Touristik",
       "platform": "desktop",
+      "orders": 7,
+      "unique_users": 6,
+      "paid_orders": 7,
+      "paid_revenue": 1525003.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Pegas Touristik",
+      "platform": "ios",
+      "orders": 5,
+      "unique_users": 5,
+      "paid_orders": 5,
+      "paid_revenue": 1192968.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Pegas Touristik",
+      "platform": "mobweb",
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 372016.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "RussianExpress",
+      "platform": "desktop",
       "orders": 1,
       "unique_users": 1,
       "paid_orders": 1,
-      "paid_revenue": 211709.0
+      "paid_revenue": 169057.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Space Travel",
+      "platform": "desktop",
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 327511.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Space Travel",
       "platform": "ios",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 123169.0
+      "orders": 4,
+      "unique_users": 4,
+      "paid_orders": 4,
+      "paid_revenue": 890648.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Sunmar",
+      "platform": "android",
+      "orders": 3,
+      "unique_users": 3,
+      "paid_orders": 3,
+      "paid_revenue": 698539.0
+    },
+    {
+      "date": "2026-01-26",
+      "variant": "b",
+      "tour_operator": "Sunmar",
+      "platform": "desktop",
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 250330.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Sunmar",
       "platform": "mobweb",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 158174.0
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 318257.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Travelata",
       "platform": "android",
-      "orders": 1,
-      "unique_users": 1,
-      "paid_orders": 1,
-      "paid_revenue": 107674.0
+      "orders": 7,
+      "unique_users": 7,
+      "paid_orders": 7,
+      "paid_revenue": 1235850.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Travelata",
       "platform": "desktop",
-      "orders": 4,
-      "unique_users": 4,
-      "paid_orders": 4,
-      "paid_revenue": 582045.0
+      "orders": 18,
+      "unique_users": 18,
+      "paid_orders": 18,
+      "paid_revenue": 2499665.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Travelata",
       "platform": "ios",
-      "orders": 5,
-      "unique_users": 5,
-      "paid_orders": 5,
-      "paid_revenue": 441479.0
+      "orders": 17,
+      "unique_users": 17,
+      "paid_orders": 17,
+      "paid_revenue": 1937228.0
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "tour_operator": "Travelata",
       "platform": "mobweb",
+      "orders": 9,
+      "unique_users": 9,
+      "paid_orders": 9,
+      "paid_revenue": 1441453.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "a",
+      "tour_operator": "Sunmar",
+      "platform": "android",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 116822.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "a",
+      "tour_operator": "Travelata",
+      "platform": "desktop",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 36330.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "Biblio Globus",
+      "platform": "desktop",
       "orders": 2,
       "unique_users": 2,
       "paid_orders": 2,
-      "paid_revenue": 551598.0
+      "paid_revenue": 297867.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "FUN&SUN",
+      "platform": "android",
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 286516.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "FUN&SUN",
+      "platform": "desktop",
+      "orders": 4,
+      "unique_users": 4,
+      "paid_orders": 4,
+      "paid_revenue": 958336.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "FUN&SUN",
+      "platform": "ios",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 169034.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "FUN&SUN",
+      "platform": "mobweb",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 56964.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "Intourist",
+      "platform": "android",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 225934.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "Pegas Touristik",
+      "platform": "android",
+      "orders": 3,
+      "unique_users": 3,
+      "paid_orders": 3,
+      "paid_revenue": 533612.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "Pegas Touristik",
+      "platform": "desktop",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 104879.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "Pegas Touristik",
+      "platform": "ios",
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 251222.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "Space Travel",
+      "platform": "android",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 134973.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "Sunmar",
+      "platform": "android",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 133689.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "Sunmar",
+      "platform": "ios",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 210530.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "Travelata",
+      "platform": "android",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 258000.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "Travelata",
+      "platform": "desktop",
+      "orders": 1,
+      "unique_users": 1,
+      "paid_orders": 1,
+      "paid_revenue": 318986.0
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "tour_operator": "Travelata",
+      "platform": "ios",
+      "orders": 2,
+      "unique_users": 2,
+      "paid_orders": 2,
+      "paid_revenue": 69775.0
     }
   ],
   "search_users": [
     {
       "variant": "a",
       "platform": "android",
-      "unique_users_search": 7210
+      "unique_users_search": 8123
     },
     {
       "variant": "a",
       "platform": "desktop",
-      "unique_users_search": 8733
+      "unique_users_search": 9760
     },
     {
       "variant": "a",
       "platform": "ios",
-      "unique_users_search": 9113
+      "unique_users_search": 10103
     },
     {
       "variant": "a",
       "platform": "mobweb",
-      "unique_users_search": 17187
+      "unique_users_search": 19307
     },
     {
       "variant": "b",
       "platform": "android",
-      "unique_users_search": 65136
+      "unique_users_search": 73184
     },
     {
       "variant": "b",
       "platform": "desktop",
-      "unique_users_search": 79165
+      "unique_users_search": 88600
     },
     {
       "variant": "b",
       "platform": "ios",
-      "unique_users_search": 81714
+      "unique_users_search": 90724
     },
     {
       "variant": "b",
       "platform": "mobweb",
-      "unique_users_search": 155422
+      "unique_users_search": 174814
     }
   ],
   "daily_search_users": [
@@ -4780,7 +5270,7 @@
       "date": "2026-01-20",
       "variant": "b",
       "platform": "desktop",
-      "unique_users_search": 6956
+      "unique_users_search": 6957
     },
     {
       "date": "2026-01-20",
@@ -4804,7 +5294,7 @@
       "date": "2026-01-21",
       "variant": "a",
       "platform": "desktop",
-      "unique_users_search": 2478
+      "unique_users_search": 2479
     },
     {
       "date": "2026-01-21",
@@ -4924,13 +5414,13 @@
       "date": "2026-01-23",
       "variant": "b",
       "platform": "desktop",
-      "unique_users_search": 17695
+      "unique_users_search": 17698
     },
     {
       "date": "2026-01-23",
       "variant": "b",
       "platform": "ios",
-      "unique_users_search": 21174
+      "unique_users_search": 21175
     },
     {
       "date": "2026-01-23",
@@ -4972,13 +5462,13 @@
       "date": "2026-01-24",
       "variant": "b",
       "platform": "desktop",
-      "unique_users_search": 10492
+      "unique_users_search": 10494
     },
     {
       "date": "2026-01-24",
       "variant": "b",
       "platform": "ios",
-      "unique_users_search": 20650
+      "unique_users_search": 20651
     },
     {
       "date": "2026-01-24",
@@ -4996,7 +5486,7 @@
       "date": "2026-01-25",
       "variant": "a",
       "platform": "desktop",
-      "unique_users_search": 1255
+      "unique_users_search": 1256
     },
     {
       "date": "2026-01-25",
@@ -5020,7 +5510,7 @@
       "date": "2026-01-25",
       "variant": "b",
       "platform": "desktop",
-      "unique_users_search": 11421
+      "unique_users_search": 11426
     },
     {
       "date": "2026-01-25",
@@ -5032,55 +5522,103 @@
       "date": "2026-01-25",
       "variant": "b",
       "platform": "mobweb",
-      "unique_users_search": 32855
+      "unique_users_search": 32856
     },
     {
       "date": "2026-01-26",
       "variant": "a",
       "platform": "android",
-      "unique_users_search": 1099
+      "unique_users_search": 2581
     },
     {
       "date": "2026-01-26",
       "variant": "a",
       "platform": "desktop",
-      "unique_users_search": 1334
+      "unique_users_search": 2283
     },
     {
       "date": "2026-01-26",
       "variant": "a",
       "platform": "ios",
-      "unique_users_search": 1325
+      "unique_users_search": 2813
     },
     {
       "date": "2026-01-26",
       "variant": "a",
       "platform": "mobweb",
-      "unique_users_search": 1579
+      "unique_users_search": 3462
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "platform": "android",
-      "unique_users_search": 9418
+      "unique_users_search": 22767
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "platform": "desktop",
-      "unique_users_search": 12293
+      "unique_users_search": 21109
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "platform": "ios",
-      "unique_users_search": 11812
+      "unique_users_search": 25274
     },
     {
       "date": "2026-01-26",
       "variant": "b",
       "platform": "mobweb",
-      "unique_users_search": 14113
+      "unique_users_search": 31406
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "a",
+      "platform": "android",
+      "unique_users_search": 611
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "a",
+      "platform": "desktop",
+      "unique_users_search": 616
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "a",
+      "platform": "ios",
+      "unique_users_search": 707
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "a",
+      "platform": "mobweb",
+      "unique_users_search": 912
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "platform": "android",
+      "unique_users_search": 5409
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "platform": "desktop",
+      "unique_users_search": 5671
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "platform": "ios",
+      "unique_users_search": 6700
+    },
+    {
+      "date": "2026-01-27",
+      "variant": "b",
+      "platform": "mobweb",
+      "unique_users_search": 8532
     }
   ],
   "dates": [
@@ -5090,6 +5628,7 @@
     "2026-01-23",
     "2026-01-24",
     "2026-01-25",
-    "2026-01-26"
+    "2026-01-26",
+    "2026-01-27"
   ]
 }
