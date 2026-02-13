@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Анализ продаж — 01.10.2025–14.02.2026 vs 01.10.2024–14.02.2025</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+    :root {
+        --bg: #0f1923;
+        --card: #1a2634;
+        --border: #2a3a4a;
+        --text: #e0e0e0;
+        --text-dim: #7a8a9a;
+        --accent: #4fc3f7;
+        --positive: #66bb6a;
+        --negative: #ef5350;
+        --warning: #ffa726;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        background: var(--bg); color: var(--text);
+        padding: 24px; line-height: 1.5;
+    }
+    h1 { font-size: 1.5rem; color: #fff; margin-bottom: 2px; }
+    .subtitle { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 20px; }
+    h2 {
+        font-size: 1.15rem; margin: 36px 0 16px; padding-bottom: 8px;
+        border-bottom: 1px solid var(--border); color: var(--accent);
+    }
+    h3 { font-size: 1rem; color: #fff; display: inline; }
+    h4 {
+        font-size: 0.78rem; color: var(--text-dim); margin-bottom: 6px;
+        text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    .nav {
+        display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+        position: sticky; top: 0; z-index: 10; background: var(--bg);
+        padding: 8px 0; border-bottom: 1px solid var(--border);
+    }
+    .nav a {
+        padding: 5px 14px; background: var(--card); border: 1px solid var(--border);
+        border-radius: 6px; color: var(--accent); text-decoration: none; font-size: 0.8rem;
+    }
+    .nav a:hover { background: rgba(79,195,247,0.12); }
+
+    .kpi-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px; margin-bottom: 24px;
+    }
+    .kpi {
+        background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+        padding: 14px; text-align: center;
+    }
+    .kpi-value { font-size: 1.6rem; font-weight: 700; color: #fff; }
+    .kpi-label { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+    .kpi-prev { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+    .kpi-change { font-size: 0.85rem; margin-top: 4px; }
+
+    .insights-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .insight {
+        display: flex; gap: 12px; align-items: flex-start; padding: 12px 16px;
+        background: var(--card); border-radius: 8px; border-left: 4px solid var(--border);
+    }
+    .insight-positive { border-left-color: var(--positive); }
+    .insight-negative { border-left-color: var(--negative); }
+    .insight-warning { border-left-color: var(--warning); }
+    .insight-info { border-left-color: var(--accent); }
+    .insight-icon { color: var(--text-dim); flex-shrink: 0; padding-top: 2px; }
+    .insight-positive .insight-icon { color: var(--positive); }
+    .insight-negative .insight-icon { color: var(--negative); }
+    .insight-warning .insight-icon { color: var(--warning); }
+    .insight-info .insight-icon { color: var(--accent); }
+    .insight-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 2px; }
+    .insight-text { font-size: 0.85rem; color: var(--text-dim); }
+    .insight-text b { color: var(--text); }
+
+    .charts-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;
+    }
+    .chart-card {
+        background: var(--card); border: 1px solid var(--border);
+        border-radius: 8px; padding: 16px;
+    }
+    .chart-card h4 { margin-bottom: 10px; }
+    .chart-card canvas { max-height: 340px; }
+    .chart-card.full-width { grid-column: 1 / -1; }
+
+    .outliers-box {
+        margin-top: 12px; padding: 10px 14px;
+        background: rgba(255,255,255,0.03); border: 1px dashed var(--border);
+        border-radius: 6px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    }
+    .outliers-title {
+        font-size: 0.8rem; color: var(--text-dim); font-weight: 600; margin-right: 4px;
+    }
+    .outlier-badge {
+        display: inline-block; padding: 3px 10px; border-radius: 12px;
+        font-size: 0.8rem; white-space: nowrap;
+    }
+    .outlier-badge.new {
+        background: rgba(79,195,247,0.15); color: #4fc3f7; border: 1px solid rgba(79,195,247,0.3);
+    }
+    .outlier-badge.growth {
+        background: rgba(102,187,106,0.12); color: #66bb6a; border: 1px solid rgba(102,187,106,0.3);
+    }
+    .outlier-badge.decline {
+        background: rgba(239,83,80,0.12); color: #ef5350; border: 1px solid rgba(239,83,80,0.3);
+    }
+    .outlier-badge b { font-weight: 700; }
+
+    /* Tables */
+    .table-scroll { overflow-x: auto; margin-bottom: 16px; }
+    table { border-collapse: collapse; width: 100%; font-size: 0.8rem; white-space: nowrap; }
+    th, td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+    th {
+        background: #16202c; color: var(--text-dim); font-weight: 600;
+        text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.3px;
+        position: sticky; top: 0; z-index: 2;
+    }
+    .subheader th { font-size: 0.65rem; color: var(--text-dim); font-weight: 400; }
+    .sticky-col {
+        position: sticky; left: 0; z-index: 3;
+        background: var(--card); min-width: 140px;
+    }
+    thead .sticky-col { background: #16202c; z-index: 4; }
+    .dim-name { font-weight: 500; color: #fff; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .pct { text-align: right; }
+    .total { border-top: 2px solid var(--accent); }
+    .total td { padding-top: 8px; }
+    .positive { color: var(--positive); }
+    .negative { color: var(--negative); }
+    .zero { color: var(--text-dim); }
+    .na { color: var(--text-dim); }
+
+    /* Heatmap */
+    .heatmap-table { font-size: 0.75rem; }
+    .heatmap-table th { font-size: 0.65rem; min-width: 70px; text-align: center; }
+    .heat-cell { text-align: center; font-weight: 500; padding: 5px 6px; }
+    .heat-empty { color: var(--text-dim); }
+    .heat-new { color: var(--accent); background: rgba(79,195,247,0.08); }
+    .heat-strong-pos { color: #2e7d32; background: rgba(102,187,106,0.25); }
+    .heat-pos { color: var(--positive); background: rgba(102,187,106,0.1); }
+    .heat-neg { color: var(--negative); background: rgba(239,83,80,0.1); }
+    .heat-strong-neg { color: #c62828; background: rgba(239,83,80,0.25); }
+
+    .method-box {
+        background: var(--card); border: 1px solid var(--border);
+        border-radius: 8px; padding: 16px; margin-bottom: 16px;
+        font-size: 0.8rem; color: var(--text-dim);
+    }
+    .method-box h4 { margin-bottom: 8px; }
+    .method-box code { color: var(--accent); font-size: 0.75rem; }
+    .method-box ul { margin-left: 20px; }
+    .method-box li { margin-bottom: 4px; }
+
+    @media (max-width: 900px) {
+        .charts-grid { grid-template-columns: 1fr; }
+        .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+</style>
+</head>
+<body>
+
+<h1>Анализ продаж по туроператорам</h1>
+<p class="subtitle">
+    01.10.2025–14.02.2026 vs 01.10.2024–14.02.2025 | Сгенерировано: 2026-02-13 12:24<br>
+    Источник: ClickHouse, Backend_data.urs_report_raw | Методология: argMax, state IN (13,14,31), firstpaymentdate
+</p>
+
+<div class="nav">
+    <a href="#kpi">KPI</a>
+    <a href="#insights">Инсайты</a>
+    <a href="#operators">По ТО</a>
+    <a href="#countries">По странам</a>
+    <a href="#cities">По городам</a>
+    <a href="#crosstab">ТО × Страна</a>
+    <a href="#prices">Цены</a>
+    <a href="#assortment">Ассортимент</a>
+    <a href="#methodology">Методология</a>
+</div>
+
+<!-- KPI Cards -->
+<div id="kpi" class="kpi-grid">
+    <div class="kpi">
+        <div class="kpi-label">Заказы</div>
+        <div class="kpi-value">37,074</div>
+        <div class="kpi-prev">01.10.2024–14.02.2025: 34,338</div>
+        <div class="kpi-change"><span class="positive">+8.0%</span></div>
+    </div>
+    <div class="kpi">
+        <div class="kpi-label">PAX</div>
+        <div class="kpi-value">80,740</div>
+        <div class="kpi-prev">01.10.2024–14.02.2025: 73,809</div>
+        <div class="kpi-change"><span class="positive">+9.4%</span></div>
+    </div>
+    <div class="kpi">
+        <div class="kpi-label">GMV (полная стоим.)</div>
+        <div class="kpi-value">7.2 млрд</div>
+        <div class="kpi-prev">01.10.2024–14.02.2025: 6.7 млрд</div>
+        <div class="kpi-change"><span class="positive">+6.9%</span></div>
+    </div>
+    <div class="kpi">
+        <div class="kpi-label">Ср. чек / PAX</div>
+        <div class="kpi-value">88,742₽</div>
+        <div class="kpi-prev">01.10.2024–14.02.2025: 90,820₽</div>
+        <div class="kpi-change"><span class="negative">-2.3%</span></div>
+    </div>
+    <div class="kpi">
+        <div class="kpi-label">Комиссия (₽)</div>
+        <div class="kpi-value">661.0 млн</div>
+        <div class="kpi-prev">01.10.2024–14.02.2025: 588.5 млн</div>
+        <div class="kpi-change"><span class="positive">+12.3%</span></div>
+    </div>
+    <div class="kpi">
+        <div class="kpi-label">Комиссия %</div>
+        <div class="kpi-value">9.2%</div>
+        <div class="kpi-prev">01.10.2024–14.02.2025: 8.8%</div>
+        <div class="kpi-change"><span class="positive">+4.5%</span></div>
+    </div>
+    <div class="kpi">
+        <div class="kpi-label">Уник. отелей</div>
+        <div class="kpi-value">5,314</div>
+        <div class="kpi-prev">01.10.2024–14.02.2025: 5,017</div>
+    </div>
+    <div class="kpi">
+        <div class="kpi-label">Стран</div>
+        <div class="kpi-value">39</div>
+        <div class="kpi-prev">01.10.2024–14.02.2025: 36</div>
+    </div>
+</div>
+
+<!-- Insights -->
+<h2 id="insights">Ключевые инсайты</h2>
+<div class="insights-grid">
+
+        <div class="insight insight-positive">
+            <div class="insight-icon"><span class="material-symbols-outlined">trending_up</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Общая динамика PAX</div>
+                <div class="insight-text">Октябрь 2025 vs Октябрь 2024: <b>рост PAX на 9.4%</b> (73,809 → 80,740). GMV: <b>+6.9%</b>.</div>
+            </div>
+        </div>
+        <div class="insight insight-negative">
+            <div class="insight-icon"><span class="material-symbols-outlined">payments</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Средний чек (за 1 PAX)</div>
+                <div class="insight-text">Средний чек: <b>90,820₽ → 88,742₽</b> (<b>-2.3%</b>).</div>
+            </div>
+        </div>
+        <div class="insight insight-positive">
+            <div class="insight-icon"><span class="material-symbols-outlined">rocket_launch</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Растущие туроператоры</div>
+                <div class="insight-text">Лидеры роста: <b>ICS Travel Group</b> (+39.8%, +1,432 PAX), <b>Fun&Sun</b> (+14.0%, +1,310 PAX), <b>Travelata</b> (+6.9%, +1,208 PAX).</div>
+            </div>
+        </div>
+        <div class="insight insight-negative">
+            <div class="insight-icon"><span class="material-symbols-outlined">trending_down</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Снижающиеся туроператоры</div>
+                <div class="insight-text">Наибольшее снижение: <b>Anex</b> (-15.2%, -1,112 PAX), <b>Biblio Globus</b> (-5.4%, -770 PAX), <b>Intourist</b> (-12.0%, -341 PAX).</div>
+            </div>
+        </div>
+        <div class="insight insight-info">
+            <div class="insight-icon"><span class="material-symbols-outlined">pie_chart</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Xtravel (Travelata)</div>
+                <div class="insight-text">Доля Xtravel в Октябрь 2025: <b>23.1%</b> (18,669 PAX). Уникальных отелей: 2977 → 3406. PAX: <b>+6.9%</b>.</div>
+            </div>
+        </div>
+        <div class="insight insight-positive">
+            <div class="insight-icon"><span class="material-symbols-outlined">flight_takeoff</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Растущие направления</div>
+                <div class="insight-text">Лидеры: <b>Турция</b> (+29.1%), <b>Вьетнам</b> (+370.3%), <b>Китай</b> (+155.1%).</div>
+            </div>
+        </div>
+        <div class="insight insight-negative">
+            <div class="insight-icon"><span class="material-symbols-outlined">flight_land</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Снижающиеся направления</div>
+                <div class="insight-text">Снижение: <b>Россия</b> (-23.9%), <b>Шри-Ланка</b> (-38.3%), <b>Куба</b> (-37.6%).</div>
+            </div>
+        </div>
+        <div class="insight insight-positive">
+            <div class="insight-icon"><span class="material-symbols-outlined">location_city</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Растущие города вылета</div>
+                <div class="insight-text">Рост: <b>Москва</b> (+4.6%), <b>Санкт-Петербург</b> (+25.2%), <b>Екатеринбург</b> (+23.5%).</div>
+            </div>
+        </div>
+        <div class="insight insight-info">
+            <div class="insight-icon"><span class="material-symbols-outlined">add_location</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Новые города вылета</div>
+                <div class="insight-text">Появились в Октябрь 2025: <b>Краснодар</b> (884 PAX).</div>
+            </div>
+        </div>
+        <div class="insight insight-warning">
+            <div class="insight-icon"><span class="material-symbols-outlined">price_change</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Рост цен по направлениям</div>
+                <div class="insight-text">Заметный рост: <b>Абхазия</b> (+12.4%, 34,812→39,144₽).</div>
+            </div>
+        </div>
+        <div class="insight insight-info">
+            <div class="insight-icon"><span class="material-symbols-outlined">sell</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Снижение цен по направлениям</div>
+                <div class="insight-text">Снижение: <b>Катар</b> (-17.1%), <b>Узбекистан</b> (-14.3%), <b>Вьетнам</b> (-12.2%).</div>
+            </div>
+        </div>
+        <div class="insight insight-info">
+            <div class="insight-icon"><span class="material-symbols-outlined">hotel</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Рост ассортимента (уник. отели)</div>
+                <div class="insight-text">Наибольший рост: <b>Let’s Fly</b> (5→701), <b>Travelata</b> (2977→3406), <b>Space Travel</b> (476→720).</div>
+            </div>
+        </div>
+        <div class="insight insight-info">
+            <div class="insight-icon"><span class="material-symbols-outlined">group_add</span></div>
+            <div class="insight-body">
+                <div class="insight-title">Новые туроператоры</div>
+                <div class="insight-text">Появились в Октябрь 2025: <b>China Travel</b> (6 PAX).</div>
+            </div>
+        </div>
+</div>
+
+<!-- Block 1: Operators -->
+<h2 id="operators">Блок 1: Продажи по туроператорам</h2>
+
+<div class="charts-grid">
+    <div class="chart-card">
+        <h4>PAX по ТО — 01.10.2024–14.02.2025 vs 01.10.2025–14.02.2026</h4>
+        <canvas id="chartOpPax"></canvas>
+    </div>
+    <div class="chart-card">
+        <h4>GMV по ТО (млн руб.)</h4>
+        <canvas id="chartOpGmv"></canvas>
+    </div>
+    <div class="chart-card full-width">
+        <h4>Изменение PAX, % (01.10.2025–14.02.2026 vs 01.10.2024–14.02.2025)</h4>
+        <canvas id="chartOpChange"></canvas>
+        <div class="outliers-box"><span class="outliers-title">Выбросы (новые ТО / изменение &gt;200%):</span> <span class="outlier-badge growth">Let’s Fly: <b>+24040%</b> (10→2,414 PAX)</span> <span class="outlier-badge new">China Travel: <b>новый</b> (6 PAX)</span></div>
+    </div>
+</div>
+
+<div class="table-scroll"><table class="comp-table">
+<thead><tr><th class="sticky-col"></th><th colspan="3">Заказы</th><th colspan="3">PAX</th><th colspan="3">GMV (полная стоим.)</th><th colspan="3">Ср. чек / PAX</th><th colspan="2">Комиссия %</th><th colspan="3">Доход (GMV − exchange)</th><th colspan="2">Уник. отелей</th></tr><tr class="subheader"><th class="sticky-col">Название</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th></tr></thead>
+<tbody>
+<tr><td class="sticky-col dim-name">Travelata (Xtravel)</td><td class="num">8 200</td><td class="num">8 763</td><td class="pct"><span class="positive">+6.9%</span></td><td class="num">17 461</td><td class="num">18 669</td><td class="pct"><span class="positive">+6.9%</span></td><td class="num">1.31 млрд</td><td class="num">1.57 млрд</td><td class="pct"><span class="positive">+20.2%</span></td><td class="num">74,886</td><td class="num">84,191</td><td class="pct"><span class="positive">+12.4%</span></td><td class="num">12.0%</td><td class="num">12.0%</td><td class="num">156.9 млн</td><td class="num">188.6 млн</td><td class="pct"><span class="positive">+20.2%</span></td><td class="num">2977</td><td class="num">3406</td></tr>
+<tr><td class="sticky-col dim-name">Biblio Globus</td><td class="num">6 960</td><td class="num">6 602</td><td class="pct"><span class="negative">-5.1%</span></td><td class="num">14 387</td><td class="num">13 617</td><td class="pct"><span class="negative">-5.4%</span></td><td class="num">1.25 млрд</td><td class="num">1.16 млрд</td><td class="pct"><span class="negative">-7.7%</span></td><td class="num">87,134</td><td class="num">84,955</td><td class="pct"><span class="negative">-2.5%</span></td><td class="num">7.4%</td><td class="num">8.1%</td><td class="num">93.1 млн</td><td class="num">93.5 млн</td><td class="pct"><span class="positive">+0.4%</span></td><td class="num">1537</td><td class="num">1623</td></tr>
+<tr><td class="sticky-col dim-name">Fun&Sun</td><td class="num">4 072</td><td class="num">4 600</td><td class="pct"><span class="positive">+13.0%</span></td><td class="num">9 331</td><td class="num">10 641</td><td class="pct"><span class="positive">+14.0%</span></td><td class="num">886.3 млн</td><td class="num">895.0 млн</td><td class="pct"><span class="positive">+1.0%</span></td><td class="num">94,980</td><td class="num">84,113</td><td class="pct"><span class="negative">-11.4%</span></td><td class="num">7.9%</td><td class="num">8.1%</td><td class="num">69.6 млн</td><td class="num">72.7 млн</td><td class="pct"><span class="positive">+4.5%</span></td><td class="num">968</td><td class="num">1076</td></tr>
+<tr><td class="sticky-col dim-name">Pegas Touristik</td><td class="num">2 961</td><td class="num">3 275</td><td class="pct"><span class="positive">+10.6%</span></td><td class="num">6 455</td><td class="num">7 439</td><td class="pct"><span class="positive">+15.2%</span></td><td class="num">605.2 млн</td><td class="num">671.3 млн</td><td class="pct"><span class="positive">+10.9%</span></td><td class="num">93,758</td><td class="num">90,243</td><td class="pct"><span class="negative">-3.7%</span></td><td class="num">8.1%</td><td class="num">7.8%</td><td class="num">49.3 млн</td><td class="num">52.2 млн</td><td class="pct"><span class="positive">+5.9%</span></td><td class="num">814</td><td class="num">866</td></tr>
+<tr><td class="sticky-col dim-name">Anex</td><td class="num">3 320</td><td class="num">2 694</td><td class="pct"><span class="negative">-18.9%</span></td><td class="num">7 315</td><td class="num">6 203</td><td class="pct"><span class="negative">-15.2%</span></td><td class="num">685.6 млн</td><td class="num">568.5 млн</td><td class="pct"><span class="negative">-17.1%</span></td><td class="num">93,724</td><td class="num">91,656</td><td class="pct"><span class="negative">-2.2%</span></td><td class="num">8.1%</td><td class="num">9.0%</td><td class="num">55.6 млн</td><td class="num">51.1 млн</td><td class="pct"><span class="negative">-8.1%</span></td><td class="num">1033</td><td class="num">939</td></tr>
+<tr><td class="sticky-col dim-name">Sunmar</td><td class="num">2 169</td><td class="num">2 035</td><td class="pct"><span class="negative">-6.2%</span></td><td class="num">4 622</td><td class="num">4 553</td><td class="pct"><span class="negative">-1.5%</span></td><td class="num">456.4 млн</td><td class="num">383.4 млн</td><td class="pct"><span class="negative">-16.0%</span></td><td class="num">98,750</td><td class="num">84,211</td><td class="pct"><span class="negative">-14.7%</span></td><td class="num">9.0%</td><td class="num">8.9%</td><td class="num">40.9 млн</td><td class="num">34.0 млн</td><td class="pct"><span class="negative">-16.7%</span></td><td class="num">643</td><td class="num">630</td></tr>
+<tr><td class="sticky-col dim-name">ICS Travel Group</td><td class="num">1 687</td><td class="num">2 414</td><td class="pct"><span class="positive">+43.1%</span></td><td class="num">3 602</td><td class="num">5 034</td><td class="pct"><span class="positive">+39.8%</span></td><td class="num">367.0 млн</td><td class="num">470.4 млн</td><td class="pct"><span class="positive">+28.2%</span></td><td class="num">101,883</td><td class="num">93,446</td><td class="pct"><span class="negative">-8.3%</span></td><td class="num">7.1%</td><td class="num">6.7%</td><td class="num">26.0 млн</td><td class="num">31.5 млн</td><td class="pct"><span class="positive">+21.2%</span></td><td class="num">783</td><td class="num">993</td></tr>
+<tr><td class="sticky-col dim-name">Intourist</td><td class="num">1 314</td><td class="num">1 140</td><td class="pct"><span class="negative">-13.2%</span></td><td class="num">2 845</td><td class="num">2 504</td><td class="pct"><span class="negative">-12.0%</span></td><td class="num">287.8 млн</td><td class="num">223.9 млн</td><td class="pct"><span class="negative">-22.2%</span></td><td class="num">101,164</td><td class="num">89,422</td><td class="pct"><span class="negative">-11.6%</span></td><td class="num">7.0%</td><td class="num">9.1%</td><td class="num">20.2 млн</td><td class="num">20.3 млн</td><td class="pct"><span class="positive">+0.9%</span></td><td class="num">555</td><td class="num">594</td></tr>
+<tr><td class="sticky-col dim-name">Space Travel</td><td class="num">901</td><td class="num">1 363</td><td class="pct"><span class="positive">+51.3%</span></td><td class="num">1 909</td><td class="num">2 969</td><td class="pct"><span class="positive">+55.5%</span></td><td class="num">190.4 млн</td><td class="num">295.5 млн</td><td class="pct"><span class="positive">+55.2%</span></td><td class="num">99,744</td><td class="num">99,540</td><td class="pct"><span class="negative">-0.2%</span></td><td class="num">9.7%</td><td class="num">10.8%</td><td class="num">18.5 млн</td><td class="num">31.9 млн</td><td class="pct"><span class="positive">+72.5%</span></td><td class="num">476</td><td class="num">720</td></tr>
+<tr><td class="sticky-col dim-name">PAKS</td><td class="num">585</td><td class="num">847</td><td class="pct"><span class="positive">+44.8%</span></td><td class="num">1 204</td><td class="num">1 818</td><td class="pct"><span class="positive">+51.0%</span></td><td class="num">165.0 млн</td><td class="num">223.8 млн</td><td class="pct"><span class="positive">+35.6%</span></td><td class="num">137,031</td><td class="num">123,100</td><td class="pct"><span class="negative">-10.2%</span></td><td class="num">8.1%</td><td class="num">9.2%</td><td class="num">13.4 млн</td><td class="num">20.6 млн</td><td class="pct"><span class="positive">+53.5%</span></td><td class="num">370</td><td class="num">530</td></tr>
+<tr><td class="sticky-col dim-name">RussianExpress</td><td class="num">660</td><td class="num">612</td><td class="pct"><span class="negative">-7.3%</span></td><td class="num">1 381</td><td class="num">1 361</td><td class="pct"><span class="negative">-1.4%</span></td><td class="num">168.4 млн</td><td class="num">156.6 млн</td><td class="pct"><span class="negative">-7.0%</span></td><td class="num">121,928</td><td class="num">115,057</td><td class="pct"><span class="negative">-5.6%</span></td><td class="num">9.3%</td><td class="num">9.7%</td><td class="num">15.7 млн</td><td class="num">15.2 млн</td><td class="pct"><span class="negative">-2.9%</span></td><td class="num">404</td><td class="num">380</td></tr>
+<tr><td class="sticky-col dim-name">Let’s Fly</td><td class="num">5</td><td class="num">1 154</td><td class="pct"><span class="positive">+22980.0%</span></td><td class="num">10</td><td class="num">2 414</td><td class="pct"><span class="positive">+24040.0%</span></td><td class="num">704,053</td><td class="num">219.4 млн</td><td class="pct"><span class="positive">+31062.4%</span></td><td class="num">70,405</td><td class="num">90,886</td><td class="pct"><span class="positive">+29.1%</span></td><td class="num">10.4%</td><td class="num">9.5%</td><td class="num">73,196</td><td class="num">20.9 млн</td><td class="pct"><span class="positive">+28429.5%</span></td><td class="num">5</td><td class="num">701</td></tr>
+<tr><td class="sticky-col dim-name">Tez Tour</td><td class="num">333</td><td class="num">610</td><td class="pct"><span class="positive">+83.2%</span></td><td class="num">770</td><td class="num">1 437</td><td class="pct"><span class="positive">+86.6%</span></td><td class="num">92.8 млн</td><td class="num">153.2 млн</td><td class="pct"><span class="positive">+65.1%</span></td><td class="num">120,457</td><td class="num">106,583</td><td class="pct"><span class="negative">-11.5%</span></td><td class="num">6.0%</td><td class="num">7.3%</td><td class="num">5.5 млн</td><td class="num">11.1 млн</td><td class="pct"><span class="positive">+100.8%</span></td><td class="num">179</td><td class="num">285</td></tr>
+<tr><td class="sticky-col dim-name">Coral Travel</td><td class="num">544</td><td class="num">551</td><td class="pct"><span class="positive">+1.3%</span></td><td class="num">1 061</td><td class="num">1 134</td><td class="pct"><span class="positive">+6.9%</span></td><td class="num">103.3 млн</td><td class="num">101.7 млн</td><td class="pct"><span class="negative">-1.6%</span></td><td class="num">97,399</td><td class="num">89,675</td><td class="pct"><span class="negative">-7.9%</span></td><td class="num">10.2%</td><td class="num">10.7%</td><td class="num">10.5 млн</td><td class="num">10.9 млн</td><td class="pct"><span class="positive">+3.5%</span></td><td class="num">324</td><td class="num">310</td></tr>
+<tr><td class="sticky-col dim-name">One Touch Travel</td><td class="num">426</td><td class="num">343</td><td class="pct"><span class="negative">-19.5%</span></td><td class="num">1 004</td><td class="num">792</td><td class="pct"><span class="negative">-21.1%</span></td><td class="num">106.7 млн</td><td class="num">65.6 млн</td><td class="pct"><span class="negative">-38.5%</span></td><td class="num">106,246</td><td class="num">82,777</td><td class="pct"><span class="negative">-22.1%</span></td><td class="num">9.8%</td><td class="num">8.5%</td><td class="num">10.5 млн</td><td class="num">5.6 млн</td><td class="pct"><span class="negative">-46.6%</span></td><td class="num">277</td><td class="num">242</td></tr>
+<tr><td class="sticky-col dim-name">AleanTour</td><td class="num">141</td><td class="num">57</td><td class="pct"><span class="negative">-59.6%</span></td><td class="num">320</td><td class="num">125</td><td class="pct"><span class="negative">-60.9%</span></td><td class="num">9.7 млн</td><td class="num">3.9 млн</td><td class="pct"><span class="negative">-60.2%</span></td><td class="num">30,399</td><td class="num">30,968</td><td class="pct"><span class="positive">+1.9%</span></td><td class="num">10.3%</td><td class="num">10.1%</td><td class="num">997,187</td><td class="num">389,735</td><td class="pct"><span class="negative">-60.9%</span></td><td class="num">72</td><td class="num">33</td></tr>
+<tr><td class="sticky-col dim-name">IZI Tour</td><td class="num">45</td><td class="num">9</td><td class="pct"><span class="negative">-80.0%</span></td><td class="num">102</td><td class="num">19</td><td class="pct"><span class="negative">-81.4%</span></td><td class="num">10.0 млн</td><td class="num">1.9 млн</td><td class="pct"><span class="negative">-81.1%</span></td><td class="num">98,511</td><td class="num">100,102</td><td class="pct"><span class="positive">+1.6%</span></td><td class="num">10.4%</td><td class="num">8.2%</td><td class="num">1.0 млн</td><td class="num">156,345</td><td class="pct"><span class="negative">-85.1%</span></td><td class="num">33</td><td class="num">8</td></tr>
+<tr><td class="sticky-col dim-name">LOTI</td><td class="num">15</td><td class="num">2</td><td class="pct"><span class="negative">-86.7%</span></td><td class="num">30</td><td class="num">5</td><td class="pct"><span class="negative">-83.3%</span></td><td class="num">6.9 млн</td><td class="num">1.6 млн</td><td class="pct"><span class="negative">-77.4%</span></td><td class="num">229,005</td><td class="num">311,093</td><td class="pct"><span class="positive">+35.8%</span></td><td class="num">11.2%</td><td class="num">11.4%</td><td class="num">769,644</td><td class="num">178,033</td><td class="pct"><span class="negative">-76.9%</span></td><td class="num">9</td><td class="num">2</td></tr>
+<tr><td class="sticky-col dim-name">China Travel</td><td class="num"><span class="zero">0</span></td><td class="num">3</td><td class="pct"><span class="na">—</span></td><td class="num"><span class="zero">0</span></td><td class="num">6</td><td class="pct"><span class="positive">+100.0%</span></td><td class="num"><span class="zero">0</span></td><td class="num">749,628</td><td class="pct"><span class="positive">+100.0%</span></td><td class="num"><span class="zero">0</span></td><td class="num">124,938</td><td class="pct"><span class="na">—</span></td><td class="num">—</td><td class="num">4.0%</td><td class="num"><span class="zero">0</span></td><td class="num">29,686</td><td class="pct"><span class="na">—</span></td><td class="num">0</td><td class="num">3</td></tr>
+<tr class="total"><td class="sticky-col dim-name"><b>ИТОГО</b></td><td class="num"><b>34 338</b></td><td class="num"><b>37 074</b></td><td class="pct"><b><span class="positive">+8.0%</span></b></td><td class="num"><b>73 809</b></td><td class="num"><b>80 740</b></td><td class="pct"><b><span class="positive">+9.4%</span></b></td><td class="num"><b>6.70 млрд</b></td><td class="num"><b>7.17 млрд</b></td><td class="pct"><b><span class="positive">+6.9%</span></b></td><td class="num"><b>90,820</b></td><td class="num"><b>88,742</b></td><td class="pct"><b><span class="negative">-2.3%</span></b></td><td class="num">—</td><td class="num">—</td><td class="num"><b>588.5 млн</b></td><td class="num"><b>661.0 млн</b></td><td class="pct"><b><span class="positive">+12.3%</span></b></td><td class="num">—</td><td class="num">—</td></tr>
+</tbody></table></div>
+
+<!-- Block 2: Countries -->
+<h2 id="countries">Блок 2: Продажи по странам</h2>
+
+<div class="charts-grid">
+    <div class="chart-card">
+        <h4>PAX по странам — 01.10.2024–14.02.2025 vs 01.10.2025–14.02.2026</h4>
+        <canvas id="chartCountryPax"></canvas>
+    </div>
+    <div class="chart-card">
+        <h4>Изменение PAX, %</h4>
+        <canvas id="chartCountryChange"></canvas>
+        <div class="outliers-box"><span class="outliers-title">Выбросы (новые / изменение &gt;200%):</span> <span class="outlier-badge growth">Вьетнам: <b>+370%</b> (963→4,529 PAX)</span></div>
+    </div>
+</div>
+
+<div class="table-scroll"><table class="comp-table">
+<thead><tr><th class="sticky-col"></th><th colspan="3">Заказы</th><th colspan="3">PAX</th><th colspan="3">GMV (полная стоим.)</th><th colspan="3">Ср. чек / PAX</th><th colspan="2">Уник. отелей</th></tr><tr class="subheader"><th class="sticky-col">Название</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th></tr></thead>
+<tbody>
+<tr><td class="sticky-col dim-name">Египет</td><td class="num">9 239</td><td class="num">9 593</td><td class="pct"><span class="positive">+3.8%</span></td><td class="num">20 312</td><td class="num">21 215</td><td class="pct"><span class="positive">+4.4%</span></td><td class="num">1.74 млрд</td><td class="num">1.69 млрд</td><td class="pct"><span class="negative">-2.9%</span></td><td class="num">85,895</td><td class="num">79,857</td><td class="pct"><span class="negative">-7.0%</span></td><td class="num">407</td><td class="num">425</td></tr>
+<tr><td class="sticky-col dim-name">Турция</td><td class="num">6 155</td><td class="num">7 727</td><td class="pct"><span class="positive">+25.5%</span></td><td class="num">13 837</td><td class="num">17 870</td><td class="pct"><span class="positive">+29.1%</span></td><td class="num">1.19 млрд</td><td class="num">1.50 млрд</td><td class="pct"><span class="positive">+25.9%</span></td><td class="num">86,239</td><td class="num">84,081</td><td class="pct"><span class="negative">-2.5%</span></td><td class="num">1038</td><td class="num">1244</td></tr>
+<tr><td class="sticky-col dim-name">ОАЭ</td><td class="num">5 790</td><td class="num">5 636</td><td class="pct"><span class="negative">-2.7%</span></td><td class="num">12 827</td><td class="num">12 818</td><td class="pct"><span class="negative">-0.1%</span></td><td class="num">1.19 млрд</td><td class="num">1.17 млрд</td><td class="pct"><span class="negative">-1.0%</span></td><td class="num">92,479</td><td class="num">91,637</td><td class="pct"><span class="negative">-0.9%</span></td><td class="num">444</td><td class="num">444</td></tr>
+<tr><td class="sticky-col dim-name">Таиланд</td><td class="num">4 405</td><td class="num">4 206</td><td class="pct"><span class="negative">-4.5%</span></td><td class="num">8 916</td><td class="num">8 490</td><td class="pct"><span class="negative">-4.8%</span></td><td class="num">1.15 млрд</td><td class="num">1.02 млрд</td><td class="pct"><span class="negative">-11.0%</span></td><td class="num">129,071</td><td class="num">120,672</td><td class="pct"><span class="negative">-6.5%</span></td><td class="num">653</td><td class="num">692</td></tr>
+<tr><td class="sticky-col dim-name">Россия</td><td class="num">4 203</td><td class="num">3 267</td><td class="pct"><span class="negative">-22.3%</span></td><td class="num">8 771</td><td class="num">6 675</td><td class="pct"><span class="negative">-23.9%</span></td><td class="num">271.0 млн</td><td class="num">199.0 млн</td><td class="pct"><span class="negative">-26.5%</span></td><td class="num">30,896</td><td class="num">29,820</td><td class="pct"><span class="negative">-3.5%</span></td><td class="num">1216</td><td class="num">880</td></tr>
+<tr><td class="sticky-col dim-name">Вьетнам</td><td class="num">481</td><td class="num">2 195</td><td class="pct"><span class="positive">+356.3%</span></td><td class="num">963</td><td class="num">4 529</td><td class="pct"><span class="positive">+370.3%</span></td><td class="num">118.7 млн</td><td class="num">489.9 млн</td><td class="pct"><span class="positive">+312.8%</span></td><td class="num">123,238</td><td class="num">108,170</td><td class="pct"><span class="negative">-12.2%</span></td><td class="num">152</td><td class="num">326</td></tr>
+<tr><td class="sticky-col dim-name">Китай</td><td class="num">628</td><td class="num">1 575</td><td class="pct"><span class="positive">+150.8%</span></td><td class="num">1 344</td><td class="num">3 428</td><td class="pct"><span class="positive">+155.1%</span></td><td class="num">143.4 млн</td><td class="num">321.5 млн</td><td class="pct"><span class="positive">+124.3%</span></td><td class="num">106,668</td><td class="num">93,789</td><td class="pct"><span class="negative">-12.1%</span></td><td class="num">95</td><td class="num">219</td></tr>
+<tr><td class="sticky-col dim-name">Шри-Ланка</td><td class="num">969</td><td class="num">599</td><td class="pct"><span class="negative">-38.2%</span></td><td class="num">1 947</td><td class="num">1 202</td><td class="pct"><span class="negative">-38.3%</span></td><td class="num">215.9 млн</td><td class="num">138.7 млн</td><td class="pct"><span class="negative">-35.7%</span></td><td class="num">110,893</td><td class="num">115,422</td><td class="pct"><span class="positive">+4.1%</span></td><td class="num">247</td><td class="num">198</td></tr>
+<tr><td class="sticky-col dim-name">Мальдивы</td><td class="num">484</td><td class="num">539</td><td class="pct"><span class="positive">+11.4%</span></td><td class="num">1 027</td><td class="num">1 152</td><td class="pct"><span class="positive">+12.2%</span></td><td class="num">248.1 млн</td><td class="num">264.9 млн</td><td class="pct"><span class="positive">+6.8%</span></td><td class="num">241,613</td><td class="num">229,980</td><td class="pct"><span class="negative">-4.8%</span></td><td class="num">124</td><td class="num">125</td></tr>
+<tr><td class="sticky-col dim-name">Куба</td><td class="num">678</td><td class="num">422</td><td class="pct"><span class="negative">-37.8%</span></td><td class="num">1 243</td><td class="num">776</td><td class="pct"><span class="negative">-37.6%</span></td><td class="num">188.9 млн</td><td class="num">110.6 млн</td><td class="pct"><span class="negative">-41.4%</span></td><td class="num">151,962</td><td class="num">142,527</td><td class="pct"><span class="negative">-6.2%</span></td><td class="num">74</td><td class="num">65</td></tr>
+<tr><td class="sticky-col dim-name">Абхазия</td><td class="num">377</td><td class="num">236</td><td class="pct"><span class="negative">-37.4%</span></td><td class="num">827</td><td class="num">502</td><td class="pct"><span class="negative">-39.3%</span></td><td class="num">28.8 млн</td><td class="num">19.7 млн</td><td class="pct"><span class="negative">-31.7%</span></td><td class="num">34,812</td><td class="num">39,144</td><td class="pct"><span class="positive">+12.4%</span></td><td class="num">102</td><td class="num">76</td></tr>
+<tr><td class="sticky-col dim-name">Индия</td><td class="num">308</td><td class="num">229</td><td class="pct"><span class="negative">-25.6%</span></td><td class="num">583</td><td class="num">435</td><td class="pct"><span class="negative">-25.4%</span></td><td class="num">55.7 млн</td><td class="num">40.6 млн</td><td class="pct"><span class="negative">-27.1%</span></td><td class="num">95,578</td><td class="num">93,354</td><td class="pct"><span class="negative">-2.3%</span></td><td class="num">140</td><td class="num">124</td></tr>
+<tr><td class="sticky-col dim-name">Индонезия</td><td class="num">178</td><td class="num">181</td><td class="pct"><span class="positive">+1.7%</span></td><td class="num">341</td><td class="num">353</td><td class="pct"><span class="positive">+3.5%</span></td><td class="num">52.8 млн</td><td class="num">48.9 млн</td><td class="pct"><span class="negative">-7.5%</span></td><td class="num">154,928</td><td class="num">138,403</td><td class="pct"><span class="negative">-10.7%</span></td><td class="num">86</td><td class="num">106</td></tr>
+<tr><td class="sticky-col dim-name">Катар</td><td class="num">90</td><td class="num">92</td><td class="pct"><span class="positive">+2.2%</span></td><td class="num">197</td><td class="num">186</td><td class="pct"><span class="negative">-5.6%</span></td><td class="num">26.9 млн</td><td class="num">21.0 млн</td><td class="pct"><span class="negative">-21.7%</span></td><td class="num">136,432</td><td class="num">113,104</td><td class="pct"><span class="negative">-17.1%</span></td><td class="num">36</td><td class="num">31</td></tr>
+<tr><td class="sticky-col dim-name">Грузия</td><td class="num">63</td><td class="num">103</td><td class="pct"><span class="positive">+63.5%</span></td><td class="num">116</td><td class="num">204</td><td class="pct"><span class="positive">+75.9%</span></td><td class="num">6.9 млн</td><td class="num">11.3 млн</td><td class="pct"><span class="positive">+62.8%</span></td><td class="num">59,689</td><td class="num">55,272</td><td class="pct"><span class="negative">-7.4%</span></td><td class="num">33</td><td class="num">69</td></tr>
+<tr><td class="sticky-col dim-name">Узбекистан</td><td class="num">40</td><td class="num">69</td><td class="pct"><span class="positive">+72.5%</span></td><td class="num">78</td><td class="num">141</td><td class="pct"><span class="positive">+80.8%</span></td><td class="num">4.6 млн</td><td class="num">7.2 млн</td><td class="pct"><span class="positive">+54.9%</span></td><td class="num">59,602</td><td class="num">51,067</td><td class="pct"><span class="negative">-14.3%</span></td><td class="num">20</td><td class="num">43</td></tr>
+<tr><td class="sticky-col dim-name">Армения</td><td class="num">53</td><td class="num">57</td><td class="pct"><span class="positive">+7.5%</span></td><td class="num">105</td><td class="num">113</td><td class="pct"><span class="positive">+7.6%</span></td><td class="num">5.1 млн</td><td class="num">5.4 млн</td><td class="pct"><span class="positive">+6.6%</span></td><td class="num">48,255</td><td class="num">47,783</td><td class="pct"><span class="negative">-1.0%</span></td><td class="num">35</td><td class="num">33</td></tr>
+<tr><td class="sticky-col dim-name">Танзания</td><td class="num">33</td><td class="num">54</td><td class="pct"><span class="positive">+63.6%</span></td><td class="num">59</td><td class="num">100</td><td class="pct"><span class="positive">+69.5%</span></td><td class="num">11.4 млн</td><td class="num">18.2 млн</td><td class="pct"><span class="positive">+58.7%</span></td><td class="num">193,937</td><td class="num">181,581</td><td class="pct"><span class="negative">-6.4%</span></td><td class="num">14</td><td class="num">29</td></tr>
+<tr><td class="sticky-col dim-name">Сейшелы</td><td class="num">29</td><td class="num">36</td><td class="pct"><span class="positive">+24.1%</span></td><td class="num">60</td><td class="num">67</td><td class="pct"><span class="positive">+11.7%</span></td><td class="num">13.2 млн</td><td class="num">14.4 млн</td><td class="pct"><span class="positive">+8.9%</span></td><td class="num">219,781</td><td class="num">214,299</td><td class="pct"><span class="negative">-2.5%</span></td><td class="num">15</td><td class="num">18</td></tr>
+<tr><td class="sticky-col dim-name">Маврикий</td><td class="num">26</td><td class="num">37</td><td class="pct"><span class="positive">+42.3%</span></td><td class="num">48</td><td class="num">71</td><td class="pct"><span class="positive">+47.9%</span></td><td class="num">13.0 млн</td><td class="num">18.9 млн</td><td class="pct"><span class="positive">+44.8%</span></td><td class="num">271,182</td><td class="num">265,540</td><td class="pct"><span class="negative">-2.1%</span></td><td class="num">21</td><td class="num">27</td></tr>
+<tr class="total"><td class="sticky-col dim-name"><b>ИТОГО</b></td><td class="num"><b>34 332</b></td><td class="num"><b>37 065</b></td><td class="pct"><b><span class="positive">+8.0%</span></b></td><td class="num"><b>73 799</b></td><td class="num"><b>80 724</b></td><td class="pct"><b><span class="positive">+9.4%</span></b></td><td class="num"><b>6.70 млрд</b></td><td class="num"><b>7.16 млрд</b></td><td class="pct"><b><span class="positive">+6.9%</span></b></td><td class="num"><b>90,816</b></td><td class="num"><b>88,734</b></td><td class="pct"><b><span class="negative">-2.3%</span></b></td><td class="num">—</td><td class="num">—</td></tr>
+</tbody></table></div>
+
+<!-- Block 3: Departure Cities -->
+<h2 id="cities">Блок 3: Продажи по городам вылета</h2>
+
+<div class="charts-grid">
+    <div class="chart-card full-width">
+        <h4>PAX по городам вылета — 01.10.2024–14.02.2025 vs 01.10.2025–14.02.2026</h4>
+        <canvas id="chartCityPax"></canvas>
+    </div>
+</div>
+
+<div class="table-scroll"><table class="comp-table">
+<thead><tr><th class="sticky-col"></th><th colspan="3">Заказы</th><th colspan="3">PAX</th><th colspan="3">GMV (полная стоим.)</th><th colspan="3">Ср. чек / PAX</th></tr><tr class="subheader"><th class="sticky-col">Название</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th><th>01.10.2024–14.02.2025</th><th>01.10.2025–14.02.2026</th><th>Δ%</th></tr></thead>
+<tbody>
+<tr><td class="sticky-col dim-name">Москва</td><td class="num">23 329</td><td class="num">24 057</td><td class="pct"><span class="positive">+3.1%</span></td><td class="num">49 844</td><td class="num">52 134</td><td class="pct"><span class="positive">+4.6%</span></td><td class="num">4.76 млрд</td><td class="num">4.91 млрд</td><td class="pct"><span class="positive">+3.2%</span></td><td class="num">95,507</td><td class="num">94,271</td><td class="pct"><span class="negative">-1.3%</span></td></tr>
+<tr><td class="sticky-col dim-name">Санкт-Петербург</td><td class="num">2 906</td><td class="num">3 551</td><td class="pct"><span class="positive">+22.2%</span></td><td class="num">6 044</td><td class="num">7 565</td><td class="pct"><span class="positive">+25.2%</span></td><td class="num">552.1 млн</td><td class="num">692.7 млн</td><td class="pct"><span class="positive">+25.5%</span></td><td class="num">91,345</td><td class="num">91,562</td><td class="pct"><span class="positive">+0.2%</span></td></tr>
+<tr><td class="sticky-col dim-name">Екатеринбург</td><td class="num">1 707</td><td class="num">2 091</td><td class="pct"><span class="positive">+22.5%</span></td><td class="num">3 750</td><td class="num">4 632</td><td class="pct"><span class="positive">+23.5%</span></td><td class="num">308.7 млн</td><td class="num">353.5 млн</td><td class="pct"><span class="positive">+14.5%</span></td><td class="num">82,308</td><td class="num">76,312</td><td class="pct"><span class="negative">-7.3%</span></td></tr>
+<tr><td class="sticky-col dim-name">Казань</td><td class="num">1 186</td><td class="num">1 500</td><td class="pct"><span class="positive">+26.5%</span></td><td class="num">2 669</td><td class="num">3 390</td><td class="pct"><span class="positive">+27.0%</span></td><td class="num">188.2 млн</td><td class="num">244.5 млн</td><td class="pct"><span class="positive">+29.9%</span></td><td class="num">70,510</td><td class="num">72,130</td><td class="pct"><span class="positive">+2.3%</span></td></tr>
+<tr><td class="sticky-col dim-name">Новосибирск</td><td class="num">719</td><td class="num">1 118</td><td class="pct"><span class="positive">+55.5%</span></td><td class="num">1 533</td><td class="num">2 373</td><td class="pct"><span class="positive">+54.8%</span></td><td class="num">139.3 млн</td><td class="num">166.3 млн</td><td class="pct"><span class="positive">+19.3%</span></td><td class="num">90,897</td><td class="num">70,068</td><td class="pct"><span class="negative">-22.9%</span></td></tr>
+<tr><td class="sticky-col dim-name">Сочи</td><td class="num">871</td><td class="num">650</td><td class="pct"><span class="negative">-25.4%</span></td><td class="num">1 928</td><td class="num">1 453</td><td class="pct"><span class="negative">-24.6%</span></td><td class="num">141.5 млн</td><td class="num">101.7 млн</td><td class="pct"><span class="negative">-28.1%</span></td><td class="num">73,387</td><td class="num">69,991</td><td class="pct"><span class="negative">-4.6%</span></td></tr>
+<tr><td class="sticky-col dim-name">Самара</td><td class="num">798</td><td class="num">701</td><td class="pct"><span class="negative">-12.2%</span></td><td class="num">1 772</td><td class="num">1 565</td><td class="pct"><span class="negative">-11.7%</span></td><td class="num">135.7 млн</td><td class="num">117.6 млн</td><td class="pct"><span class="negative">-13.3%</span></td><td class="num">76,563</td><td class="num">75,144</td><td class="pct"><span class="negative">-1.9%</span></td></tr>
+<tr><td class="sticky-col dim-name">Уфа</td><td class="num">620</td><td class="num">661</td><td class="pct"><span class="positive">+6.6%</span></td><td class="num">1 405</td><td class="num">1 545</td><td class="pct"><span class="positive">+10.0%</span></td><td class="num">92.4 млн</td><td class="num">107.3 млн</td><td class="pct"><span class="positive">+16.2%</span></td><td class="num">65,752</td><td class="num">69,460</td><td class="pct"><span class="positive">+5.6%</span></td></tr>
+<tr><td class="sticky-col dim-name">Минеральные Воды</td><td class="num">332</td><td class="num">305</td><td class="pct"><span class="negative">-8.1%</span></td><td class="num">802</td><td class="num">708</td><td class="pct"><span class="negative">-11.7%</span></td><td class="num">62.4 млн</td><td class="num">50.4 млн</td><td class="pct"><span class="negative">-19.3%</span></td><td class="num">77,817</td><td class="num">71,124</td><td class="pct"><span class="negative">-8.6%</span></td></tr>
+<tr><td class="sticky-col dim-name">Пермь</td><td class="num">198</td><td class="num">275</td><td class="pct"><span class="positive">+38.9%</span></td><td class="num">440</td><td class="num">587</td><td class="pct"><span class="positive">+33.4%</span></td><td class="num">29.1 млн</td><td class="num">41.7 млн</td><td class="pct"><span class="positive">+43.6%</span></td><td class="num">66,037</td><td class="num">71,093</td><td class="pct"><span class="positive">+7.7%</span></td></tr>
+<tr><td class="sticky-col dim-name">Нижний Новгород</td><td class="num">234</td><td class="num">215</td><td class="pct"><span class="negative">-8.1%</span></td><td class="num">527</td><td class="num">478</td><td class="pct"><span class="negative">-9.3%</span></td><td class="num">36.4 млн</td><td class="num">37.8 млн</td><td class="pct"><span class="positive">+4.0%</span></td><td class="num">69,072</td><td class="num">79,178</td><td class="pct"><span class="positive">+14.6%</span></td></tr>
+<tr><td class="sticky-col dim-name">Иркутск</td><td class="num">204</td><td class="num">243</td><td class="pct"><span class="positive">+19.1%</span></td><td class="num">427</td><td class="num">522</td><td class="pct"><span class="positive">+22.2%</span></td><td class="num">41.4 млн</td><td class="num">42.9 млн</td><td class="pct"><span class="positive">+3.7%</span></td><td class="num">96,857</td><td class="num">82,189</td><td class="pct"><span class="negative">-15.1%</span></td></tr>
+<tr><td class="sticky-col dim-name">Красноярск</td><td class="num">197</td><td class="num">224</td><td class="pct"><span class="positive">+13.7%</span></td><td class="num">437</td><td class="num">488</td><td class="pct"><span class="positive">+11.7%</span></td><td class="num">45.1 млн</td><td class="num">42.4 млн</td><td class="pct"><span class="negative">-6.0%</span></td><td class="num">103,199</td><td class="num">86,858</td><td class="pct"><span class="negative">-15.8%</span></td></tr>
+<tr><td class="sticky-col dim-name">Челябинск</td><td class="num">162</td><td class="num">240</td><td class="pct"><span class="positive">+48.1%</span></td><td class="num">352</td><td class="num">542</td><td class="pct"><span class="positive">+54.0%</span></td><td class="num">22.6 млн</td><td class="num">37.7 млн</td><td class="pct"><span class="positive">+66.8%</span></td><td class="num">64,171</td><td class="num">69,526</td><td class="pct"><span class="positive">+8.3%</span></td></tr>
+<tr><td class="sticky-col dim-name">Краснодар</td><td class="num"><span class="zero">0</span></td><td class="num">387</td><td class="pct"><span class="na">—</span></td><td class="num"><span class="zero">0</span></td><td class="num">884</td><td class="pct"><span class="positive">+100.0%</span></td><td class="num"><span class="zero">0</span></td><td class="num">64.4 млн</td><td class="pct"><span class="positive">+100.0%</span></td><td class="num"><span class="zero">0</span></td><td class="num">72,905</td><td class="pct"><span class="na">—</span></td></tr>
+<tr><td class="sticky-col dim-name">Тюмень</td><td class="num">181</td><td class="num">130</td><td class="pct"><span class="negative">-28.2%</span></td><td class="num">413</td><td class="num">297</td><td class="pct"><span class="negative">-28.1%</span></td><td class="num">30.7 млн</td><td class="num">20.3 млн</td><td class="pct"><span class="negative">-33.8%</span></td><td class="num">74,308</td><td class="num">68,370</td><td class="pct"><span class="negative">-8.0%</span></td></tr>
+<tr><td class="sticky-col dim-name">Хабаровск</td><td class="num">121</td><td class="num">149</td><td class="pct"><span class="positive">+23.1%</span></td><td class="num">257</td><td class="num">329</td><td class="pct"><span class="positive">+28.0%</span></td><td class="num">27.6 млн</td><td class="num">32.2 млн</td><td class="pct"><span class="positive">+16.8%</span></td><td class="num">107,356</td><td class="num">97,954</td><td class="pct"><span class="negative">-8.8%</span></td></tr>
+<tr><td class="sticky-col dim-name">Владивосток</td><td class="num">97</td><td class="num">139</td><td class="pct"><span class="positive">+43.3%</span></td><td class="num">209</td><td class="num">292</td><td class="pct"><span class="positive">+39.7%</span></td><td class="num">21.7 млн</td><td class="num">25.7 млн</td><td class="pct"><span class="positive">+18.5%</span></td><td class="num">103,853</td><td class="num">88,113</td><td class="pct"><span class="negative">-15.2%</span></td></tr>
+<tr><td class="sticky-col dim-name">Волгоград</td><td class="num">60</td><td class="num">51</td><td class="pct"><span class="negative">-15.0%</span></td><td class="num">128</td><td class="num">113</td><td class="pct"><span class="negative">-11.7%</span></td><td class="num">10.6 млн</td><td class="num">10.0 млн</td><td class="pct"><span class="negative">-6.3%</span></td><td class="num">83,165</td><td class="num">88,300</td><td class="pct"><span class="positive">+6.2%</span></td></tr>
+<tr><td class="sticky-col dim-name">Омск</td><td class="num">38</td><td class="num">66</td><td class="pct"><span class="positive">+73.7%</span></td><td class="num">77</td><td class="num">138</td><td class="pct"><span class="positive">+79.2%</span></td><td class="num">5.4 млн</td><td class="num">9.1 млн</td><td class="pct"><span class="positive">+69.5%</span></td><td class="num">69,951</td><td class="num">66,175</td><td class="pct"><span class="negative">-5.4%</span></td></tr>
+<tr><td class="sticky-col dim-name">Томск</td><td class="num">56</td><td class="num">17</td><td class="pct"><span class="negative">-69.6%</span></td><td class="num">109</td><td class="num">39</td><td class="pct"><span class="negative">-64.2%</span></td><td class="num">7.1 млн</td><td class="num">1.3 млн</td><td class="pct"><span class="negative">-82.4%</span></td><td class="num">65,372</td><td class="num">32,186</td><td class="pct"><span class="negative">-50.8%</span></td></tr>
+<tr><td class="sticky-col dim-name">Калининград</td><td class="num">22</td><td class="num">41</td><td class="pct"><span class="positive">+86.4%</span></td><td class="num">53</td><td class="num">89</td><td class="pct"><span class="positive">+67.9%</span></td><td class="num">5.9 млн</td><td class="num">7.9 млн</td><td class="pct"><span class="positive">+34.1%</span></td><td class="num">110,829</td><td class="num">88,509</td><td class="pct"><span class="negative">-20.1%</span></td></tr>
+<tr><td class="sticky-col dim-name">Сургут</td><td class="num">31</td><td class="num">33</td><td class="pct"><span class="positive">+6.5%</span></td><td class="num">61</td><td class="num">71</td><td class="pct"><span class="positive">+16.4%</span></td><td class="num">5.1 млн</td><td class="num">6.7 млн</td><td class="pct"><span class="positive">+32.9%</span></td><td class="num">83,225</td><td class="num">95,040</td><td class="pct"><span class="positive">+14.2%</span></td></tr>
+<tr><td class="sticky-col dim-name">Оренбург</td><td class="num">24</td><td class="num">22</td><td class="pct"><span class="negative">-8.3%</span></td><td class="num">57</td><td class="num">51</td><td class="pct"><span class="negative">-10.5%</span></td><td class="num">3.2 млн</td><td class="num">3.8 млн</td><td class="pct"><span class="positive">+19.3%</span></td><td class="num">55,701</td><td class="num">74,260</td><td class="pct"><span class="positive">+33.3%</span></td></tr>
+<tr><td class="sticky-col dim-name">Барнаул</td><td class="num">28</td><td class="num">18</td><td class="pct"><span class="negative">-35.7%</span></td><td class="num">59</td><td class="num">38</td><td class="pct"><span class="negative">-35.6%</span></td><td class="num">4.6 млн</td><td class="num">2.9 млн</td><td class="pct"><span class="negative">-37.7%</span></td><td class="num">77,853</td><td class="num">75,321</td><td class="pct"><span class="negative">-3.3%</span></td></tr>
+<tr class="total"><td class="sticky-col dim-name"><b>ИТОГО</b></td><td class="num"><b>34 336</b></td><td class="num"><b>37 066</b></td><td class="pct"><b><span class="positive">+8.0%</span></b></td><td class="num"><b>73 806</b></td><td class="num"><b>80 727</b></td><td class="pct"><b><span class="positive">+9.4%</span></b></td><td class="num"><b>6.70 млрд</b></td><td class="num"><b>7.16 млрд</b></td><td class="pct"><b><span class="positive">+6.9%</span></b></td><td class="num"><b>90,820</b></td><td class="num"><b>88,738</b></td><td class="pct"><b><span class="negative">-2.3%</span></b></td></tr>
+</tbody></table></div>
+
+<!-- Block 4: Cross-tab -->
+<h2 id="crosstab">Блок 4: Перекрёстный анализ (ТО × Страна)</h2>
+<p class="subtitle" style="margin-top:-8px">Изменение PAX, % — 01.10.2025–14.02.2026 vs 01.10.2024–14.02.2025. Ячейки: +зелёный / −красный.</p>
+
+<div class="table-scroll"><table class="heatmap-table">
+<thead><tr><th class="sticky-col">ТО \ Страна</th><th>Египет</th><th>Турция</th><th>ОАЭ</th><th>Таиланд</th><th>Россия</th><th>Вьетнам</th><th>Китай</th><th>Шри-Ланка</th><th>Мальдивы</th><th>Куба</th><th>Абхазия</th><th>Индия</th></tr></thead>
+<tbody>
+<tr><td class="sticky-col dim-name">Travelata (Xtravel)</td><td class="heat-cell heat-strong-pos" title="1700→2779">+63%</td><td class="heat-cell heat-pos" title="4239→4641">+9%</td><td class="heat-cell heat-pos" title="2301→2602">+13%</td><td class="heat-cell heat-pos" title="1857→2114">+14%</td><td class="heat-cell heat-strong-neg" title="5597→3378">-40%</td><td class="heat-cell heat-strong-pos" title="373→770">+106%</td><td class="heat-cell heat-strong-pos" title="15→712">+4647%</td><td class="heat-cell heat-strong-neg" title="169→87">-49%</td><td class="heat-cell heat-neg" title="267→265">-1%</td><td class="heat-cell heat-strong-neg" title="24→14">-42%</td><td class="heat-cell heat-neg" title="369→332">-10%</td><td class="heat-cell heat-strong-pos" title="30→62">+107%</td></tr>
+<tr><td class="sticky-col dim-name">Biblio Globus</td><td class="heat-cell heat-neg" title="6241→5110">-18%</td><td class="heat-cell heat-pos" title="627→673">+7%</td><td class="heat-cell heat-neg" title="1461→1199">-18%</td><td class="heat-cell heat-pos" title="1933→2117">+10%</td><td class="heat-cell heat-pos" title="2277→2434">+7%</td><td class="heat-cell heat-strong-pos" title="32→855">+2572%</td><td class="heat-cell heat-strong-pos" title="299→390">+30%</td><td class="heat-cell heat-strong-neg" title="296→190">-36%</td><td class="heat-cell heat-strong-neg" title="342→140">-59%</td><td class="heat-cell heat-strong-neg" title="344→189">-45%</td><td class="heat-cell heat-strong-neg" title="242→53">-78%</td><td class="heat-cell heat-neg" title="258→227">-12%</td></tr>
+<tr><td class="sticky-col dim-name">Fun&Sun</td><td class="heat-cell heat-strong-neg" title="3734→2885">-23%</td><td class="heat-cell heat-strong-pos" title="1396→2939">+111%</td><td class="heat-cell heat-strong-pos" title="2416→3211">+33%</td><td class="heat-cell heat-strong-neg" title="1128→674">-40%</td><td class="heat-cell heat-strong-neg" title="62→46">-26%</td><td class="heat-cell heat-strong-pos" title="63→535">+749%</td><td class="heat-cell heat-strong-pos" title="9→65">+622%</td><td class="heat-cell heat-strong-neg" title="279→141">-49%</td><td class="heat-cell heat-pos" title="68→75">+10%</td><td class="heat-cell heat-strong-neg" title="41→13">-68%</td><td class="heat-cell heat-strong-pos" title="4→24">+500%</td><td class="heat-cell heat-strong-neg" title="100→0">-100%</td></tr>
+<tr><td class="sticky-col dim-name">Pegas Touristik</td><td class="heat-cell heat-pos" title="2611→3091">+18%</td><td class="heat-cell heat-strong-pos" title="2035→2668">+31%</td><td class="heat-cell heat-pos" title="355→396">+12%</td><td class="heat-cell heat-neg" title="529→432">-18%</td><td class="heat-cell heat-strong-neg" title="418→164">-61%</td><td class="heat-cell heat-strong-pos" title="4→203">+4975%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-neg" title="472→433">-8%</td><td class="heat-cell heat-strong-pos" title="0→4">+100%</td><td class="heat-cell heat-strong-pos" title="0→42">+100%</td></tr>
+<tr><td class="sticky-col dim-name">Anex</td><td class="heat-cell heat-neg" title="1224→1190">-3%</td><td class="heat-cell heat-pos" title="2440→2753">+13%</td><td class="heat-cell heat-strong-neg" title="1697→802">-53%</td><td class="heat-cell heat-strong-neg" title="762→415">-46%</td><td class="heat-cell heat-strong-pos" title="200→254">+27%</td><td class="heat-cell heat-strong-pos" title="123→466">+279%</td><td class="heat-cell heat-strong-neg" title="60→0">-100%</td><td class="heat-cell heat-strong-neg" title="496→113">-77%</td><td class="heat-cell heat-strong-pos" title="15→113">+653%</td><td class="heat-cell heat-strong-neg" title="136→38">-72%</td><td class="heat-cell heat-strong-neg" title="17→2">-88%</td><td class="heat-cell heat-strong-neg" title="110→3">-97%</td></tr>
+<tr><td class="sticky-col dim-name">Sunmar</td><td class="heat-cell heat-pos" title="2344→2517">+7%</td><td class="heat-cell heat-strong-pos" title="969→1315">+36%</td><td class="heat-cell heat-strong-neg" title="903→566">-37%</td><td class="heat-cell heat-strong-neg" title="306→79">-74%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-pos" title="43→76">+77%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-neg" title="16→0">-100%</td><td class="heat-cell heat-strong-neg" title="14→0">-100%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-empty">—</td></tr>
+<tr><td class="sticky-col dim-name">ICS Travel Group</td><td class="heat-cell heat-strong-pos" title="102→998">+878%</td><td class="heat-cell heat-neg" title="681→617">-9%</td><td class="heat-cell heat-strong-neg" title="1377→696">-49%</td><td class="heat-cell heat-strong-pos" title="405→730">+80%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-pos" title="189→377">+99%</td><td class="heat-cell heat-strong-pos" title="323→1206">+273%</td><td class="heat-cell heat-strong-pos" title="107→249">+133%</td><td class="heat-cell heat-strong-neg" title="85→21">-75%</td><td class="heat-cell heat-strong-neg" title="73→2">-97%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-neg" title="43→11">-74%</td></tr>
+<tr><td class="sticky-col dim-name">Intourist</td><td class="heat-cell heat-strong-neg" title="1114→562">-50%</td><td class="heat-cell heat-strong-pos" title="438→570">+30%</td><td class="heat-cell heat-strong-pos" title="208→710">+241%</td><td class="heat-cell heat-strong-neg" title="781→115">-85%</td><td class="heat-cell heat-strong-pos" title="45→193">+329%</td><td class="heat-cell heat-strong-pos" title="2→147">+7250%</td><td class="heat-cell heat-strong-pos" title="0→8">+100%</td><td class="heat-cell heat-strong-neg" title="178→80">-55%</td><td class="heat-cell heat-strong-pos" title="48→71">+48%</td><td class="heat-cell heat-strong-neg" title="9→0">-100%</td><td class="heat-cell heat-strong-pos" title="6→26">+333%</td><td class="heat-cell heat-strong-neg" title="9→0">-100%</td></tr>
+<tr><td class="sticky-col dim-name">Space Travel</td><td class="heat-cell heat-strong-pos" title="379→630">+66%</td><td class="heat-cell heat-strong-pos" title="293→469">+60%</td><td class="heat-cell heat-strong-pos" title="622→858">+38%</td><td class="heat-cell heat-neg" title="397→323">-19%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-pos" title="2→175">+8650%</td><td class="heat-cell heat-neg" title="200→192">-4%</td><td class="heat-cell heat-strong-pos" title="0→40">+100%</td><td class="heat-cell heat-strong-pos" title="4→125">+3025%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-pos" title="3→25">+733%</td></tr>
+<tr><td class="sticky-col dim-name">PAKS</td><td class="heat-cell heat-pos" title="234→265">+13%</td><td class="heat-cell heat-strong-pos" title="17→29">+71%</td><td class="heat-cell heat-pos" title="103→116">+13%</td><td class="heat-cell heat-strong-pos" title="334→555">+66%</td><td class="heat-cell heat-strong-pos" title="0→2">+100%</td><td class="heat-cell heat-strong-pos" title="9→251">+2689%</td><td class="heat-cell heat-strong-pos" title="81→108">+33%</td><td class="heat-cell heat-strong-neg" title="275→171">-38%</td><td class="heat-cell heat-strong-pos" title="51→119">+133%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-pos" title="0→23">+100%</td></tr>
+<tr><td class="sticky-col dim-name">RussianExpress</td><td class="heat-cell heat-strong-pos" title="73→114">+56%</td><td class="heat-cell heat-strong-neg" title="128→1">-99%</td><td class="heat-cell heat-pos" title="482→568">+18%</td><td class="heat-cell heat-strong-pos" title="100→149">+49%</td><td class="heat-cell heat-strong-neg" title="3→0">-100%</td><td class="heat-cell heat-strong-pos" title="53→182">+243%</td><td class="heat-cell heat-strong-neg" title="193→116">-40%</td><td class="heat-cell heat-strong-neg" title="119→77">-35%</td><td class="heat-cell heat-neg" title="74→74">+0%</td><td class="heat-cell heat-strong-pos" title="0→7">+100%</td><td class="heat-cell heat-strong-neg" title="39→6">-85%</td><td class="heat-cell heat-strong-neg" title="30→21">-30%</td></tr>
+<tr><td class="sticky-col dim-name">Let’s Fly</td><td class="heat-cell heat-strong-pos" title="0→312">+100%</td><td class="heat-cell heat-strong-pos" title="6→484">+7967%</td><td class="heat-cell heat-strong-pos" title="4→500">+12400%</td><td class="heat-cell heat-strong-pos" title="0→549">+100%</td><td class="heat-cell heat-strong-pos" title="0→134">+100%</td><td class="heat-cell heat-strong-pos" title="0→140">+100%</td><td class="heat-cell heat-strong-pos" title="0→184">+100%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-pos" title="0→60">+100%</td><td class="heat-cell heat-strong-pos" title="0→11">+100%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-pos" title="0→2">+100%</td></tr>
+<tr><td class="sticky-col dim-name">Tez Tour</td><td class="heat-cell heat-strong-pos" title="15→96">+540%</td><td class="heat-cell heat-strong-pos" title="65→163">+151%</td><td class="heat-cell heat-strong-pos" title="280→364">+30%</td><td class="heat-cell heat-strong-pos" title="102→169">+66%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-pos" title="0→100">+100%</td><td class="heat-cell heat-strong-pos" title="122→344">+182%</td><td class="heat-cell heat-strong-pos" title="12→48">+300%</td><td class="heat-cell heat-strong-pos" title="7→47">+571%</td><td class="heat-cell heat-strong-neg" title="123→69">-44%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-empty">—</td></tr>
+<tr><td class="sticky-col dim-name">Coral Travel</td><td class="heat-cell heat-strong-pos" title="411→605">+47%</td><td class="heat-cell heat-strong-pos" title="218→268">+23%</td><td class="heat-cell heat-strong-neg" title="256→138">-46%</td><td class="heat-cell heat-neg" title="56→52">-7%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-neg" title="70→63">-10%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-neg" title="2→0">-100%</td><td class="heat-cell heat-strong-neg" title="27→8">-70%</td><td class="heat-cell heat-strong-neg" title="1→0">-100%</td><td class="heat-cell heat-strong-neg" title="6→0">-100%</td><td class="heat-cell heat-empty">—</td></tr>
+<tr><td class="sticky-col dim-name">One Touch Travel</td><td class="heat-cell heat-strong-neg" title="64→46">-28%</td><td class="heat-cell heat-neg" title="276→276">+0%</td><td class="heat-cell heat-strong-neg" title="362→92">-75%</td><td class="heat-cell heat-strong-neg" title="206→15">-93%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-pos" title="0→189">+100%</td><td class="heat-cell heat-strong-pos" title="10→103">+930%</td><td class="heat-cell heat-strong-neg" title="14→0">-100%</td><td class="heat-cell heat-strong-pos" title="18→31">+72%</td><td class="heat-cell heat-strong-neg" title="6→0">-100%</td><td class="heat-cell heat-empty">—</td><td class="heat-cell heat-strong-pos" title="0→19">+100%</td></tr>
+</tbody></table></div>
+
+<!-- Block 5: Prices -->
+<h2 id="prices">Блок 5: Ценовая политика (средний чек / PAX)</h2>
+
+<div class="charts-grid">
+    <div class="chart-card full-width">
+        <h4>Средний чек по ТО (руб. за 1 PAX)</h4>
+        <canvas id="chartTicket"></canvas>
+    </div>
+</div>
+
+<!-- Block 6: Assortment (covered in operator table with hotel columns) -->
+<h2 id="assortment">Блок 6: Ассортимент</h2>
+<p class="subtitle" style="margin-top:-8px">
+    Количество уникальных отелей в проданных заказах по ТО (прокси для ассортимента).
+    Полноценный анализ ассортимента требует данных из каталога/поисковой выдачи.
+</p>
+<p style="color: var(--text-dim); font-size: 0.85rem;">
+    Данные по уникальным отелям включены в таблицу «По туроператорам» (последние 2 колонки).
+</p>
+
+<!-- Methodology -->
+<h2 id="methodology">Методология</h2>
+<div class="method-box">
+    <h4>Источник данных</h4>
+    <ul>
+        <li><b>Таблица:</b> <code>Backend_data.urs_report_raw</code></li>
+        <li><b>Дедупликация:</b> <code>argMax(col, last_update)</code> + <code>GROUP BY id</code> + <code>HAVING state IN (13, 14, 31)</code></li>
+        <li><b>Дата:</b> <code>firstpaymentdate</code> (дата первого платежа)</li>
+        <li><b>PAX:</b> adults + kids (без младенцев)</li>
+        <li><b>Полная стоимость:</b> <code>fullprice + flightspecificationprice + visaprice + visasupportprice</code></li>
+        <li><b>Exchange (оплата ТО):</b> <code>needtopayfortouroperator</code>; для Anex (id=226) и Travelata/Xtravel — фиксированная комиссия 12% (exchange = 88%)</li>
+        <li><b>Комиссия:</b> <code>(full_price - exchange) / full_price × 100</code></li>
+        <li><b>Нормализация ТО:</b> Anex+AnexTour→Anex, MyAgent+Travelata(ex MyAgent)→Travelata, FUN&SUN+FUN&SUN(TUI)→Fun&Sun, NTK-Intourist+Intourist→Intourist</li>
+        <li><b>Исключения:</b> ERV RU</li>
+    </ul>
+    <h4 style="margin-top:12px">Отличия от предыдущего отчёта (tour_dynamics)</h4>
+    <ul>
+        <li>Использует <code>argMax</code> вместо <code>row_number()</code> — быстрее в ClickHouse</li>
+        <li>Все проданные статусы (13, 14, 31) вместо только 13</li>
+        <li><code>firstpaymentdate</code> вместо <code>solddate</code></li>
+        <li>Полная стоимость (4 компонента) вместо <code>priceforcustomer</code></li>
+        <li>Расчёт комиссии и дохода</li>
+    </ul>
+</div>
+
+<script>
+const cPrev = 'rgba(100,140,180,0.7)';
+const cCurr = 'rgba(79,195,247,0.85)';
+const cPrevBorder = 'rgba(100,140,180,1)';
+const cCurrBorder = 'rgba(79,195,247,1)';
+
+Chart.defaults.color = '#7a8a9a';
+Chart.defaults.borderColor = 'rgba(42,58,74,0.5)';
+
+// Operator PAX
+new Chart(document.getElementById('chartOpPax'), {
+    type: 'bar',
+    data: {
+        labels: ["Travelata (Xtravel)", "Biblio Globus", "Fun&Sun", "Pegas Touristik", "Anex", "Sunmar", "ICS Travel Group", "Intourist", "Space Travel", "PAKS", "RussianExpress", "Let\u2019s Fly", "Tez Tour", "Coral Travel", "One Touch Travel"],
+        datasets: [
+            { label: '01.10.2024–14.02.2025', data: [17461, 14387, 9331, 6455, 7315, 4622, 3602, 2845, 1909, 1204, 1381, 10, 770, 1061, 1004], backgroundColor: cPrev, borderRadius: 3 },
+            { label: '01.10.2025–14.02.2026', data: [18669, 13617, 10641, 7439, 6203, 4553, 5034, 2504, 2969, 1818, 1361, 2414, 1437, 1134, 792], backgroundColor: cCurr, borderRadius: 3 }
+        ]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: { legend: { position: 'top' } },
+        scales: {
+            x: { ticks: { callback: v => (v/1000).toFixed(0)+'K' } },
+            y: { ticks: { font: { size: 11 } } }
+        }
+    }
+});
+
+// Operator GMV
+new Chart(document.getElementById('chartOpGmv'), {
+    type: 'bar',
+    data: {
+        labels: ["Travelata (Xtravel)", "Biblio Globus", "Fun&Sun", "Pegas Touristik", "Anex", "Sunmar", "ICS Travel Group", "Intourist", "Space Travel", "PAKS", "RussianExpress", "Let\u2019s Fly", "Tez Tour", "Coral Travel", "One Touch Travel"],
+        datasets: [
+            { label: '01.10.2024–14.02.2025', data: [1307.6, 1253.6, 886.3, 605.2, 685.6, 456.4, 367.0, 287.8, 190.4, 165.0, 168.4, 0.7, 92.8, 103.3, 106.7], backgroundColor: cPrev, borderRadius: 3 },
+            { label: '01.10.2025–14.02.2026', data: [1571.8, 1156.8, 895.0, 671.3, 568.5, 383.4, 470.4, 223.9, 295.5, 223.8, 156.6, 219.4, 153.2, 101.7, 65.6], backgroundColor: cCurr, borderRadius: 3 }
+        ]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: { legend: { position: 'top' } },
+        scales: {
+            x: { ticks: { callback: v => v.toFixed(0)+' млн' } },
+            y: { ticks: { font: { size: 11 } } }
+        }
+    }
+});
+
+// Operator PAX change %
+new Chart(document.getElementById('chartOpChange'), {
+    type: 'bar',
+    data: {
+        labels: ["Tez Tour", "Space Travel", "PAKS", "ICS Travel Group", "Pegas Touristik", "Fun&Sun", "Travelata (Xtravel)", "Coral Travel", "RussianExpress", "Sunmar", "Biblio Globus", "Intourist", "Anex", "One Touch Travel", "AleanTour", "IZI Tour", "LOTI"],
+        datasets: [{ data: [86.6, 55.5, 51.0, 39.8, 15.2, 14.0, 6.9, 6.9, -1.4, -1.5, -5.4, -12.0, -15.2, -21.1, -60.9, -81.4, -83.3], backgroundColor: ["rgba(102,187,106,0.8)", "rgba(102,187,106,0.8)", "rgba(102,187,106,0.8)", "rgba(102,187,106,0.8)", "rgba(102,187,106,0.8)", "rgba(102,187,106,0.8)", "rgba(102,187,106,0.8)", "rgba(102,187,106,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)"], borderRadius: 3 }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: ctx => ctx.parsed.x.toFixed(1) + '%' } }
+        },
+        scales: {
+            x: { ticks: { callback: v => v + '%' } },
+            y: { ticks: { font: { size: 11 } } }
+        }
+    }
+});
+
+// Country PAX
+new Chart(document.getElementById('chartCountryPax'), {
+    type: 'bar',
+    data: {
+        labels: ["\u0415\u0433\u0438\u043f\u0435\u0442", "\u0422\u0443\u0440\u0446\u0438\u044f", "\u041e\u0410\u042d", "\u0422\u0430\u0438\u043b\u0430\u043d\u0434", "\u0420\u043e\u0441\u0441\u0438\u044f", "\u0412\u044c\u0435\u0442\u043d\u0430\u043c", "\u041a\u0438\u0442\u0430\u0439", "\u0428\u0440\u0438-\u041b\u0430\u043d\u043a\u0430", "\u041c\u0430\u043b\u044c\u0434\u0438\u0432\u044b", "\u041a\u0443\u0431\u0430"],
+        datasets: [
+            { label: '01.10.2024–14.02.2025', data: [20312, 13837, 12827, 8916, 8771, 963, 1344, 1947, 1027, 1243], backgroundColor: cPrev, borderRadius: 3 },
+            { label: '01.10.2025–14.02.2026', data: [21215, 17870, 12818, 8490, 6675, 4529, 3428, 1202, 1152, 776], backgroundColor: cCurr, borderRadius: 3 }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { position: 'top' } },
+        scales: { y: { beginAtZero: true, ticks: { callback: v => (v/1000).toFixed(0)+'K' } } }
+    }
+});
+
+// Country change %
+new Chart(document.getElementById('chartCountryChange'), {
+    type: 'bar',
+    data: {
+        labels: ["\u041a\u0438\u0442\u0430\u0439", "\u0413\u0440\u0443\u0437\u0438\u044f", "\u0422\u0443\u0440\u0446\u0438\u044f", "\u041c\u0430\u043b\u044c\u0434\u0438\u0432\u044b", "\u0415\u0433\u0438\u043f\u0435\u0442", "\u0418\u043d\u0434\u043e\u043d\u0435\u0437\u0438\u044f", "\u041e\u0410\u042d", "\u0422\u0430\u0438\u043b\u0430\u043d\u0434", "\u041a\u0430\u0442\u0430\u0440", "\u0420\u043e\u0441\u0441\u0438\u044f", "\u0418\u043d\u0434\u0438\u044f", "\u041a\u0443\u0431\u0430", "\u0428\u0440\u0438-\u041b\u0430\u043d\u043a\u0430", "\u0410\u0431\u0445\u0430\u0437\u0438\u044f"],
+        datasets: [{ data: [155.1, 75.9, 29.1, 12.2, 4.4, 3.5, -0.1, -4.8, -5.6, -23.9, -25.4, -37.6, -38.3, -39.3], backgroundColor: ["rgba(102,187,106,0.8)", "rgba(102,187,106,0.8)", "rgba(102,187,106,0.8)", "rgba(102,187,106,0.8)", "rgba(102,187,106,0.8)", "rgba(102,187,106,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)", "rgba(239,83,80,0.8)"], borderRadius: 3 }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: ctx => ctx.parsed.x.toFixed(1) + '%' } }
+        },
+        scales: {
+            x: { ticks: { callback: v => v + '%' } },
+            y: { ticks: { font: { size: 11 } } }
+        }
+    }
+});
+
+// City PAX
+new Chart(document.getElementById('chartCityPax'), {
+    type: 'bar',
+    data: {
+        labels: ["\u041c\u043e\u0441\u043a\u0432\u0430", "\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433", "\u0415\u043a\u0430\u0442\u0435\u0440\u0438\u043d\u0431\u0443\u0440\u0433", "\u041a\u0430\u0437\u0430\u043d\u044c", "\u041d\u043e\u0432\u043e\u0441\u0438\u0431\u0438\u0440\u0441\u043a", "\u0421\u043e\u0447\u0438", "\u0421\u0430\u043c\u0430\u0440\u0430", "\u0423\u0444\u0430", "\u041c\u0438\u043d\u0435\u0440\u0430\u043b\u044c\u043d\u044b\u0435 \u0412\u043e\u0434\u044b", "\u041f\u0435\u0440\u043c\u044c"],
+        datasets: [
+            { label: '01.10.2024–14.02.2025', data: [49844, 6044, 3750, 2669, 1533, 1928, 1772, 1405, 802, 440], backgroundColor: cPrev, borderRadius: 3 },
+            { label: '01.10.2025–14.02.2026', data: [52134, 7565, 4632, 3390, 2373, 1453, 1565, 1545, 708, 587], backgroundColor: cCurr, borderRadius: 3 }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { position: 'top' } },
+        scales: { y: { beginAtZero: true, ticks: { callback: v => (v/1000).toFixed(0)+'K' } } }
+    }
+});
+
+// Avg ticket by operator
+new Chart(document.getElementById('chartTicket'), {
+    type: 'bar',
+    data: {
+        labels: ["Travelata (Xtravel)", "Biblio Globus", "Fun&Sun", "Pegas Touristik", "Anex", "Sunmar", "ICS Travel Group", "Intourist", "Space Travel", "PAKS", "RussianExpress", "Let\u2019s Fly"],
+        datasets: [
+            { label: '01.10.2024–14.02.2025', data: [74886, 87134, 94980, 93758, 93724, 98750, 101883, 101164, 99744, 137031, 121928, 70405], backgroundColor: cPrev, borderRadius: 3 },
+            { label: '01.10.2025–14.02.2026', data: [84191, 84955, 84113, 90243, 91656, 84211, 93446, 89422, 99540, 123100, 115057, 90886], backgroundColor: cCurr, borderRadius: 3 }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { position: 'top' } },
+        scales: { y: { beginAtZero: true, ticks: { callback: v => (v/1000).toFixed(0)+'K ₽' } } }
+    }
+});
+
+</script>
+</body>
+</html>
